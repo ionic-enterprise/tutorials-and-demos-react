@@ -1,8 +1,8 @@
+import { Capacitor } from '@capacitor/core';
 import { Auth0Provider, AuthConnect, ProviderOptions } from '@ionic-enterprise/auth';
-import { isPlatform } from '@ionic/react';
 import { getSnapshot, setSession } from './session-store';
 
-const isNative = isPlatform('hybrid');
+const isNative = Capacitor.isNativePlatform();
 const provider = new Auth0Provider();
 
 const authOptions: ProviderOptions = {
