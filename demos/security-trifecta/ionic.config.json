@@ -1,0 +1,7 @@
+{
+  "name": "security-trifecta-react",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
