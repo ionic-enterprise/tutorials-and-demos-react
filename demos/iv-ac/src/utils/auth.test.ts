@@ -1,7 +1,7 @@
 import { vi, Mock } from 'vitest';
 import { clearSession, getSession, setSession } from './session-vault';
 import { getAccessToken, isAuthenticated, login, logout } from './auth';
-import { AuthConnect, CognitoProvider } from '@ionic-enterprise/auth';
+import { Auth0Provider, AuthConnect, CognitoProvider } from '@ionic-enterprise/auth';
 
 vi.mock('@ionic-enterprise/auth');
 vi.mock('@ionic/react', async (getOriginal) => {
@@ -56,7 +56,7 @@ describe('Auth Utilities', () => {
           it('attempts a refresh', async () => {
             await isAuthenticated();
             expect(AuthConnect.refreshSession).toHaveBeenCalledTimes(1);
-            expect(AuthConnect.refreshSession).toHaveBeenCalledWith(expect.any(CognitoProvider), testAuthResult);
+            expect(AuthConnect.refreshSession).toHaveBeenCalledWith(expect.any(Auth0Provider), testAuthResult);
           });
 
           describe('when the refresh is successful', () => {
@@ -134,7 +134,7 @@ describe('Auth Utilities', () => {
           it('attempts a refresh', async () => {
             await getAccessToken();
             expect(AuthConnect.refreshSession).toHaveBeenCalledTimes(1);
-            expect(AuthConnect.refreshSession).toHaveBeenCalledWith(expect.any(CognitoProvider), testAuthResult);
+            expect(AuthConnect.refreshSession).toHaveBeenCalledWith(expect.any(Auth0Provider), testAuthResult);
           });
 
           describe('when the refresh is successful', () => {
@@ -188,14 +188,13 @@ describe('Auth Utilities', () => {
     it('performs a login', async () => {
       await login();
       expect(AuthConnect.login).toHaveBeenCalledTimes(1);
-      expect(AuthConnect.login).toHaveBeenCalledWith(expect.any(CognitoProvider), {
-        clientId: '64p9c53l5thd5dikra675suvq9',
-        discoveryUrl:
-          'https://cognito-idp.us-east-2.amazonaws.com/us-east-2_YU8VQe29z/.well-known/openid-configuration',
+      expect(AuthConnect.login).toHaveBeenCalledWith(expect.any(Auth0Provider), {
+        audience: 'https://io.ionic.demo.ac',
+        clientId: 'yLasZNUGkZ19DGEjTmAITBfGXzqbvd00',
+        discoveryUrl: 'https://dev-2uspt-sz.us.auth0.com/.well-known/openid-configuration',
+        scope: 'openid email picture profile offline_access',
         redirectUri: 'msauth://auth-action-complete',
         logoutUrl: 'msauth://auth-action-complete',
-        scope: 'openid email profile',
-        audience: '',
       });
 
       it('sets the auth result value', async () => {
@@ -228,7 +227,7 @@ describe('Auth Utilities', () => {
       it('calls logout', async () => {
         await logout();
         expect(AuthConnect.logout).toHaveBeenCalledTimes(1);
-        expect(AuthConnect.logout).toHaveBeenCalledWith(expect.any(CognitoProvider), testAuthResult);
+        expect(AuthConnect.logout).toHaveBeenCalledWith(expect.any(Auth0Provider), testAuthResult);
       });
 
       it('clears the auth result', async () => {

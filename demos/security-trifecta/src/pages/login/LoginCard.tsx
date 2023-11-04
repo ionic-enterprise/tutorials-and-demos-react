@@ -1,6 +1,5 @@
 import {
   IonButton,
-  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -8,10 +7,9 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/react';
-import { useContext, useEffect, useState } from 'react';
-import { logoAmazon, logOut, cafeOutline } from 'ionicons/icons';
+import { logInOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
-import { login, logout, isAuthenticated, getAccessToken } from '../../utils/auth';
+import { login } from '../../utils/auth';
 
 const LoginCard: React.FC = () => {
   const history = useHistory();
@@ -33,8 +31,8 @@ const LoginCard: React.FC = () => {
       </IonCardHeader>
       <IonCardContent>
         <IonButton expand="full" color="primary" onClick={handleLogin}>
-          <IonIcon slot="end" icon={logoAmazon} />
-          Sign in with AWS
+          <IonIcon slot="end" icon={logInOutline} />
+          Sign in
         </IonButton>
       </IonCardContent>
     </IonCard>

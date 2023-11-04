@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   IonButton,
   IonCard,
@@ -11,7 +10,8 @@ import {
   IonPage,
   IonToast,
 } from '@ionic/react';
-import { logoAmazon } from 'ionicons/icons';
+import { logInOutline } from 'ionicons/icons';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../utils/auth';
 
@@ -42,9 +42,9 @@ const LoginPage: React.FC = () => {
             </IonCardHeader>
             <IonCardContent>
               <div className="auth-button-area">
-                <IonButton expand="block" color="aws" onClick={() => handleSignIn()} data-testid="signin-button">
-                  <IonIcon slot="end" icon={logoAmazon} />
-                  Sign in with AWS
+                <IonButton expand="block" color="primary" onClick={() => handleSignIn()} data-testid="signin-button">
+                  <IonIcon slot="end" icon={logInOutline} />
+                  Sign in
                 </IonButton>
               </div>
             </IonCardContent>

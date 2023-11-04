@@ -1,26 +1,25 @@
-import { AuthConnect, AuthResult, CognitoProvider, ProviderOptions, TokenType } from '@ionic-enterprise/auth';
+import { Auth0Provider, AuthConnect, AuthResult, ProviderOptions, TokenType } from '@ionic-enterprise/auth';
 import { isPlatform } from '@ionic/react';
 import { clearSession, getSession, setSession } from './session-vault';
-// import {clearSess}
 
 const isMobile = isPlatform('hybrid');
 const url = isMobile ? 'msauth://auth-action-complete' : 'http://localhost:8100/auth-action-complete';
 const options: ProviderOptions = {
-  clientId: '64p9c53l5thd5dikra675suvq9',
-  discoveryUrl: 'https://cognito-idp.us-east-2.amazonaws.com/us-east-2_YU8VQe29z/.well-known/openid-configuration',
+  audience: 'https://io.ionic.demo.ac',
+  clientId: 'yLasZNUGkZ19DGEjTmAITBfGXzqbvd00',
+  discoveryUrl: 'https://dev-2uspt-sz.us.auth0.com/.well-known/openid-configuration',
+  scope: 'openid email picture profile offline_access',
   logoutUrl: url,
   redirectUri: url,
-  scope: 'openid email profile',
-  audience: '',
 };
-const provider = new CognitoProvider();
+const provider = new Auth0Provider();
 
 const setupAuthConnect = async (): Promise<void> => {
   return AuthConnect.setup({
     platform: isMobile ? 'capacitor' : 'web',
     logLevel: 'DEBUG',
     ios: { webView: 'private' },
-    web: { uiMode: 'popup', authFlow: 'PKCE' },
+    web: { uiMode: 'popup', authFlow: 'implicit' },
   });
 };
 
@@ -55,7 +54,7 @@ const getAccessToken = async (): Promise<string | void> => {
 };
 
 const isAuthenticated = async (): Promise<boolean> => {
-  return !!(await getAuthResult);
+  return !!(await getAuthResult());
 };
 
 const login = async (): Promise<void> => {
@@ -79,4 +78,4 @@ const getUserEmail = async (): Promise<string | void> => {
   }
 };
 
-export { setupAuthConnect, isAuthenticated, getAccessToken, login, logout, getUserEmail };
+export { getAccessToken, getUserEmail, isAuthenticated, login, logout, setupAuthConnect };
