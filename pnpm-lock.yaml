@@ -91,8 +91,8 @@ importers:
         specifier: ^14.5.1
         version: 14.5.1(@testing-library/dom@9.3.3)
       '@types/react':
-        specifier: ^18.2.34
-        version: 18.2.34
+        specifier: ^18.2.36
+        version: 18.2.36
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
@@ -158,7 +158,7 @@ importers:
         version: 5.0.6(@capacitor/core@5.5.1)
       '@hookform/resolvers':
         specifier: ~3.3.2
-        version: 3.3.2(react-hook-form@7.47.0)
+        version: 3.3.2(react-hook-form@7.48.2)
       '@ionic-enterprise/auth':
         specifier: ~5.1.1
         version: 5.1.1(@capacitor/core@5.5.1)
@@ -190,8 +190,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ~7.47.0
-        version: 7.47.0(react@18.2.0)
+        specifier: ~7.48.2
+        version: 7.48.2(react@18.2.0)
       react-router:
         specifier: ^5.3.4
         version: 5.3.4(react@18.2.0)
@@ -218,8 +218,8 @@ importers:
         specifier: ^14.5.1
         version: 14.5.1(@testing-library/dom@9.3.3)
       '@types/react':
-        specifier: ^18.2.34
-        version: 18.2.34
+        specifier: ^18.2.36
+        version: 18.2.36
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
@@ -285,7 +285,7 @@ importers:
         version: 5.0.6(@capacitor/core@5.5.1)
       '@hookform/resolvers':
         specifier: ~3.3.2
-        version: 3.3.2(react-hook-form@7.47.0)
+        version: 3.3.2(react-hook-form@7.48.2)
       '@ionic-enterprise/auth':
         specifier: ~5.1.1
         version: 5.1.1(@capacitor/core@5.5.1)
@@ -317,8 +317,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ~7.47.0
-        version: 7.47.0(react@18.2.0)
+        specifier: ~7.48.2
+        version: 7.48.2(react@18.2.0)
       react-router:
         specifier: ^5.3.4
         version: 5.3.4(react@18.2.0)
@@ -345,8 +345,8 @@ importers:
         specifier: ^14.5.1
         version: 14.5.1(@testing-library/dom@9.3.3)
       '@types/react':
-        specifier: ^18.2.34
-        version: 18.2.34
+        specifier: ^18.2.36
+        version: 18.2.36
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
@@ -466,8 +466,8 @@ importers:
         specifier: ^14.5.1
         version: 14.5.1(@testing-library/dom@9.3.3)
       '@types/react':
-        specifier: ^18.2.34
-        version: 18.2.34
+        specifier: ^18.2.36
+        version: 18.2.36
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
@@ -533,7 +533,7 @@ importers:
         version: 5.0.6(@capacitor/core@5.5.1)
       '@hookform/resolvers':
         specifier: ~3.3.2
-        version: 3.3.2(react-hook-form@7.47.0)
+        version: 3.3.2(react-hook-form@7.48.2)
       '@ionic/react':
         specifier: ^7.5.3
         version: 7.5.3(react-dom@18.2.0)(react@18.2.0)
@@ -559,8 +559,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-hook-form:
-        specifier: ~7.47.0
-        version: 7.47.0(react@18.2.0)
+        specifier: ~7.48.2
+        version: 7.48.2(react@18.2.0)
       react-router:
         specifier: ^5.3.4
         version: 5.3.4(react@18.2.0)
@@ -587,8 +587,8 @@ importers:
         specifier: ^14.5.1
         version: 14.5.1(@testing-library/dom@9.3.3)
       '@types/react':
-        specifier: ^18.2.34
-        version: 18.2.34
+        specifier: ^18.2.36
+        version: 18.2.36
       '@types/react-dom':
         specifier: ^18.2.14
         version: 18.2.14
@@ -2256,12 +2256,12 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@hookform/resolvers@3.3.2(react-hook-form@7.47.0):
+  /@hookform/resolvers@3.3.2(react-hook-form@7.48.2):
     resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.47.0(react@18.2.0)
+      react-hook-form: 7.48.2(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -2336,7 +2336,7 @@ packages:
   /@ionic/core@7.5.3:
     resolution: {integrity: sha512-nd4NV6gSgohLvKHGmf+jAcgzI1387eKq3enjBfE574FK/ikl5CeIltv0MBVJr9lz0pNSL/y9m1tdaFg+syASuA==}
     dependencies:
-      '@stencil/core': 4.7.0
+      '@stencil/core': 4.7.1
       ionicons: 7.2.1
       tslib: 2.6.2
     dev: false
@@ -2604,8 +2604,8 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@stencil/core@4.7.0:
-    resolution: {integrity: sha512-hl3hD5FA8F9kZiDJSus08Kno1QRl+fXeMBzrl5DjWAzAu0JHxL1AqTph5oQSekjvkSahaa8JtsXnHRZU93eivg==}
+  /@stencil/core@4.7.1:
+    resolution: {integrity: sha512-KDWA/3qDiABA5LqtHCmTVwORuzgu/YdC0FpSBwVmwlw6K8jUjbTA5JB6Q03da2F+EQlDHOVgbW0TNtHCm54uXQ==}
     engines: {node: '>=16.0.0', npm: '>=7.10.0'}
     hasBin: true
     dev: false
@@ -2836,14 +2836,14 @@ packages:
   /@types/react-dom@18.2.14:
     resolution: {integrity: sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==}
     dependencies:
-      '@types/react': 18.2.34
+      '@types/react': 18.2.36
     dev: true
 
   /@types/react-router-dom@5.3.3:
     resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.2.34
+      '@types/react': 18.2.36
       '@types/react-router': 5.1.20
     dev: false
 
@@ -2851,11 +2851,11 @@ packages:
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.2.34
+      '@types/react': 18.2.36
     dev: false
 
-  /@types/react@18.2.34:
-    resolution: {integrity: sha512-U6eW/alrRk37FU/MS2RYMjx0Va2JGIVXELTODaTIYgvWGCV4Y4TfTUzG8DdmpDNIT0Xpj/R7GfyHOJJrDttcvg==}
+  /@types/react@18.2.36:
+    resolution: {integrity: sha512-o9XFsHYLLZ4+sb9CWUYwHqFVoG61SesydF353vFMMsQziiyRu8np4n2OYMUSDZ8XuImxDr9c5tR7gidlH29Vnw==}
     dependencies:
       '@types/prop-types': 15.7.9
       '@types/scheduler': 0.16.5
@@ -4695,8 +4695,8 @@ packages:
     resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
     dev: true
 
-  /fast-glob@3.3.1:
-    resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
+  /fast-glob@3.3.2:
+    resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
     engines: {node: '>=8.6.0'}
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -5067,7 +5067,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
@@ -5321,7 +5321,7 @@ packages:
   /ionicons@7.2.1:
     resolution: {integrity: sha512-2pvCM7DGVEtbbj48PJzQrCADCQrqjU1nUYX9l9PyEWz3ZfdnLdAouqwPxLdl8tbaF9cE7OZRSlyQD7oLOLnGoQ==}
     dependencies:
-      '@stencil/core': 4.7.0
+      '@stencil/core': 4.7.1
     dev: false
 
   /is-arguments@1.1.1:
@@ -6219,8 +6219,8 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: true
 
-  /nanoid@3.3.6:
-    resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
+  /nanoid@3.3.7:
+    resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
@@ -6695,7 +6695,7 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
-      nanoid: 3.3.6
+      nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
@@ -6873,8 +6873,8 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
-  /react-hook-form@7.47.0(react@18.2.0):
-    resolution: {integrity: sha512-F/TroLjTICipmHeFlMrLtNLceO2xr1jU3CyiNla5zdwsGUGu2UOxxR4UyJgLlhMwLW/Wzp4cpJ7CPfgJIeKdSg==}
+  /react-hook-form@7.48.2(react@18.2.0):
+    resolution: {integrity: sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -8245,7 +8245,7 @@ packages:
       workbox-window: ^7.0.0
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
-      fast-glob: 3.3.1
+      fast-glob: 3.3.2
       pretty-bytes: 6.1.1
       vite: 4.5.0(@types/node@20.8.10)(terser@5.24.0)
       workbox-build: 7.0.0

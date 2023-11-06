@@ -1,15 +1,15 @@
 .pin-dialog-content .prompt {
-  font-size: 2em;
+  font-size: 2rem;
   font-weight: bold;
 }
 
 .pin-dialog-content .pin {
-  font-size: 3em;
+  font-size: 3rem;
   font-weight: bold;
 }
 
 .pin-dialog-content .error {
-  font-size: 1.5em;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
