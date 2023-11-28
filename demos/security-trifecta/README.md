@@ -12,25 +12,9 @@ For this application, "authentication assets" consist of the session information
 
 This application is still under active development and there may be areas with missing features and non-finalized code
 
-## Getting Started
+## Building Note
 
-Follow all the normal steps:
-
-1. clone the repo
-1. install your own `.npmrc` file from one of your production projects
-1. `npm i`
-1. `npm run build`
-1. `npx cap sync`
-1. `npx cap open ios` and/or `npx cap open android`
-
-This application takes advantage of a couple of `@ionic-enterprise` solutions. Thus you need to have purchased access to those solutions and have a valid enterprise key in order to try this application.
-
-## Credentials
-
-This application uses a live backend API that requires a login. Unless you have your own credentials, please use the following:
-
-- **email:** `test@ionic.io`
-- **password:** `Ion54321`
+This app is part of a mono-repo containing other demos but can also be [built on its own](../../README.md#build-a-stand-alone-project).
 
 ## Identity Vault Usage
 
