@@ -39,7 +39,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
           <ion-note
             slot="end"
           >
-            iv-ac
+            demo-iv-ac
           </ion-note>
         </ion-item>
         <ion-item>

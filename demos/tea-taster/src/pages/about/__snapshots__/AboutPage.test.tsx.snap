@@ -39,7 +39,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
           <ion-note
             slot="end"
           >
-            tea-taster
+            demo-tea-taster
           </ion-note>
         </ion-item>
         <ion-item>
