@@ -19,7 +19,7 @@ const setupAuthConnect = async (): Promise<void> => {
     platform: isMobile ? 'capacitor' : 'web',
     logLevel: 'DEBUG',
     ios: { webView: 'private' },
-    web: { uiMode: 'popup', authFlow: 'implicit' },
+    web: { uiMode: 'popup', authFlow: 'PKCE' },
   });
 };
 

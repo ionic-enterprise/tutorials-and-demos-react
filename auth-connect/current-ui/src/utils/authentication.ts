@@ -19,8 +19,19 @@ const setupAuthConnect = async (): Promise<void> => {
     platform: isNative ? 'capacitor' : 'web',
     logLevel: 'DEBUG',
     ios: { webView: 'private' },
-    web: { uiMode: 'popup', authFlow: 'PKCE' },
+    web: { uiMode: 'current', authFlow: 'PKCE' },
   });
+};
+
+const handleAuthCallback = async (): Promise<void> => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.size > 0) {
+    const queryEntries = Object.fromEntries(params.entries());
+    const authResult = await AuthConnect.handleLoginCallback(queryEntries, authOptions);
+    setSession(authResult);
+  } else {
+    setSession(null);
+  }
 };
 
 const login = async (): Promise<void> => {
@@ -36,4 +47,4 @@ const logout = async (): Promise<void> => {
   }
 };
 
-export { login, logout, setupAuthConnect };
+export { handleAuthCallback, login, logout, setupAuthConnect };
