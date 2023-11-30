@@ -49,8 +49,9 @@ usage of these products within the context of a small but functional application
 
 ### `demo-pwa`
 
-This is a variation of the [Tea Taster](#tea-taster) application that uses Auth Connect and Identity Vault in conjunction
-with PWA. This application provides an example of how the same code base can be adapted for both mobile and web contexts.
+This is a variation of the [Tea Taster](#tea-taster) application that uses Auth Connect and Identity Vault in
+conjunction with PWA. This application provides an example of how the same code base can be adapted for both
+mobile and web contexts.
 
 ### `demo-security-trifecta`
 

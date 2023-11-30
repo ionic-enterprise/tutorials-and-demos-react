@@ -18,13 +18,14 @@ If you do not have access to the full suite of `@ionic-enterprise` packages used
 build specific demos. For example, if you only have access to Auth Connect, you can build the demos that _only_ depend on
 Auth Connect.
 
-Here is an example of doing this for the `tea-taster-iv-ac` demo, which uses Identity Vault and Auth Connect:
+Here is an example of doing this for the `demo-iv-ac` demo, which uses Identity Vault and Auth Connect:
 
 - Clone this repo
 - `cd tutorials-and-demos-react`
 - `cp -r demos/iv-ac ..`
 - `cd ../iv-ac`
-- Copy your `.npmrc` file. Some demos, such as the `tea-taster` demo, do not depend on any `@ionic-enterprise` packages. For such items, you can skip this step.
+- Copy your `.npmrc` file. Some demos, such as the `tea-taster` demo, do not depend on any `@ionic-enterprise` packages.
+  For such items, you can skip this step.
 - `npm i`
 - `npm run build`
 - `npm run dev`
@@ -74,7 +75,7 @@ For more advanced uses of the Ionic or Capacitor CLIs you can also change to the
 ## Development Workflow
 
 To develop any if the projects within the mono-repo, use the `--filter` option with a couple of standard scripts.
-For example, to work on the `tea-taster` demo, open a couple of terminal sessions and run the following commands:
+For example, to work on the `demo-tea-taster` demo, open a couple of terminal sessions and run the following commands:
 
 - `pnpm --filter demo-tea-taster dev`
 - `pnpm --filter demo-tea-taster test:dev`
