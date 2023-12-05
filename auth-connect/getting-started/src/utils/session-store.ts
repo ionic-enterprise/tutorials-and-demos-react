@@ -27,11 +27,11 @@ const setSession = async (newSession: AuthResult | null) => {
   emitChange();
 };
 
-Preferences.get({ key: 'session' }).then((result) => {
-  if (result.value) {
-    session = JSON.parse(result.value);
-    emitChange();
+const initialize = async (): Promise<void> => {
+  const { value } = await Preferences.get({ key: 'session' });
+  if (value) {
+    session = JSON.parse(value);
   }
-});
+};
 
-export { subscribe, getSnapshot, setSession };
+export { initialize, subscribe, getSnapshot, setSession };

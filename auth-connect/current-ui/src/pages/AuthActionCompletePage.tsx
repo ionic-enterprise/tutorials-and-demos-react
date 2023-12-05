@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { IonContent, IonPage, IonSpinner } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
@@ -7,9 +8,11 @@ import './AuthActionCompletePage.css';
 const AuthActionCompletePage: React.FC = () => {
   const history = useHistory();
 
-  if (!Capacitor.isNativePlatform()) {
-    handleAuthCallback().then(() => history.replace('/'));
-  }
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) {
+      handleAuthCallback().then(() => history.replace('/'));
+    }
+  }, [handleAuthCallback]);
 
   return (
     <IonPage>
