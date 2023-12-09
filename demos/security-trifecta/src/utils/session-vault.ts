@@ -17,27 +17,31 @@ type CallbackMap = {
 };
 
 const keys = { session: 'session', mode: 'last-unlock-mode' };
-const vault = createVault({
-  key: 'io.ionic.teatastereact',
-  type: VaultType.SecureStorage,
-  deviceSecurityType: DeviceSecurityType.None,
-  lockAfterBackgrounded: 5000,
-  shouldClearVaultAfterTooManyFailedAttempts: true,
-  customPasscodeInvalidUnlockAttempts: 2,
-  unlockVaultOnLoad: false,
-});
-
-vault.onLock(() => {
-  session = undefined;
-  if (callbackMap.onVaultLock) callbackMap.onVaultLock();
-});
-
-vault.onPasscodeRequested((isPasscodeSetRequest, onComplete) => {
-  if (callbackMap.onPasscodeRequested) callbackMap.onPasscodeRequested(isPasscodeSetRequest, onComplete);
-});
+const vault = createVault();
 
 let session: AuthResult | undefined;
 const callbackMap: CallbackMap = {};
+
+const initializeVault = async (): Promise<void> => {
+  vault.initialize({
+    key: 'io.ionic.teatastereact',
+    type: VaultType.SecureStorage,
+    deviceSecurityType: DeviceSecurityType.None,
+    lockAfterBackgrounded: 5000,
+    shouldClearVaultAfterTooManyFailedAttempts: true,
+    customPasscodeInvalidUnlockAttempts: 2,
+    unlockVaultOnLoad: false,
+  });
+
+  vault.onLock(() => {
+    session = undefined;
+    if (callbackMap.onVaultLock) callbackMap.onVaultLock();
+  });
+
+  vault.onPasscodeRequested((isPasscodeSetRequest, onComplete) => {
+    if (callbackMap.onPasscodeRequested) callbackMap.onPasscodeRequested(isPasscodeSetRequest, onComplete);
+  });
+};
 
 const clearSession = async (): Promise<void> => {
   session = undefined;
@@ -107,6 +111,7 @@ const unregisterCallback = <T extends keyof CallbackMap>(topic: T): void => {
 };
 
 export {
+  initializeVault,
   clearSession,
   getSession,
   restoreSession,

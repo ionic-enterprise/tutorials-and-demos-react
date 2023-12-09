@@ -10,6 +10,7 @@ const mockVault = {
   setValue: vi.fn().mockResolvedValue(undefined),
   getValue: vi.fn().mockResolvedValue(undefined),
   updateConfig: vi.fn().mockResolvedValue(undefined),
+  initialize: vi.fn().mockResolvedValue(undefined),
   isEmpty: vi.fn().mockResolvedValue(false),
   isLocked: vi.fn().mockResolvedValue(false),
   onConfigChanged: vi.fn().mockResolvedValue(undefined),

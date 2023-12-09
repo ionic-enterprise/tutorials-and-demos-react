@@ -9,6 +9,7 @@ import {
   clearSession,
   getSession,
   getUnlockMode,
+  initializeVault,
   registerCallback,
   restoreSession,
   setSession,
@@ -36,8 +37,9 @@ describe('Session Utilities', () => {
     unlockVaultOnLoad: false,
   };
 
-  beforeEach(() => {
-    mockVault = createVault(mockVaultOptions);
+  beforeEach(async () => {
+    mockVault = createVault();
+    await initializeVault();
     vi.clearAllMocks();
   });
 
