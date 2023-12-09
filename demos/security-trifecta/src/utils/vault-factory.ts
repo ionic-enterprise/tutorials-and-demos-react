@@ -1,6 +1,6 @@
+import { BrowserVault, Vault } from '@ionic-enterprise/identity-vault';
 import { isPlatform } from '@ionic/react';
-import { BrowserVault, IdentityVaultConfig, Vault } from '@ionic-enterprise/identity-vault';
 
-export const createVault = (config: IdentityVaultConfig): Vault | BrowserVault => {
-  return isPlatform('hybrid') ? new Vault(config) : new BrowserVault(config);
+export const createVault = (): Vault | BrowserVault => {
+  return isPlatform('hybrid') ? new Vault() : new BrowserVault();
 };

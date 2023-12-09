@@ -5,6 +5,7 @@ import { UnlockMode } from '../models';
 import { createVault } from './vault-factory';
 
 import {
+  initializeVault,
   canUnlock,
   clearSession,
   getSession,
@@ -26,18 +27,10 @@ describe('Session Utilities', () => {
     refreshToken: 'test-refresh-token',
     idToken: 'test-id-token',
   };
-  const mockVaultOptions = {
-    key: 'io.ionic.teatasterreact',
-    type: VaultType.SecureStorage,
-    deviceSecurityType: DeviceSecurityType.None,
-    lockAfterBackgrounded: 5000,
-    shouldClearVaultAfterTooManyFailedAttempts: true,
-    customPasscodeInvalidUnlockAttempts: 2,
-    unlockVaultOnLoad: false,
-  };
 
-  beforeEach(() => {
-    mockVault = createVault(mockVaultOptions);
+  beforeEach(async () => {
+    mockVault = createVault();
+    await initializeVault();
     vi.clearAllMocks();
   });
 

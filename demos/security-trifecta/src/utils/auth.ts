@@ -3,7 +3,7 @@ import { isPlatform } from '@ionic/react';
 import { clearSession, getSession, setSession } from './session-vault';
 
 const isMobile = isPlatform('hybrid');
-const url = isMobile ? 'msauth://auth-action-complete' : 'http://localhost:8100/auth-action-complete';
+const url = isMobile ? 'io.ionic.acdemo://auth-action-complete' : 'http://localhost:8100/auth-action-complete';
 const options: ProviderOptions = {
   audience: 'https://io.ionic.demo.ac',
   clientId: 'yLasZNUGkZ19DGEjTmAITBfGXzqbvd00',

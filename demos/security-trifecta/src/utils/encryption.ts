@@ -2,14 +2,18 @@ import { client } from './backend-api';
 import { createVault } from './vault-factory';
 import { DeviceSecurityType, VaultType } from '@ionic-enterprise/identity-vault';
 
-const vault = createVault({
-  key: 'io.ionic.csdemosecurestoragekeys',
-  type: VaultType.SecureStorage,
-  deviceSecurityType: DeviceSecurityType.None,
-  unlockVaultOnLoad: false,
-});
+const vault = createVault();
 
 const databaseKey = 'database-key';
+
+const initializeEncription = async (): Promise<void> => {
+  await vault.initialize({
+    key: 'io.ionic.csdemosecurestoragekeys',
+    type: VaultType.SecureStorage,
+    deviceSecurityType: DeviceSecurityType.None,
+    unlockVaultOnLoad: false,
+  });
+};
 
 const getKeyFromBackendAPI = async (): Promise<string | undefined> => {
   const res = await client.get('/keys');
@@ -27,4 +31,4 @@ const getDatabaseKey = async (): Promise<string | void> => {
   return key;
 };
 
-export { getDatabaseKey };
+export { getDatabaseKey, initializeEncription };
