@@ -13,7 +13,7 @@ const StartPage: React.FC = () => {
       // will take you to /unlock
       // however not currently implemented
       // so return to /login instead
-      history.replace('/login');
+      history.replace('/unlock');
     } else {
       const s = await restoreSession();
       if (s != undefined) history.replace('/teas');
