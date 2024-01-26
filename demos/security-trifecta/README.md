@@ -8,10 +8,6 @@ The scenario modeled here is where the application has a need for:
 
 For this application, "authentication assets" consist of the session information as well as a key that is used to encrypt the database. For our architecture, the database is shared, and thus the same database encryption key is used across all users. The architecture could easily be expanded so that each user had their own database and their own key.
 
-## NOTE
-
-This application is still under active development and there may be areas with missing features and non-finalized code
-
 ## Building Note
 
 This app is part of a mono-repo containing other demos but can also be [built on its own](../../README.md#build-a-stand-alone-project).
