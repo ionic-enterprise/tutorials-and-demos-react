@@ -1,5 +1,4 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
-import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../utils/auth';
 
