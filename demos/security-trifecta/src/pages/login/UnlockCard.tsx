@@ -2,12 +2,9 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, Ion
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../utils/auth';
-import { UnlockMode } from '../../models/UnlockMode';
 
 const UnlockCard: React.FC = () => {
   const history = useHistory();
-  const [displayLockOptions, setLockOptions] = useState<boolean>(false);
-  const [unlockModes, setUnlockModes] = useState<Array<{ mode: UnlockMode; label: string }>>([]);
 
   useEffect(() => {}, []);
 
