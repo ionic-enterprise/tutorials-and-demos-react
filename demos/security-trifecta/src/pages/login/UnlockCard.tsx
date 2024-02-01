@@ -1,22 +1,8 @@
-import {
-  IonButton,
-  IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonIcon,
-  IonSelect,
-  IonSelectOption,
-} from '@ionic/react';
-import { useContext, useEffect, useState } from 'react';
-import { logoAmazon, logOut, cafeOutline } from 'ionicons/icons';
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { login, logout, isAuthenticated, getAccessToken } from '../../utils/auth';
+import { login } from '../../utils/auth';
 import { UnlockMode } from '../../models/UnlockMode';
-import { getUnlockMode, setUnlockMode, canUseLocking } from '../../utils/session-vault';
-import { Device } from '@ionic-enterprise/identity-vault';
 
 const UnlockCard: React.FC = () => {
   const history = useHistory();

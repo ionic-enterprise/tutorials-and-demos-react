@@ -17,10 +17,15 @@ import { UnlockMode } from '../../models/UnlockMode';
 import { getUnlockMode, setUnlockMode, canUseLocking } from '../../utils/session-vault';
 import { Device } from '@ionic-enterprise/identity-vault';
 
+interface UnlockOptions {
+  mode: UnlockMode;
+  label: string;
+}
+
 const LoginCard: React.FC = () => {
   const history = useHistory();
   const [displayLockOptions, setLockOptions] = useState<boolean>(false);
-  const [unlockModes, setUnlockModes] = useState<Array<{ mode: UnlockMode; label: string }>>([]);
+  const [unlockModes, setUnlockModes] = useState<Array<UnlockOptions>>([]);
   const [selectedMode, setSelectedMode] = useState<UnlockMode | undefined>(undefined);
 
   useEffect(() => {
@@ -29,7 +34,7 @@ const LoginCard: React.FC = () => {
   }, []);
 
   const initialize = async () => {
-    const newUnlockOptions: { mode: UnlockMode; label: string }[] = [
+    const newUnlockOptions: UnlockOptions[] = [
       {
         mode: 'SecureStorage',
         label: 'Never Lock Session',
@@ -52,11 +57,10 @@ const LoginCard: React.FC = () => {
     });
 
     //initialize to secure storage
-    setSelectedMode(newUnlockOptions[0].mode);
+    setSelectedMode('SecureStorage');
   };
 
   const updateUnlockMode = async (mode: UnlockMode) => {
-    // setUnlockMode(mode)
     setSelectedMode(mode);
   };
 

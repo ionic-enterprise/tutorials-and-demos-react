@@ -95,7 +95,6 @@ const setUnlockMode = async (unlockMode: UnlockMode) => {
   const { type, deviceSecurityType } = await getUnlockModeConfig(unlockMode);
   await vault.updateConfig({ ...vault.config!, type, deviceSecurityType });
   await Preferences.set({ key: keys.mode, value: unlockMode });
-  const newMode = await getUnlockMode();
 };
 
 const getUnlockMode = async (): Promise<UnlockMode> => {
