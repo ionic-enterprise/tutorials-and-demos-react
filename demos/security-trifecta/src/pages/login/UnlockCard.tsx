@@ -6,8 +6,6 @@ import { login } from '../../utils/auth';
 const UnlockCard: React.FC = () => {
   const history = useHistory();
 
-  useEffect(() => {}, []);
-
   const unlock = async () => {
     try {
       await login();
