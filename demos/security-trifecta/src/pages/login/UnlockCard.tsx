@@ -1,13 +1,13 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import { login } from '../../utils/auth';
+import { restoreSession } from '../../utils/session-vault';
 
 const UnlockCard: React.FC = () => {
   const history = useHistory();
 
   const unlock = async () => {
     try {
-      await login();
+      await restoreSession();
       history.replace('/');
     } catch (err) {
       console.log('Error logging in:', err);

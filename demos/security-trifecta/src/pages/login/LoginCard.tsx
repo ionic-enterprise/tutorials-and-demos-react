@@ -70,7 +70,7 @@ const LoginCard: React.FC = () => {
       if (selectedMode != undefined) {
         setUnlockMode(selectedMode);
       }
-      history.replace('/');
+      history.replace('/teas');
     } catch (err) {
       console.log('Error logging in:', err);
     }
