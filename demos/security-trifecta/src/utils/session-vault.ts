@@ -3,10 +3,8 @@ import { DeviceSecurityType, IdentityVaultConfig, VaultErrorCodes, VaultType } f
 import { AuthResult } from '@ionic-enterprise/auth';
 import { createVault } from './vault-factory';
 import { provisionBiometricPermission } from './device';
-//canUlock
-
-//export to own model?
-type UnlockMode = 'Biometrics' | 'BiometricsWithPasscode' | 'SystemPasscode' | 'CustomPasscode' | 'SecureStorage';
+import { UnlockMode } from '../models/UnlockMode';
+import { isPlatform } from '@ionic/react';
 
 type VaultUnlockType = Pick<IdentityVaultConfig, 'type' | 'deviceSecurityType'>;
 
@@ -86,6 +84,8 @@ const getUnlockModeConfig = async (unlockMode: UnlockMode): Promise<VaultUnlockT
   }
 };
 
+const canUseLocking = (): boolean => isPlatform('hybrid');
+
 const canUnlock = async (): Promise<boolean> => {
   const { value } = await Preferences.get({ key: keys.mode });
   return (value || 'SecureStorage') !== 'SecureStorage' && !(await vault.isEmpty()) && (await vault.isLocked());
@@ -121,4 +121,5 @@ export {
   getUnlockMode,
   registerCallback,
   unregisterCallback,
+  canUseLocking,
 };

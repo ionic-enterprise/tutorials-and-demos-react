@@ -5,8 +5,6 @@ import { useHistory } from 'react-router';
 import { registerCallback, unregisterCallback } from '../utils/session-vault';
 import { setupAuthConnect } from '../utils/auth';
 import { PinDialog } from '../pages/PinDialog/PinDialog';
-//Implement pindialog then import it
-// import {PinDia}
 
 type Props = { children?: ReactNode };
 type Context = { session?: AuthResult };
@@ -56,7 +54,9 @@ const AuthProvider = ({ children }: Props) => {
     };
   }, []);
 
-  //todo useEffect for showModal
+  useEffect(() => {
+    showModal ? present() : dismiss();
+  }, [showModal]);
 
   return <AuthContext.Provider value={{ session }}>{isSetup ? children : <IonSpinner />}</AuthContext.Provider>;
 };
