@@ -73,14 +73,17 @@ export const updateUnlockMode = async (mode: UnlockMode): Promise<void> => {
   switch (mode) {
     case 'BiometricsWithPasscode': {
       newConfig.type = VaultType.DeviceSecurity;
+      newConfig.deviceSecurityType = DeviceSecurityType.Both;
       break;
     }
     case 'InMemory': {
       newConfig.type = VaultType.InMemory;
+      newConfig.deviceSecurityType = DeviceSecurityType.None;
       break;
     }
     default: {
       newConfig.type = VaultType.SecureStorage;
+      newConfig.deviceSecurityType = DeviceSecurityType.None;
       break;
     }
   }
