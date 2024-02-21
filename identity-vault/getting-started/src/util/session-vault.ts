@@ -1,4 +1,4 @@
-import { 
+import {
   BrowserVault,
   Vault,
   VaultType,
@@ -8,10 +8,7 @@ import {
 import { createVault } from './vault-factory';
 import { Session } from '../models/Session';
 
-export type UnlockMode =
-  | 'BiometricsWithPasscode'
-  | 'InMemory'
-  | 'SecureStorage';
+export type UnlockMode = 'BiometricsWithPasscode' | 'InMemory' | 'SecureStorage';
 
 const vault: Vault | BrowserVault = createVault();
 let session: Session | null = null;
@@ -58,10 +55,10 @@ export const storeSession = async (newSession: Session): Promise<void> => {
 
 export const getSession = async (): Promise<void> => {
   if (session === null) {
-    if (await vault.isEmpty()) session = null; 
+    if (await vault.isEmpty()) session = null;
     else session = await vault.getValue<Session>('session');
   }
-  emitChange()
+  emitChange();
 };
 
 export const clearSession = async (): Promise<void> => {
@@ -71,21 +68,27 @@ export const clearSession = async (): Promise<void> => {
 };
 
 export const updateUnlockMode = async (mode: UnlockMode): Promise<void> => {
-  const type =
-    mode === 'BiometricsWithPasscode'
-      ? VaultType.DeviceSecurity
-      : mode === 'InMemory'
-      ? VaultType.InMemory
-      : VaultType.SecureStorage;
-  const deviceSecurityType =
-    type === VaultType.DeviceSecurity
-      ? DeviceSecurityType.Both
-      : DeviceSecurityType.None;
-  await vault.updateConfig({
-    ...(vault.config as IdentityVaultConfig),
-    type,
-    deviceSecurityType,
-  });
+  const newConfig = { ...(vault.config as IdentityVaultConfig) };
+
+  switch (mode) {
+    case 'BiometricsWithPasscode': {
+      newConfig.type = VaultType.DeviceSecurity;
+      newConfig.deviceSecurityType = DeviceSecurityType.Both;
+      break;
+    }
+    case 'InMemory': {
+      newConfig.type = VaultType.InMemory;
+      newConfig.deviceSecurityType = DeviceSecurityType.None;
+      break;
+    }
+    default: {
+      newConfig.type = VaultType.SecureStorage;
+      newConfig.deviceSecurityType = DeviceSecurityType.None;
+      break;
+    }
+  }
+
+  await vault.updateConfig(newConfig);
 };
 
 export const lockSession = async (): Promise<void> => {
