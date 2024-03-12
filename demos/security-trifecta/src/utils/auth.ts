@@ -1,6 +1,6 @@
 import { Auth0Provider, AuthConnect, AuthResult, ProviderOptions, TokenType } from '@ionic-enterprise/auth';
 import { isPlatform } from '@ionic/react';
-import { clearSession, getSession, setSession } from './session-vault';
+import { clearSession, setSession, getSnapshot } from './session-vault';
 
 const isMobile = isPlatform('hybrid');
 const url = isMobile ? 'io.ionic.acdemo://auth-action-complete' : 'http://localhost:8100/auth-action-complete';
@@ -40,7 +40,7 @@ const performRefresh = async (authResult: AuthResult): Promise<AuthResult | unde
 };
 
 const getAuthResult = async (): Promise<AuthResult | undefined> => {
-  let authResult = await getSession();
+  let authResult = await getSnapshot();
   if (authResult && (await AuthConnect.isAccessTokenExpired(authResult))) {
     authResult = await performRefresh(authResult);
   }
@@ -63,7 +63,7 @@ const login = async (): Promise<void> => {
 };
 
 const logout = async (): Promise<void> => {
-  const authResult = await getSession();
+  const authResult = await getSnapshot();
   if (authResult) {
     await AuthConnect.logout(provider, authResult);
     await clearSession();
@@ -71,7 +71,7 @@ const logout = async (): Promise<void> => {
 };
 
 const getUserEmail = async (): Promise<string | void> => {
-  const authResult = await getSession();
+  const authResult = await getSnapshot();
   if (authResult) {
     const { email } = (await AuthConnect.decodeToken(TokenType.id, authResult)) as any;
     return email;

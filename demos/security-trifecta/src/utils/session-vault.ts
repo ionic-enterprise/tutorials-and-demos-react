@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import { DeviceSecurityType, IdentityVaultConfig, VaultErrorCodes, VaultType } from '@ionic-enterprise/identity-vault';
+import { DeviceSecurityType, IdentityVaultConfig, VaultType } from '@ionic-enterprise/identity-vault';
 import { AuthResult } from '@ionic-enterprise/auth';
 import { createVault } from './vault-factory';
 import { provisionBiometricPermission } from './device';
@@ -9,7 +9,6 @@ import { isPlatform } from '@ionic/react';
 type VaultUnlockType = Pick<IdentityVaultConfig, 'type' | 'deviceSecurityType'>;
 
 type CallbackMap = {
-  onSessionChange?: (session: AuthResult | undefined) => void;
   onVaultLock?: () => void;
   onPasscodeRequested?: (isPasscodeSetRequest: boolean, onComplete: (code: string) => void) => void;
 };
@@ -18,7 +17,32 @@ const keys = { session: 'session', mode: 'last-unlock-mode' };
 const vault = createVault();
 
 let session: AuthResult | undefined;
+let listeners: any[] = [];
+
 const callbackMap: CallbackMap = {};
+
+const subscribe = (listener: any) => {
+  listeners = [...listeners, listener];
+  return () => {
+    listeners = listeners.filter((l) => l !== listener);
+  };
+};
+
+const getSnapshot = (): AuthResult | undefined => {
+  return session;
+};
+
+const emitChange = () => {
+  for (let listener of listeners) {
+    listener();
+  }
+};
+
+const setSession = async (newSession: AuthResult | undefined) => {
+  session = newSession;
+  await vault.setValue(keys.session, session);
+  emitChange();
+};
 
 const initializeVault = async (): Promise<void> => {
   vault.initialize({
@@ -31,9 +55,10 @@ const initializeVault = async (): Promise<void> => {
     unlockVaultOnLoad: false,
   });
 
-  vault.onLock(() => {
+  vault.onLock(async () => {
     session = undefined;
-    if (callbackMap.onVaultLock) callbackMap.onVaultLock();
+    if (callbackMap.onVaultLock) await callbackMap.onVaultLock();
+    emitChange();
   });
 
   vault.onPasscodeRequested((isPasscodeSetRequest, onComplete) => {
@@ -45,25 +70,19 @@ const clearSession = async (): Promise<void> => {
   session = undefined;
   await vault.clear();
   await setUnlockMode('SecureStorage');
-  if (callbackMap.onSessionChange) callbackMap.onSessionChange(undefined);
+  emitChange();
 };
 
-const getSession = async (): Promise<AuthResult | undefined> => {
+const getSession = async (): Promise<void> => {
   if (!session) session = (await vault.getValue<AuthResult>(keys.session)) || undefined;
-  return session;
+  emitChange();
 };
 
 const restoreSession = async (): Promise<AuthResult | undefined> => {
   const s = (await vault.getValue<AuthResult>(keys.session)) || undefined;
   session = s;
-  if (callbackMap.onSessionChange) callbackMap.onSessionChange(session);
+  emitChange();
   return session;
-};
-
-const setSession = async (s: AuthResult): Promise<void> => {
-  session = s;
-  await vault.setValue(keys.session, s);
-  if (callbackMap.onSessionChange) callbackMap.onSessionChange(session);
 };
 
 const getUnlockModeConfig = async (unlockMode: UnlockMode): Promise<VaultUnlockType> => {
@@ -122,4 +141,6 @@ export {
   registerCallback,
   unregisterCallback,
   canUseLocking,
+  subscribe,
+  getSnapshot,
 };
