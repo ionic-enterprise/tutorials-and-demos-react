@@ -1,24 +1,24 @@
 # Auth Playground
 
-This application highlights the use of the Ionic Enterprise <a href="https://ionic.io/docs/auth-connect" target="_blank">Auth Connect</a> and <a href="https://ionic.io/docs/identity-vault/" target="_blank">Identity Vault</a> products in an React application. The application runs on both Android and iOS. In addition, it will also run in a web browser, allowing developers to remain in the more comfortable and productive web-based development environments while working on the application. However, since the web does not have a secure biometrically locked key storage mechanism, the full potential of Identity Vault is only accessible through the native platforms.
+> [!TIP]
+> This app is part of a mono-repo containing other demos but can also be [built on its own](../../README.md#build-a-stand-alone-project).
 
-This application uses <a href="https://capacitorjs.com/docs" target="_blank">Capacitor</a> to provide the native layer. This is the preferred technology to use for the native layer and the Customer Success team highly suggests using it over Cordova. However, Identity Vault and Auth Connect can both be used with either technology.
+This application highlights the use of the Ionic Enterprise [Auth Connect](https://ionic.io/docs/auth-connect) and [Identity Vault](https://ionic.io/docs/identity-vault/) products in an React application. The application runs on both Android and iOS. In addition, it will also run in a web browser, allowing developers to remain in the more comfortable and productive web-based development environments while working on the application. However, since the web does not have a secure biometrically locked key storage mechanism, the full potential of Identity Vault is only accessible through the native platforms.
 
-The purpose of this application is to show the use of much of the `Vault` and `Device` APIs of Identity Vault as well as how Identity Vault and Auth Connect work together to provide a secure authentication solution.
+This application uses [Capacitor](https://capacitorjs.com/docs) to provide the native layer. This is the preferred technology to use for the native layer and the Customer Success team highly suggests using it over Cordova. However, Identity Vault and Auth Connect can both be used with either technology.
 
-> [!NOTE]
+The purpose of this application is to show the use of much of the [Vault](https://ionic.io/docs/identity-vault/classes/vault) and [Device](https://ionic.io/docs/identity-vault/classes/device) APIs of Identity Vault as well as how Identity Vault and Auth Connect work together to provide a secure authentication solution.
+
+> [!CAUTION]
 > This app may or may not work on an emulator. When working with biometrics it is highly suggested that you test only on actual devices and skip the emulators.
 
 ## Significant Architecture
-
-> [!TIP]
-> This app is part of a mono-repo containing other demos but can also be [built on its own](../../README.md#build-a-stand-alone-project).
 
 ### Session Storage
 
 #### Identity Vault Implementation
 
-Located in `src/utils/session-storage/session-vault.ts`, this module initializes a `Vault` that the demo uses to store session data within.
+Located in `src/utils/session-storage/session-vault.ts`, this module initializes a [Vault](https://ionic.io/docs/identity-vault/classes/vault) that the demo uses to store session data.
 
 When being used in a production application, this area would typically do the following:
 
@@ -33,26 +33,26 @@ Typically, the functions would be ones like:
 - `initializeUnlockMode()`
 - `setUnlockMode()`
 
-We have gone beyond that with this application so we could allow the user to manually perform some vault operations that would typically be automatically managed by either Auth Connect or Identity Vault (`lock()`, `clear()`, etc).
+We have gone beyond that with this application so we could allow the user to manually perform some vault operations that would typically be automatically managed by either Auth Connect or Identity Vault ([lock](https://ionic.io/docs/identity-vault/classes/vault#lock), [clear](https://ionic.io/docs/identity-vault/classes/vault#clear), etc).
 
 ### Authentication
 
 #### Implementation
 
-Located in `src/utils/authentication/authentication.ts`, this module manages which `Authenticator` implementation is used to authenticate the user. Otherwise it's simply a wrapper that exposes the [Authenticator](./README.md#authenticator-interface) API. As the authentication status changes over time [AuthenticationState](./README.md#authenticationstate) is updated, which the React application uses to protect views that require authorization.
+Located in `src/utils/authentication/authentication.ts`, this module manages which [Authenticator](./README.md#authenticator-interface) implementation is used to authenticate the user. Otherwise it's simply a wrapper that exposes the `Authenticator` API. As the authentication status changes over time [AuthenticationState](./README.md#authenticationstate) is updated, which the React application uses to protect views that require authorization.
 
-##### AuthenticationState
+#### AuthenticationState
 
 > [!IMPORTANT]
 > Because there are many state management approaches available, this demo uses an architecture that is generic as possible. Your team will almost certainly leverage a different implementation for your own application, **specific to the state management library you're using**.
 
 Located in `src/utils/authentication/store.ts` you'll find a simple immutable data store that allows consumers to subscribe and be notified when the data changes. The React application then listens for changes to `AuthenticationState` with the [useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore) hook.
 
-##### Authenticator Interface
+#### Authenticator Interface
 
 The `Authenticator` interface provides a consistent set of methods that are used across our [Basic Authentication Service](./README.md#basic-authentication-service) as well as our [OIDC Authentication Service](./README.md#oidc-authentication-service). This way, no matter which type of authentication we are using the rest of our application can rely on having a simple, well-defined service level API.
 
-##### Basic Authentication Service
+#### Basic Authentication Service
 
 The `BasicAuthenticationService` is used to perform a basic HTTP based authentication where the application itself gathers the credentials and then sends them to the backend to be verified. A token is returned by the backend. This is easily the least secure of all of the methods presented because:
 
@@ -64,7 +64,7 @@ Obviously, some of this could be solidified from a security standpoint. However,
 
 This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the session data returned by the demo authentication backend.
 
-##### OIDC Authentication Service
+#### OIDC Authentication Service
 
 The `OIDCAuthenticationService` encapsulates the configuration for each of the authentication providers that this application supports:
 
@@ -72,9 +72,9 @@ The `OIDCAuthenticationService` encapsulates the configuration for each of the a
 - AWS Cognito
 - Azure
 
-The important thing to notice here is how little actual code is needed. Most of the logic here is to support the ability to use different providers in the demo. The remaining code is simply ensuring the token is refreshed as needed and handling login/logout functionality. Due to a quirk with Azure's password reset functionality, there is some additional logic within `login()` to handle the required procedure specific to Azure.
+The important thing to notice here is how little actual code is required. Most of the logic here is to support the ability to use different providers in the demo. The remaining code is simply ensuring the token is refreshed as needed, and handling login/logout functionality. Due to a quirk with Azure's password reset functionality, there is some additional logic within `login()` to handle the required procedure specific to Azure.
 
-This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the [AuthResult](https://ionic.io/docs/auth-connect/interfaces/AuthResult) data that is provided (and used) by Auth Connect. Auth Connect is stateless, so requires the developer to handle storage of the `AuthResult` data and provided it to the API when necessary.
+This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the [AuthResult](https://ionic.io/docs/auth-connect/interfaces/AuthResult) data used by Auth Connect. Auth Connect is stateless, so requires the developer to handle storage of the `AuthResult` data and provided it to the API when necessary.
 
 #### Backend API
 
@@ -88,20 +88,20 @@ It gets the access token from the [Authentication Implementation](./README.md#au
 
 Because Auth Connect and Identity Vault both have asynchronous initialization mechanisms, this component allows the React application to wait until that process is completed to render the full content.
 
-During the initialization it will render the cutome `Splashscreen` component which will be visible when running on the web. For iOS/Android the native splashscreen will cover the web content, and then [hide()](https://capacitorjs.com/docs/apis/splash-screen#hide) this once initialization is completed (revealing the full UI).
+During the initialization it will render the custom `Splashscreen` component which will be visible when running on the web. For iOS/Android the native splashscreen will cover the web content, and then [hide](https://capacitorjs.com/docs/apis/splash-screen#hide) once initialization is completed (revealing the full UI).
 
 Since the [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, this component must supply the following callbacks when invoking `initializeVault()`:
 
 - `onLock`
-  - This will get invoked exactly like the [onLock](https://ionic.io/docs/identity-vault/classes/vault#onlock) event from Identity Vault. This approach allows us to use React Router to navigate to the `UnlockPage`.
+  - This will get invoked exactly like [onLock](https://ionic.io/docs/identity-vault/classes/vault#onlock) from Identity Vault. This approach allows us to use React Router to navigate to the `UnlockPage`.
 - `onPasscodeRequested`
-  - This is a slightly modified version of the [onPasscodeRequested](https://ionic.io/docs/identity-vault/classes/vault#onpasscoderequested) event from Identity Vault. The difference being that it should return the passcode value, which our Identity Vault implementation will then use internally to set it.
+  - This is a slightly modified version of [onPasscodeRequested](https://ionic.io/docs/identity-vault/classes/vault#onpasscoderequested) from Identity Vault. The difference being that it should return the passcode value, which our Identity Vault implementation will then use internally to set it.
 
-This component will also attempt to restore previously set session data if the `Vault` is not locked. Otherwise the app will rely on the router configuration to appropriately navigate to either the `LoginPage` or `UnlockPage`.
+This component will also attempt to restore previously set session data if `canUnlock` is false. Otherwise the app will rely on the router configuration to appropriately navigate to either the `LoginPage` or `UnlockPage`.
 
 #### AppPinDialog
 
-The `Vault` API contains an [onPasscodeRequested()](https://ionic.io/docs/identity-vault/classes/vault#onpasscoderequested) callback that is used to get the passcode when using a [CustomPasscode](https://ionic.io/docs/identity-vault/enums/vaulttype#custompasscode) type of vault. The method and workflow used to obtain the passcode is determined by the application, the only requirement is to call `setCustomPasscode()` from within `onPasscodeRequested()`.
+The `Vault` API contains an [onPasscodeRequested](https://ionic.io/docs/identity-vault/classes/vault#onpasscoderequested) callback that is used to get the passcode when using a [CustomPasscode](https://ionic.io/docs/identity-vault/enums/vaulttype#custompasscode) type of vault. The method and workflow used to obtain the passcode is determined by the application, the only requirement is to call `setCustomPasscode` from within `onPasscodeRequested`.
 
 For example:
 
@@ -114,7 +114,10 @@ private async onPasscodeRequested(isPasscodeSetRequest: boolean): Promise<void> 
 
 For this application, we chose to use a modal dialog to get the custom passcode. Moreover, we chose to use the same component for initially setting the passcode as we use for getting the passcode when unlocking the vault.
 
-Our component implements a different workflow depending on whether `setPasscodeMode` is `true` (ask the user twice, do not allow a "cancel") or `false` (ask once, allow a "cancel").
+Our component implements a different workflow depending on whether `setPasscodeMode` is:
+
+- `true` - ask the user twice, do not allow a "cancel"
+- `false` - ask once, allow a "cancel"
 
 Because our [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, we'll need to pass in a callback method when [AppInitializer](./README.md#appinitializer) invokes `initializeVault()`. This is provided by the hook exported from `AppPinDialog`:
 
@@ -143,7 +146,7 @@ export const usePinDialog = () => {
 
 #### PrivateRoute
 
-This component simply reacts to changes in [AuthenticationState](./README.md#auth-playground) and will redirect to the `LoginPage` when a user is not authenticated and a protected route is accessed.
+This component simply reacts to changes in [AuthenticationState](./README.md#auth-playground) and will redirect to the `LoginPage` when an unauthenticated user attempts to access a protected route.
 
 ### Hooks
 
