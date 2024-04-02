@@ -1,7 +1,7 @@
-# Auth Playground
-
 > [!TIP]
 > This app is part of a mono-repo containing other demos but can also be [built on its own](../../README.md#build-a-stand-alone-project).
+
+# Auth Playground
 
 This application highlights the use of the Ionic Enterprise [Auth Connect](https://ionic.io/docs/auth-connect) and [Identity Vault](https://ionic.io/docs/identity-vault/) products in an React application. The application runs on both Android and iOS. In addition, it will also run in a web browser, allowing developers to remain in the more comfortable and productive web-based development environments while working on the application. However, since the web does not have a secure biometrically locked key storage mechanism, the full potential of Identity Vault is only accessible through the native platforms.
 
