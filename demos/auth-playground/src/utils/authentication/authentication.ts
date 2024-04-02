@@ -57,8 +57,8 @@ export const login = async (provider: AuthVendor, username?: string, password?: 
 };
 
 export const logout = async (): Promise<void> => {
-  setState({ isAuthenticated: false });
   await authService?.logout();
+  setState({ isAuthenticated: false });
   authService = undefined;
 };
 
@@ -67,8 +67,8 @@ export const getAccessToken = async (): Promise<string | undefined> => {
 };
 
 export const removeSession = async (): Promise<void> => {
-  setState({ isAuthenticated: false });
   await authService?.removeSession();
+  setState({ isAuthenticated: false });
   authService = undefined;
 };
 
