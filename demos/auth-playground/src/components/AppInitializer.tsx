@@ -6,7 +6,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { initializeAuthService, isAuthenticated } from '@/utils/authentication';
 import { initializeVault, canUnlock } from '@/utils/session-storage/session-vault';
 import Splashscreen from '@/components/Splashscreen';
-import { usePinDialog } from '@/hooks/usePinDialog';
+import { usePinDialog } from '@/components/AppPinDialog';
 
 const isNative = Capacitor.isNativePlatform();
 
