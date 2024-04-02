@@ -49,11 +49,9 @@ const App: React.FC = () => (
           <Route exact path="/auth-action-complete">
             <AuthActionCompletePage />
           </Route>
-          <Route path="/tabs">
-            <PrivateRoute>
-              <Tabs />
-            </PrivateRoute>
-          </Route>
+          <PrivateRoute path="/tabs" redirectPath="/login">
+            <Tabs />
+          </PrivateRoute>
         </IonRouterOutlet>
       </AppInitializer>
     </IonReactRouter>

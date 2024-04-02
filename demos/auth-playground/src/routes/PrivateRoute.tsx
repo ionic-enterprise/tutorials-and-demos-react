@@ -1,12 +1,11 @@
-import { ReactNode } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { useAuthentication } from '@/hooks/useAuthentication';
 
-type Props = { children?: ReactNode };
+type Props = { redirectPath: string } & RouteProps;
 
-const PrivateRoute = ({ children }: Props) => {
+const PrivateRoute = ({ redirectPath, ...routeProps }: Props) => {
   const { isAuthenticated } = useAuthentication();
 
-  return isAuthenticated ? children : <Redirect to="/login" />;
+  return isAuthenticated ? <Route {...routeProps} /> : <Redirect to={redirectPath} />;
 };
 export default PrivateRoute;
