@@ -37,16 +37,16 @@ We have gone beyond that with this application so we could allow the user to man
 
 ### Authentication
 
-#### Implementation
+#### Authentication Service
 
-Located in `src/utils/authentication/authentication.ts`, this module manages which [Authenticator](./README.md#authenticator-interface) implementation is used to authenticate the user. Otherwise it's simply a wrapper that exposes the `Authenticator` API. As the authentication status changes over time [AuthenticationState](./README.md#authenticationstate) is updated, which the React application uses to protect views that require authorization.
+Located in `src/utils/authentication/authentication.ts`, this module manages which [Authenticator](./README.md#authenticator-interface) implementation is used to authenticate the user. Otherwise it's simply a wrapper that exposes the `Authenticator` API. As the authentication status changes over time [AuthenticationState](./README.md#authentication-state) is updated, which the React application uses to protect views that require authorization.
 
-#### AuthenticationState
+#### Authentication State
 
 > [!IMPORTANT]
 > Because there are many state management approaches available, this demo uses an architecture that is as generic and simple as possible. This is because your team should replace this portion of the implementation with a solution _specific to your own application_, for the particular state management library it's using.
 
-Located in `src/utils/authentication/store.ts` you'll find a simple immutable data store that allows consumers to subscribe and be notified when the data changes. The React application then listens for changes to `AuthenticationState` with the [useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore) hook.
+Located in `src/utils/authentication/store.ts` you'll find a simple immutable data store that allows consumers to subscribe and be notified when the data changes. The React application relies on the `useAuthentication` hook which listens for changes to `AuthenticationState` through [useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore).
 
 #### Authenticator Interface
 
@@ -116,8 +116,8 @@ For this application, we chose to use a modal dialog to get the custom passcode.
 
 Our component implements a different workflow depending on whether `setPasscodeMode` is:
 
-- `true` - ask the user twice, do not allow a "cancel"
-- `false` - ask once, allow a "cancel"
+- `true` - Ask the user twice, do not allow a "cancel"
+- `false` - Ask once, allow a "cancel"
 
 Because our [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, we'll need to pass in a callback method when [AppInitializer](./README.md#appinitializer) invokes `initializeVault()`. This is provided by the hook exported from `AppPinDialog`:
 
@@ -129,7 +129,7 @@ export const usePinDialog = () => {
     dismiss: (data?: any, role?: string) => dismissPinDialog(data, role),
   });
 
-  const onPasscodeRequested = async (isPasscodeSetRequest: boolean): Promise<string> => {
+  return async (isPasscodeSetRequest: boolean): Promise<string> => {
     setIsPasscodeSetRequest(isPasscodeSetRequest);
     const data = await new Promise<any>((resolve) => {
       presentPinDialog({
@@ -139,8 +139,6 @@ export const usePinDialog = () => {
     });
     return data || '';
   };
-
-  return onPasscodeRequested;
 };
 ```
 
@@ -152,11 +150,23 @@ This component simply reacts to changes in [AuthenticationState](./README.md#aut
 
 #### useAuthentication
 
-This subscribes to changes in [AuthenticationState](./README.md#authenticationstate) and provides the current data stored there.
+This subscribes to changes in [AuthenticationState](./README.md#authentication-state) and provides the current data stored there.
 
 #### useVault
 
-This provides common logic for displaying `Vault` information within the UI.
+This provides methods for displaying `Vault` information within the UI:
+
+- `getValues`
+  - Fetches all the key/value pairs contained within a `Vault`
+- `getVaultTypeLabel`
+  - Returns a formatted label of the current `Vault` type
+
+#### usePinDialog
+
+This hook is used within the [AppInitializer](./README.md#appinitializer) component to provide a mechanism for the [Identity Vault implementation](./README.md#identity-vault-implementation) to collect the custom passcode from the user.
+
+> [!TIP]
+> Review the [AppPinDialog](./README.md#apppindialog) section for more detail.
 
 ## Pages
 
