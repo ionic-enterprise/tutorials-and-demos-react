@@ -1,8 +1,8 @@
-// NOTE: Helper methods to store data for use with useSyncExternalStore hook
+// NOTE: Simple and generic data store for React application to be notified of AuthenticationState changes
+//       This should be replaced by a state management strategy specific to your own application
 
 import { useSyncExternalStore } from 'react';
 
-//       This should be replaced by the specific state management strategy used within your own application
 interface AuthenticationState {
   isAuthenticated?: boolean;
 }
