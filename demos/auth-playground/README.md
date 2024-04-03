@@ -150,6 +150,12 @@ export const usePinDialog = () => {
 
 ## Hooks
 
+### useSplashScreen
+
+This hook is used to provide a similar SplashScreen experience on all 3 platforms. When the app is running on the Web a modal is shown with a similar appearance to the native splashscreen for iOS/Android. This logic also provides support for setting a "minimum duration" to prevent a quick flash of the splashscreen content.
+
+In the [AppInitializer](./README.md#appinitializer) component, the demo app turns this off on native as the startup time should be as quick as possible. But uses the default 400ms setting on the Web since the quick flash of content can be jarring, especially for larger displays.
+
 ### useAuthentication
 
 This subscribes to changes in [AuthenticationState](./README.md#authentication-state) and provides the current data stored there.

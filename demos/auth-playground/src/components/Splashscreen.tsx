@@ -1,14 +1,13 @@
-import { IonSpinner, IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 
 import './Splashscreen.css';
 
 const Splashscreen: React.FC = () => {
   return (
-    <IonPage>
+    <IonPage className="splash-screen">
       <IonContent fullscreen>
-        <div className="splashscreen-container">
-          <h1>Auth Playground</h1>
-          <IonSpinner />
+        <div className="logo-container">
+          <img alt="Auth Playground App Icon" src="/assets/icons/icon-256.webp" />
         </div>
       </IonContent>
     </IonPage>

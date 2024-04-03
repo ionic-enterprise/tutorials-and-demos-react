@@ -1,14 +1,10 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
 import { Device } from '@ionic-enterprise/identity-vault';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { initializeAuthService, isAuthenticated } from '@/utils/authentication';
 import { initializeVault, canUnlock } from '@/utils/session-storage/session-vault';
-import Splashscreen from '@/components/Splashscreen';
+import { useSplashScreen } from '@/hooks/useSplashScreen';
 import { usePinDialog } from '@/hooks/usePinDialog';
-
-const isNative = Capacitor.isNativePlatform();
 
 interface Props {
   children?: ReactNode;
@@ -18,6 +14,7 @@ let didInit = false;
 const AppInitializer: React.FC<Props> = ({ children }) => {
   const history = useHistory();
   const onPasscodeRequested = usePinDialog();
+  const { hideSplashScreen } = useSplashScreen();
   const [isReady, setIsReady] = useState(false);
 
   const init = async () => {
@@ -35,7 +32,8 @@ const AppInitializer: React.FC<Props> = ({ children }) => {
     }
 
     Device.setHideScreenOnBackground(true);
-    isNative && SplashScreen.hide();
+
+    hideSplashScreen();
 
     setIsReady(true);
   };
@@ -47,6 +45,6 @@ const AppInitializer: React.FC<Props> = ({ children }) => {
     }
   }, []);
 
-  return isReady ? children : <Splashscreen />;
+  return isReady ? children : null;
 };
 export default AppInitializer;
