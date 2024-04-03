@@ -44,7 +44,7 @@ Located in `src/utils/authentication/authentication.ts`, this module manages whi
 #### Authentication State
 
 > [!IMPORTANT]
-> Because there are many state management approaches available, this demo uses an architecture that is as generic and simple as possible. This is because your team should replace this portion of the implementation with a solution _specific to your own application_, for the particular state management library it's using.
+> Because there are many state management approaches available, this demo uses an architecture that is as generic and simple as possible. This is because your team should replace this portion of the implementation with a solution _specific to your own application_, for the particular state management library it's using. Typically this means removing this file, and replacing `useAuthentication` and `setState` (used by the [Authentication Service](./README.md#authentication-service)) with something applicable to your situation.
 
 Located in `src/utils/authentication/store.ts` you'll find a simple immutable data store that allows consumers to subscribe and be notified when the data changes. The React application relies on the `useAuthentication` hook which listens for changes to `AuthenticationState` through [useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore).
 
