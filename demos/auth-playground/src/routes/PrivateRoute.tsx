@@ -1,5 +1,5 @@
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { useAuthentication } from '@/hooks/useAuthentication';
+import { useAuthentication } from '@/utils/authentication';
 
 type Props = { redirectPath: string } & RouteProps;
 

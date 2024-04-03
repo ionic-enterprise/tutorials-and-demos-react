@@ -1,2 +1,2 @@
 export * from './authentication';
-export { subscribe, getSnapshot } from './store';
+export { useAuthentication } from './store';

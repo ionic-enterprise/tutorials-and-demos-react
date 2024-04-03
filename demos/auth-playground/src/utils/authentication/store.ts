@@ -1,6 +1,8 @@
 // NOTE: Helper methods to store data for use with useSyncExternalStore hook
+
+import { useSyncExternalStore } from 'react';
+
 //       This should be replaced by the specific state management strategy used within your own application
-//       https://react.dev/reference/react/useSyncExternalStore
 interface AuthenticationState {
   isAuthenticated?: boolean;
 }
@@ -13,8 +15,13 @@ export const setState = (update: Partial<AuthenticationState>): void => {
   subscribers.forEach((notify) => notify());
 };
 
-export const getSnapshot = (): AuthenticationState => data;
-export const subscribe = (notify: () => void): (() => void) => {
+const getSnapshot = (): AuthenticationState => data;
+const subscribe = (notify: () => void): (() => void) => {
   subscribers.add(notify);
   return () => subscribers.delete(notify);
+};
+
+// https://react.dev/reference/react/useSyncExternalStore
+export const useAuthentication = () => {
+  return useSyncExternalStore(subscribe, getSnapshot);
 };
