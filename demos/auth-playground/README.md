@@ -12,11 +12,13 @@ The purpose of this application is to show the use of much of the [Vault](https:
 > [!CAUTION]
 > This app may or may not work on an emulator. When working with biometrics it is highly suggested that you test only on actual devices and skip the emulators.
 
-## Significant Architecture
+# Significant Architecture
 
-### Session Storage
+There are several areas that all work together to provide a cohesive solution that provides securely stored authentication data and protection within this application. Described below are the important details for each of these implementations.
 
-#### Identity Vault Implementation
+## Session Storage
+
+### Identity Vault Implementation
 
 Located in `src/utils/session-storage/session-vault.ts`, this module initializes a [Vault](https://ionic.io/docs/identity-vault/classes/vault) that the demo uses to store session data.
 
@@ -35,20 +37,20 @@ Typically, the functions would be ones like:
 
 We have gone beyond that with this application so we could allow the user to manually perform some vault operations that would typically be automatically managed by either Auth Connect or Identity Vault ([lock](https://ionic.io/docs/identity-vault/classes/vault#lock), [clear](https://ionic.io/docs/identity-vault/classes/vault#clear), etc).
 
-### Authentication
+## Authentication
 
-#### Authentication Service
+### Authentication Service
 
 Located in `src/utils/authentication/authentication.ts`, this module manages which [Authenticator](./README.md#authenticator-interface) implementation is used to authenticate the user. Otherwise it's simply a wrapper that exposes the `Authenticator` API. As the authentication status changes over time [AuthenticationState](./README.md#authentication-state) is updated, which the React application uses to protect views that require authorization.
 
-#### Authentication State
+### Authentication State
 
 > [!IMPORTANT]
 > Because there are many state management approaches available, this demo uses an architecture that is as generic and simple as possible. This is because your team should replace this portion of the implementation with a solution _specific to your own application_, for the particular state management library it's using. Typically this means removing this file, and replacing `useAuthentication` and `setState` (used by the [Authentication Service](./README.md#authentication-service)) with something applicable to your situation.
 
 Located in `src/utils/authentication/store.ts` you'll find a simple immutable data store that allows consumers to subscribe and be notified when the data changes. The React application relies on the `useAuthentication` hook which listens for changes to `AuthenticationState` through [useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore).
 
-#### Authenticator Interface
+### Authenticator Interface
 
 The `Authenticator` interface provides a consistent set of methods that are used across our [Basic Authentication Service](./README.md#basic-authentication-service) as well as our [OIDC Authentication Service](./README.md#oidc-authentication-service). This way, no matter which type of authentication we are using the rest of our application can rely on having a simple, well-defined service level API.
 
@@ -76,15 +78,15 @@ The important thing to notice here is how little actual code is required. Most o
 
 This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the [AuthResult](https://ionic.io/docs/auth-connect/interfaces/AuthResult) data used by Auth Connect. Auth Connect is stateless, so requires the developer to handle storage of the `AuthResult` data and provided it to the API when necessary.
 
-#### Backend API
+### Backend API
 
 Located in `src/utils/backend-api.ts`, this module creates an Axios client instance used to centralize some high level authentication behavior.
 
 It gets the access token from the [Authentication Implementation](./README.md#authentication-implementation) and appends it to the headers as a bearer token. If an access token cannot be obtained, the request will still be sent, but it will be sent without a bearer token. In such a case, if the API requires a token in order to process the request it should result in a 401 error. When a response has a 401 error code, the locally stored session data will be removed.
 
-### Components
+## Components
 
-#### AppInitializer
+### AppInitializer
 
 Because Auth Connect and Identity Vault both have asynchronous initialization mechanisms, this component allows the React application to wait until that process is completed to render the full content.
 
@@ -99,7 +101,11 @@ Since the [Identity Vault implementation](./README.md#identity-vault-implementat
 
 This component will also attempt to restore previously set session data if `canUnlock` is false. Otherwise the app will rely on the router configuration to appropriately navigate to either the `LoginPage` or `UnlockPage`.
 
-#### AppPinDialog
+### PrivateRoute
+
+This component simply reacts to changes in [AuthenticationState](./README.md#auth-playground) and will redirect to the `LoginPage` when an unauthenticated user attempts to access a protected route.
+
+### AppPinDialog
 
 The `Vault` API contains an [onPasscodeRequested](https://ionic.io/docs/identity-vault/classes/vault#onpasscoderequested) callback that is used to get the passcode when using a [CustomPasscode](https://ionic.io/docs/identity-vault/enums/vaulttype#custompasscode) type of vault. The method and workflow used to obtain the passcode is determined by the application, the only requirement is to call `setCustomPasscode` from within `onPasscodeRequested`.
 
@@ -142,17 +148,13 @@ export const usePinDialog = () => {
 };
 ```
 
-#### PrivateRoute
+## Hooks
 
-This component simply reacts to changes in [AuthenticationState](./README.md#auth-playground) and will redirect to the `LoginPage` when an unauthenticated user attempts to access a protected route.
-
-### Hooks
-
-#### useAuthentication
+### useAuthentication
 
 This subscribes to changes in [AuthenticationState](./README.md#authentication-state) and provides the current data stored there.
 
-#### useVault
+### useVault
 
 This provides methods for displaying `Vault` information within the UI:
 
@@ -161,7 +163,7 @@ This provides methods for displaying `Vault` information within the UI:
 - `getVaultTypeLabel`
   - Returns a formatted label of the current `Vault` type
 
-#### usePinDialog
+### usePinDialog
 
 > [!TIP]
 > Review the [AppPinDialog](./README.md#apppindialog) section for more detail.
