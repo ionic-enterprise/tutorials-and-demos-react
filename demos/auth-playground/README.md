@@ -163,10 +163,10 @@ This provides methods for displaying `Vault` information within the UI:
 
 #### usePinDialog
 
-This hook is used within the [AppInitializer](./README.md#appinitializer) component to provide a mechanism for the [Identity Vault implementation](./README.md#identity-vault-implementation) to collect the custom passcode from the user.
-
 > [!TIP]
 > Review the [AppPinDialog](./README.md#apppindialog) section for more detail.
+
+This hook is used within the [AppInitializer](./README.md#appinitializer) component to provide a mechanism for the [Identity Vault implementation](./README.md#identity-vault-implementation) to collect the custom passcode from the user.
 
 ## Pages
 
