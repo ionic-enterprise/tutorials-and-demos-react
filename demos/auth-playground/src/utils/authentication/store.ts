@@ -8,17 +8,17 @@ interface AuthenticationState {
 }
 
 let data: AuthenticationState = {};
+
 const subscribers = new Set<() => void>();
-
-export const setState = (update: Partial<AuthenticationState>): void => {
-  data = Object.freeze({ ...data, ...update });
-  subscribers.forEach((notify) => notify());
-};
-
 const getSnapshot = (): AuthenticationState => data;
 const subscribe = (notify: () => void): (() => void) => {
   subscribers.add(notify);
   return () => subscribers.delete(notify);
+};
+
+export const setState = (update: Partial<AuthenticationState>): void => {
+  data = Object.freeze({ ...data, ...update });
+  subscribers.forEach((notify) => notify());
 };
 
 // https://react.dev/reference/react/useSyncExternalStore
