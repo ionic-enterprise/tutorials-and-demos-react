@@ -8,9 +8,9 @@ interface AuthenticationState {
 }
 
 let data: AuthenticationState = {};
+const getSnapshot = (): AuthenticationState => data;
 
 const subscribers = new Set<() => void>();
-const getSnapshot = (): AuthenticationState => data;
 const subscribe = (notify: () => void): (() => void) => {
   subscribers.add(notify);
   return () => subscribers.delete(notify);
