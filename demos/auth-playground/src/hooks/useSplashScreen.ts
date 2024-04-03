@@ -1,73 +1,93 @@
 import { useEffect, useRef } from 'react';
 import { createAnimation, useIonModal } from '@ionic/react';
 import { Capacitor } from '@capacitor/core';
-import { SplashScreen } from '@capacitor/splash-screen';
+import { SplashScreen, ShowOptions, HideOptions } from '@capacitor/splash-screen';
 import WebSplashscreen from '@/components/Splashscreen';
 
 const isNative = Capacitor.isNativePlatform();
 
+let enterDuration = 200;
+let leaveDuration = 200;
 const enterAnimation = (baseEl: HTMLElement) => {
-  const root = baseEl.shadowRoot;
-
-  return createAnimation()
-    .addElement(root?.querySelector('.modal-wrapper')!)
-    .to('opacity', 1)
-    .to('transform', 'scale(1)');
-};
-
-const leaveAnimation = (baseEl: HTMLElement) => {
   const root = baseEl.shadowRoot;
 
   const backdropAnimation = createAnimation()
     .addElement(root?.querySelector('ion-backdrop')!)
-    .fromTo('opacity', 'var(--backdrop-opacity)', '0.01');
+    .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
 
   const wrapperAnimation = createAnimation()
     .addElement(root?.querySelector('.modal-wrapper')!)
     .keyframes([
-      { offset: 0, opacity: '0.99' },
-      { offset: 1, opacity: '0' },
+      { offset: 0, opacity: '0', transform: 'scale(1)' },
+      { offset: 1, opacity: '1', transform: 'scale(1)' },
     ]);
 
   return createAnimation()
     .addElement(baseEl)
     .easing('ease-out')
-    .duration(500)
+    .duration(enterDuration)
     .addAnimation([backdropAnimation, wrapperAnimation]);
+};
+const leaveAnimation = (baseEl: HTMLElement) => {
+  return enterAnimation(baseEl).duration(leaveDuration).direction('reverse');
 };
 
 let didInit = false;
-export const useSplashScreen = (minimumDuration = 400) => {
+export const useSplashScreen = (minimumTimeVisible = isNative ? 0 : 400) => {
   const start = useRef<number>();
+  const onDidDismiss = useRef(() => {});
   const [showWebSplashscreen, hideWebSplashscreen] = useIonModal(WebSplashscreen);
 
-  const showSplashScreen = () => {
+  const show = async (options?: ShowOptions) => {
     start.current = Date.now();
+
     if (isNative) {
-      SplashScreen.show();
-    } else {
-      showWebSplashscreen({ cssClass: 'web-splash-screen', enterAnimation, leaveAnimation });
+      return SplashScreen.show(options);
     }
+
+    const { fadeInDuration, fadeOutDuration } = Object.assign({ fadeInDuration: 200, fadeOutDuration: 200 }, options);
+    enterDuration = fadeInDuration;
+    leaveDuration = fadeOutDuration;
+
+    return new Promise<void>((resolveShow) => {
+      showWebSplashscreen({
+        cssClass: 'web-splash-screen',
+        enterAnimation,
+        leaveAnimation,
+        onDidDismiss: () => onDidDismiss.current(),
+        onDidPresent: () => resolveShow(),
+      });
+    });
   };
 
-  const hideSplashScreen = () => {
+  const hide = async (options?: HideOptions) => {
     const timeSinceShown = Date.now() - (start.current || 0);
-    setTimeout(() => {
-      if (isNative) {
-        SplashScreen.hide();
-      } else {
-        hideWebSplashscreen();
-      }
-    }, minimumDuration - timeSinceShown);
+
+    return new Promise<void>((resolveHide) => {
+      setTimeout(
+        async () => {
+          if (isNative) {
+            await SplashScreen.hide(options);
+            resolveHide();
+          } else {
+            const { fadeOutDuration } = Object.assign({ fadeOutDuration: 200 }, options);
+            leaveDuration = fadeOutDuration;
+            onDidDismiss.current = resolveHide;
+            hideWebSplashscreen();
+          }
+        },
+        Math.max(0, minimumTimeVisible - timeSinceShown),
+      );
+    });
   };
 
   // Splashscreen should show by default for app startup
   useEffect(() => {
     if (!didInit) {
       didInit = true;
-      showSplashScreen();
+      show({ fadeInDuration: 0 });
     }
   }, []);
 
-  return { showSplashScreen, hideSplashScreen };
+  return [show, hide];
 };

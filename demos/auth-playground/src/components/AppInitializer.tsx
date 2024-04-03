@@ -14,7 +14,7 @@ let didInit = false;
 const AppInitializer: React.FC<Props> = ({ children }) => {
   const history = useHistory();
   const onPasscodeRequested = usePinDialog();
-  const { hideSplashScreen } = useSplashScreen();
+  const [_, hideSplashScreen] = useSplashScreen();
   const [isReady, setIsReady] = useState(false);
 
   const init = async () => {
