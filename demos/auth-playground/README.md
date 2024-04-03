@@ -54,7 +54,7 @@ Located in `src/utils/authentication/store.ts` you'll find a simple immutable da
 
 The `Authenticator` interface provides a consistent set of methods that are used across our [Basic Authentication Service](./README.md#basic-authentication-service) as well as our [OIDC Authentication Service](./README.md#oidc-authentication-service). This way, no matter which type of authentication we are using the rest of our application can rely on having a simple, well-defined service level API.
 
-#### Basic Authentication Service
+### Basic Authentication Service
 
 The `BasicAuthenticationService` is used to perform a basic HTTP based authentication where the application itself gathers the credentials and then sends them to the backend to be verified. A token is returned by the backend. This is easily the least secure of all of the methods presented because:
 
@@ -66,7 +66,7 @@ Obviously, some of this could be solidified from a security standpoint. However,
 
 This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the session data returned by the demo authentication backend.
 
-#### OIDC Authentication Service
+### OIDC Authentication Service
 
 The `OIDCAuthenticationService` encapsulates the configuration for each of the authentication providers that this application supports:
 
