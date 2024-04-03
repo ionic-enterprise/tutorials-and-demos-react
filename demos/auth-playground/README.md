@@ -88,9 +88,9 @@ It gets the access token from the [Authentication Implementation](./README.md#au
 
 ### AppInitializer
 
-Because Auth Connect and Identity Vault both have asynchronous initialization mechanisms, this component allows the React application to wait until that process is completed to render the full content.
+Because Auth Connect and Identity Vault both have asynchronous initialization mechanisms, this component allows the React application to wait until that process is completed before rendering the full content.
 
-During the initialization it will render the custom `Splashscreen` component which will be visible when running on the web. For iOS/Android the native splashscreen will cover the web content, and then [hide](https://capacitorjs.com/docs/apis/splash-screen#hide) once initialization is completed (revealing the full UI).
+During the initialization, while on the Web it will render a custom `Splashscreen` component. On iOS/Android the native splashscreen will be shown instead, and then [hide](https://capacitorjs.com/docs/apis/splash-screen#hide) once initialization is completed (revealing the full UI).
 
 Since the [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, this component must supply the following callbacks when invoking `initializeVault`:
 
