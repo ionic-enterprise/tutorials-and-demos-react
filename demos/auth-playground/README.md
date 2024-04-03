@@ -92,7 +92,7 @@ Because Auth Connect and Identity Vault both have asynchronous initialization me
 
 During the initialization it will render the custom `Splashscreen` component which will be visible when running on the web. For iOS/Android the native splashscreen will cover the web content, and then [hide](https://capacitorjs.com/docs/apis/splash-screen#hide) once initialization is completed (revealing the full UI).
 
-Since the [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, this component must supply the following callbacks when invoking `initializeVault()`:
+Since the [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, this component must supply the following callbacks when invoking `initializeVault`:
 
 - `onLock`
   - This will get invoked exactly like [onLock](https://ionic.io/docs/identity-vault/classes/vault#onlock) from Identity Vault. This approach allows us to use React Router to navigate to the `UnlockPage`.
@@ -125,7 +125,7 @@ Our component implements a different workflow depending on whether `setPasscodeM
 - `true` - Ask the user twice, do not allow a "cancel"
 - `false` - Ask once, allow a "cancel"
 
-Because our [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, we'll need to pass in a callback method when [AppInitializer](./README.md#appinitializer) invokes `initializeVault()`. This is provided by the hook exported from `AppPinDialog`:
+Because our [Identity Vault implementation](./README.md#identity-vault-implementation) is outside of React, we'll need to pass in a callback method when [AppInitializer](./README.md#appinitializer) invokes `initializeVault`. This is provided by the hook exported from `AppPinDialog`:
 
 ```typescript
 export const usePinDialog = () => {
