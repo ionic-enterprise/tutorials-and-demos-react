@@ -54,6 +54,7 @@ export const useSplashScreen = (minimumTimeVisible = isNative ? 0 : 400) => {
         cssClass: 'web-splash-screen',
         enterAnimation,
         leaveAnimation,
+        canDismiss: async (data, role) => role === 'splashscreen',
         onDidDismiss: () => onDidDismiss.current(),
         onDidPresent: () => resolveShow(),
       });
@@ -73,7 +74,7 @@ export const useSplashScreen = (minimumTimeVisible = isNative ? 0 : 400) => {
             const { fadeOutDuration } = Object.assign({ fadeOutDuration: 200 }, options);
             leaveDuration = fadeOutDuration;
             onDidDismiss.current = resolveHide;
-            hideWebSplashscreen();
+            hideWebSplashscreen(undefined, 'splashscreen');
           }
         },
         Math.max(0, minimumTimeVisible - timeSinceShown),
