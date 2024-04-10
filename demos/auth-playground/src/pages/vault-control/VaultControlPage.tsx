@@ -46,8 +46,7 @@ const VaultControlPage: React.FC = () => {
   const setMode = async (mode: UnlockMode) => {
     setDisableLock(mode === 'NeverLock');
     await setUnlockMode(mode);
-    const label = getVaultTypeLabel();
-    setVaultTypeLabel(label);
+    setVaultTypeLabel(getVaultTypeLabel());
   };
   const clearVault = async () => {
     await clear();
