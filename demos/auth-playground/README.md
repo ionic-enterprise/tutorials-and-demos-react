@@ -76,13 +76,13 @@ The `OIDCAuthenticationService` encapsulates the configuration for each of the a
 
 The important thing to notice here is how little actual code is required. Most of the logic here is to support the ability to use different providers in the demo. The remaining code is simply ensuring the token is refreshed as needed, and handling login/logout functionality. Due to a quirk with Azure's password reset functionality, there is some additional logic within `login()` to handle the required procedure specific to Azure.
 
-This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the [AuthResult](https://ionic.io/docs/auth-connect/interfaces/AuthResult) data used by Auth Connect. Auth Connect is stateless, so requires the developer to handle storage of the `AuthResult` data and provided it to the API when necessary.
+This service relies on the [Identity Vault Implementation](./README.md#identity-vault-implementation) to persist the [AuthResult](https://ionic.io/docs/auth-connect/interfaces/AuthResult) data used by Auth Connect. Auth Connect is stateless, so requires the developer to handle storage of the `AuthResult` data and providing it to the API when necessary.
 
 ### Backend API
 
 Located in `src/utils/backend-api.ts`, this module creates an Axios client instance used to centralize some high level authentication behavior.
 
-It gets the access token from the [Authentication Implementation](./README.md#authentication-implementation) and appends it to the headers as a bearer token. If an access token cannot be obtained, the request will still be sent, but it will be sent without a bearer token. In such a case, if the API requires a token in order to process the request it should result in a 401 error. When a response has a 401 error code, the locally stored session data will be removed.
+It gets the access token from the [Authentication Service](./README.md#authentication-service) and appends it to the headers as a bearer token. If an access token cannot be obtained the request will still be sent, but it will be sent without a bearer token. In such a case, if the API requires a token in order to process the request it should result in a 401 error. When a response has a 401 error code, the locally stored session data will be removed (which results in a redirect to `LoginPage`).
 
 ## Components
 
