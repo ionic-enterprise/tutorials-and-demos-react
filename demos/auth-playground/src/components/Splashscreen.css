@@ -1,0 +1,20 @@
+.splash-screen {
+  ion-content {
+    --background: #f1ebe1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    ion-content {
+      --background: #110b00;
+    }
+  }
+
+  .logo-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
