@@ -1,7 +1,3 @@
-html {
-  --ion-dynamic-font: var(--ion-default-dynamic-font);
-}
-
 ion-modal.web-splash-screen {
   --height: 100%;
   --width: 100%;

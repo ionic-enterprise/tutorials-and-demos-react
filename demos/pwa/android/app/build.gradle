@@ -8,7 +8,7 @@ android {
         }
     }
     namespace "io.ionic.teataster"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.ionic.teataster"
         minSdkVersion rootProject.ext.minSdkVersion

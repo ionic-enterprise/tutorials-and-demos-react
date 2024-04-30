@@ -196,13 +196,13 @@ describe('Auth Utilities', () => {
         redirectUri: 'msauth://auth-action-complete',
         logoutUrl: 'msauth://auth-action-complete',
       });
+    });
 
-      it('sets the auth result value', async () => {
-        (AuthConnect.login as Mock).mockResolvedValue(testAuthResult);
-        await login();
-        expect(setSession).toHaveBeenCalledTimes(1);
-        expect(setSession).toHaveBeenCalledWith(testAuthResult);
-      });
+    it('sets the auth result value', async () => {
+      (AuthConnect.login as Mock).mockResolvedValue(testAuthResult);
+      await login();
+      expect(setSession).toHaveBeenCalledTimes(1);
+      expect(setSession).toHaveBeenCalledWith(testAuthResult);
     });
   });
 

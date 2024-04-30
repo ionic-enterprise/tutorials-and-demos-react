@@ -47,6 +47,7 @@ exports[`<TastingNotesPage /> > renders consistently 1`] = `
       <ion-list>
         <ion-item>
           <ion-label>
+            <!---->
             <div>
               Lipton
             </div>
@@ -75,6 +76,7 @@ exports[`<TastingNotesPage /> > renders consistently 1`] = `
         </ion-item>
         <ion-item>
           <ion-label>
+            <!---->
             <div>
               Rishi
             </div>
@@ -103,6 +105,7 @@ exports[`<TastingNotesPage /> > renders consistently 1`] = `
         </ion-item>
         <ion-item>
           <ion-label>
+            <!---->
             <div>
               Lipton
             </div>
