@@ -44,7 +44,7 @@ const AuthProvider = ({ children }: Props) => {
       handlePasscodeRequested(isSetPasscodeMode, onComplete),
     );
 
-    registerCallback('onVaultLock', () => history.replace('/login'));
+    registerCallback('onVaultLock', () => history.replace('/'));
 
     return () => {
       unregisterCallback('onPasscodeRequested');
