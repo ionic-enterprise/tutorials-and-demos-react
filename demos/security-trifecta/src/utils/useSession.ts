@@ -1,8 +1,8 @@
 import { useSyncExternalStore } from 'react';
 import { subscribe, getSnapshot } from './session-vault';
 
-const useAuth = () => {
+const useSession = () => {
   return useSyncExternalStore(subscribe, getSnapshot);
 };
 
-export default useAuth;
+export default useSession;
