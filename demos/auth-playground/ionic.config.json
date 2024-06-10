@@ -1,0 +1,7 @@
+{
+  "name": "demo-auth-playground",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

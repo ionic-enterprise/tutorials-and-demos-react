@@ -15,6 +15,7 @@ exports[`<TastingNoteEditor /> > renders consistently 1`] = `
       <ion-buttons
         slot="start"
       >
+        <!---->
         <ion-button
           data-testid="cancel-button"
         >
@@ -24,6 +25,7 @@ exports[`<TastingNoteEditor /> > renders consistently 1`] = `
       <ion-buttons
         slot="end"
       >
+        <!---->
         <ion-button
           data-testid="share-button"
           disabled="true"
@@ -91,6 +93,7 @@ exports[`<TastingNoteEditor /> > renders consistently 1`] = `
         </ion-item>
         <ion-item>
           <ion-label>
+            <!---->
             Rating
           </ion-label>
           <div

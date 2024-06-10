@@ -8,7 +8,7 @@ android {
         }
     }
     namespace "io.ionic.teataster"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.ionic.teataster"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -21,9 +21,6 @@ android {
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
-        manifestPlaceholders = [
-            'AUTH_URL_SCHEME': 'io.ionic.teataster'
-        ]
     }
     buildTypes {
         release {

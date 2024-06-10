@@ -14,6 +14,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
         <ion-buttons
           slot="end"
         >
+          <!---->
           <ion-button
             data-testid="logout-button"
           >
@@ -34,6 +35,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
         </ion-list-header>
         <ion-item>
           <ion-label>
+            <!---->
             Name
           </ion-label>
           <ion-note
@@ -44,6 +46,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
         </ion-item>
         <ion-item>
           <ion-label>
+            <!---->
             Description
           </ion-label>
           <ion-note
@@ -54,6 +57,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
         </ion-item>
         <ion-item>
           <ion-label>
+            <!---->
             Version
           </ion-label>
           <ion-note
@@ -64,6 +68,7 @@ exports[`<AboutPage /> > renders consistently 1`] = `
         </ion-item>
         <ion-item>
           <ion-label>
+            <!---->
             Author
           </ion-label>
           <ion-note
