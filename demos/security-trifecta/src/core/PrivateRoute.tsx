@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { Redirect, Route, useLocation } from 'react-router';
-import { useAuth } from './AuthProvider';
+import { Redirect } from 'react-router';
+import { getSnapshot } from '../utils/session-vault';
 
 type Props = { children?: ReactNode };
 
 export const PrivateRoute = ({ children }: Props) => {
-  const { session } = useAuth();
+  const session = getSnapshot();
 
   // If there is no session, redirect the user to the login page.
   if (!session) return <Redirect to="/" />;

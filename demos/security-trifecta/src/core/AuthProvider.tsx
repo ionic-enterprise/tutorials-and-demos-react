@@ -1,10 +1,10 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState, useSyncExternalStore } from 'react';
 import { IonSpinner, useIonModal } from '@ionic/react';
 import { AuthResult } from '@ionic-enterprise/auth';
-import { useHistory } from 'react-router';
-import { registerCallback, unregisterCallback } from '../utils/session-vault';
+import { getSnapshot, registerCallback, subscribe, unregisterCallback } from '../utils/session-vault';
 import { setupAuthConnect } from '../utils/auth';
 import { PinDialog } from '../pages/PinDialog/PinDialog';
+import { useHistory } from 'react-router';
 
 type Props = { children?: ReactNode };
 type Context = { session?: AuthResult };
@@ -15,7 +15,6 @@ let handlePasscodeRequest: CustomPasscodeCallback = () => {};
 const AuthContext = createContext<Context | undefined>(undefined);
 const AuthProvider = ({ children }: Props) => {
   const history = useHistory();
-  const [session, setSession] = useState<AuthResult | undefined>(undefined);
   const [isSetup, setIsSetup] = useState<boolean>(false);
   const [isSetPasscodeMode, setIsSetPasscodeMode] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -23,6 +22,8 @@ const AuthProvider = ({ children }: Props) => {
     setPasscodeMode: isSetPasscodeMode,
     onDismiss: (opts: { data: any; role?: string }) => handlePasscodeRequest(opts),
   });
+
+  const session = useSyncExternalStore(subscribe, getSnapshot);
 
   const handlePasscodeRequested = (isPasscodeSetRequest: boolean, onComplete: (code: string) => void): void => {
     handlePasscodeRequest = (opts) => {
@@ -39,18 +40,15 @@ const AuthProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    registerCallback('onSessionChange', (s: AuthResult | undefined) => {
-      setSession(s);
-    });
-    registerCallback('onVaultLock', () => history.replace('/login'));
     registerCallback('onPasscodeRequested', (isSetPasscodeMode, onComplete) =>
       handlePasscodeRequested(isSetPasscodeMode, onComplete),
     );
 
+    registerCallback('onVaultLock', () => history.replace('/'));
+
     return () => {
-      unregisterCallback('onSessionChange');
-      unregisterCallback('onVaultLock');
       unregisterCallback('onPasscodeRequested');
+      unregisterCallback('onVaultLock');
     };
   }, []);
 
