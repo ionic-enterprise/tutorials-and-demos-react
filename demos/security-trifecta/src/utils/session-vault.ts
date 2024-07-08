@@ -45,15 +45,20 @@ const setSession = async (newSession: AuthResult | undefined) => {
 };
 
 const initializeVault = async (): Promise<void> => {
-  vault.initialize({
-    key: 'io.ionic.teatastereact',
-    type: VaultType.SecureStorage,
-    deviceSecurityType: DeviceSecurityType.None,
-    lockAfterBackgrounded: 5000,
-    shouldClearVaultAfterTooManyFailedAttempts: true,
-    customPasscodeInvalidUnlockAttempts: 2,
-    unlockVaultOnLoad: false,
-  });
+  try {
+    vault.initialize({
+      key: 'io.ionic.teatastereact',
+      type: VaultType.SecureStorage,
+      deviceSecurityType: DeviceSecurityType.None,
+      lockAfterBackgrounded: 5000,
+      shouldClearVaultAfterTooManyFailedAttempts: true,
+      customPasscodeInvalidUnlockAttempts: 2,
+      unlockVaultOnLoad: false,
+    });
+  } catch (e: unknown) {
+    await vault.clear();
+    await setUnlockMode('SecureStorage');
+  }
 
   vault.onLock(async () => {
     session = undefined;
