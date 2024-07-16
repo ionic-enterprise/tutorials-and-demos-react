@@ -15,12 +15,17 @@ let session: Session | null = null;
 let listeners: any[] = [];
 
 export const initializeVault = async (): Promise<void> => {
-  await vault.initialize({
-    key: 'io.ionic.gettingstartedivreact',
-    type: VaultType.SecureStorage,
-    deviceSecurityType: DeviceSecurityType.None,
-    lockAfterBackgrounded: 2000,
-  });
+  try {
+    await vault.initialize({
+      key: 'io.ionic.gettingstartedivreact',
+      type: VaultType.SecureStorage,
+      deviceSecurityType: DeviceSecurityType.None,
+      lockAfterBackgrounded: 2000,
+    });
+  } catch (e: unknown) {
+    await vault.clear();
+    await updateUnlockMode('SecureStorage');
+  }
 
   vault.onLock(() => {
     session = null;
