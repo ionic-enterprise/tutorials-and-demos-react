@@ -1,6 +1,7 @@
 import { IonPage, IonContent, IonCard, IonCardContent, IonCardTitle, IonButton, IonIcon } from '@ionic/react';
 import { lockOpenOutline, arrowRedoOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
+import { logout } from '../../utils/auth';
 import { clearSession, restoreSession } from '../../utils/session-vault';
 
 import './UnlockPage.css';
@@ -10,6 +11,7 @@ const UnlockPage: React.FC = () => {
 
   const handleRedo = async (): Promise<void> => {
     await clearSession();
+    await logout();
     history.replace('/login');
   };
 
