@@ -61,11 +61,12 @@ const login = async (): Promise<void> => {
 };
 
 const logout = async (): Promise<void> => {
-  const authResult = await getSession();
-  if (authResult) {
-    await AuthConnect.logout(provider, authResult);
-    await clearSession();
+  let authResult = await getSession();
+  if (!authResult) {
+    authResult = await AuthConnect.buildAuthResult(provider, options, {});
   }
+  await AuthConnect.logout(provider, authResult);
+  await clearSession();
 };
 
 export { getAccessToken, isAuthenticated, login, logout, setupAuthConnect };
