@@ -32,7 +32,7 @@ export const initializeVault = async (): Promise<void> => {
     emitChange();
   });
 
-  await getSession();
+  await restoreSession();
 };
 
 export const getSnapshot = (): Session | null => {
@@ -58,7 +58,7 @@ export const storeSession = async (newSession: Session): Promise<void> => {
   emitChange();
 };
 
-export const getSession = async (): Promise<void> => {
+export const restoreSession = async (): Promise<void> => {
   if (session === null) {
     if (await vault.isEmpty()) session = null;
     else session = await vault.getValue<Session>('session');
