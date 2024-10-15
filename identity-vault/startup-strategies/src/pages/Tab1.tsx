@@ -10,28 +10,18 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { useSyncExternalStore } from 'react';
+import { useHistory } from 'react-router';
+import { logout } from '../util/authentication';
+import { getSnapshot, subscribe, updateUnlockMode } from '../util/session-vault';
 import './Tab1.css';
-import {
-  storeSession,
-  subscribe,
-  getSnapshot,
-  clearSession,
-  updateUnlockMode,
-  lockSession,
-  restoreSession,
-} from '../util/session-vault';
 
 const Tab1: React.FC = () => {
+  const history = useHistory();
   const session = useSyncExternalStore(subscribe, getSnapshot);
 
-  const storeClicked = async (): Promise<void> => {
-    await storeSession({
-      email: 'test@ionic.io',
-      firstName: 'Tessa',
-      lastName: 'Testsmith',
-      accessToken: '4abf1d79-143c-4b89-b478-19607eb5ce97',
-      refreshToken: '565111b6-66c3-4527-9238-6ea2cc017126',
-    });
+  const logoutClicked = async () => {
+    await logout();
+    history.replace('/login');
   };
 
   return (
@@ -49,30 +39,6 @@ const Tab1: React.FC = () => {
         </IonHeader>
 
         <IonList>
-          <IonItem>
-            <IonLabel>
-              <IonButton expand="block" color="warning" onClick={restoreSession}>
-                Unlock
-              </IonButton>
-            </IonLabel>
-          </IonItem>
-
-          <IonItem>
-            <IonLabel>
-              <IonButton expand="block" onClick={storeClicked}>
-                Store
-              </IonButton>
-            </IonLabel>
-          </IonItem>
-
-          <IonItem>
-            <IonLabel>
-              <IonButton expand="block" color="warning" onClick={lockSession}>
-                Lock
-              </IonButton>
-            </IonLabel>
-          </IonItem>
-
           <IonItem>
             <IonLabel>
               <IonButton expand="block" color="secondary" onClick={() => updateUnlockMode('BiometricsWithPasscode')}>
@@ -99,8 +65,8 @@ const Tab1: React.FC = () => {
 
           <IonItem>
             <IonLabel>
-              <IonButton expand="block" color="danger" onClick={clearSession}>
-                Clear
+              <IonButton expand="block" color="danger" onClick={logoutClicked}>
+                Logout
               </IonButton>
             </IonLabel>
           </IonItem>
