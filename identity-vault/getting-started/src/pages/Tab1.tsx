@@ -9,20 +9,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useSyncExternalStore } from 'react';
+import { useSession } from '../util/session-store';
+import { clearSession, lockSession, restoreSession, storeSession, updateUnlockMode } from '../util/session-vault';
 import './Tab1.css';
-import {
-  storeSession,
-  subscribe,
-  getSnapshot,
-  clearSession,
-  updateUnlockMode,
-  lockSession,
-  restoreSession,
-} from '../util/session-vault';
 
 const Tab1: React.FC = () => {
-  const session = useSyncExternalStore(subscribe, getSnapshot);
+  const { session } = useSession();
 
   const storeClicked = async (): Promise<void> => {
     await storeSession({
