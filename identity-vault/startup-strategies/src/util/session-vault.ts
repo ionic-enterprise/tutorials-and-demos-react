@@ -12,7 +12,6 @@ import { setState } from './session-store';
 export type UnlockMode = 'BiometricsWithPasscode' | 'InMemory' | 'SecureStorage';
 
 const vault: Vault | BrowserVault = createVault();
-let listeners: any[] = [];
 
 export const initializeVault = async (): Promise<void> => {
   try {
