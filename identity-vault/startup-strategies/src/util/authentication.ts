@@ -1,4 +1,4 @@
-import { clearSession, getSnapshot, restoreSession, storeSession } from './session-vault';
+import { clearSession, restoreSession, storeSession } from './session-vault';
 
 export const login = (): Promise<void> =>
   storeSession({
@@ -12,6 +12,5 @@ export const login = (): Promise<void> =>
 export const logout = (): Promise<void> => clearSession();
 
 export const isAuthenticated = async (): Promise<boolean> => {
-  await restoreSession();
-  return !!getSnapshot();
+  return !!(await restoreSession());
 };

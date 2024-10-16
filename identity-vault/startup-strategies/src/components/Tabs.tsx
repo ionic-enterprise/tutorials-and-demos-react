@@ -1,17 +1,18 @@
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
+import { ellipse, square, triangle } from 'ionicons/icons';
+import { useEffect } from 'react';
 import { Redirect, Route, useHistory, useRouteMatch } from 'react-router-dom';
 import Tab1 from '../pages/Tab1';
 import Tab2 from '../pages/Tab2';
 import Tab3 from '../pages/Tab3';
-import { ellipse, square, triangle } from 'ionicons/icons';
-import { useEffect, useSyncExternalStore } from 'react';
-import { getSnapshot, restoreSession, sessionIsLocked, subscribe } from '../util/session-vault';
+import { useSession } from '../util/session-store';
+import { restoreSession, sessionIsLocked } from '../util/session-vault';
 
 const Tabs = () => {
   const { url } = useRouteMatch();
 
   const history = useHistory();
-  const session = useSyncExternalStore(subscribe, getSnapshot);
+  const { session } = useSession();
 
   useEffect(() => {
     if (!session) {

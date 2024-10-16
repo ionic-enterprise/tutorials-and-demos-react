@@ -9,15 +9,15 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useSyncExternalStore } from 'react';
 import { useHistory } from 'react-router';
 import { logout } from '../util/authentication';
-import { getSnapshot, subscribe, updateUnlockMode } from '../util/session-vault';
+import { useSession } from '../util/session-store';
+import { updateUnlockMode } from '../util/session-vault';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
   const history = useHistory();
-  const session = useSyncExternalStore(subscribe, getSnapshot);
+  const { session } = useSession();
 
   const logoutClicked = async () => {
     await logout();
