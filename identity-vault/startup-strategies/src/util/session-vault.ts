@@ -29,8 +29,6 @@ export const initializeVault = async (): Promise<void> => {
   vault.onLock(() => {
     setState({ session: null });
   });
-
-  await restoreSession();
 };
 
 export const storeSession = async (session: Session): Promise<void> => {
@@ -38,17 +36,27 @@ export const storeSession = async (session: Session): Promise<void> => {
   setState({ session });
 };
 
-export const restoreSession = async (): Promise<void> => {
+export const restoreSession = async (): Promise<Session | null> => {
   let session: Session | null = null;
   if (!(await vault.isEmpty())) {
     session = await vault.getValue<Session>('session');
   }
   setState({ session });
+  return session;
 };
 
 export const clearSession = async (): Promise<void> => {
   await vault.clear();
   setState({ session: null });
+};
+
+export const sessionIsLocked = async (): Promise<boolean> => {
+  return (
+    vault.config?.type !== VaultType.SecureStorage &&
+    vault.config?.type !== VaultType.InMemory &&
+    !(await vault.isEmpty()) &&
+    (await vault.isLocked())
+  );
 };
 
 export const updateUnlockMode = async (mode: UnlockMode): Promise<void> => {
