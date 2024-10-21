@@ -31,7 +31,7 @@ const Tabs = () => {
         <Route exact path={`${url}/tab2`}>
           <Tab2 />
         </Route>
-        <Route path={`${url}/tab3`}>
+        <Route exact path={`${url}/tab3`}>
           <Tab3 />
         </Route>
         <Route exact path="/">
