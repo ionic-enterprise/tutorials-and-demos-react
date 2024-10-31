@@ -1,0 +1,18 @@
+.pin-dialog-content .prompt {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.pin-dialog-content .pin {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.pin-dialog-content .error {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.pin-dialog-footer ion-grid {
+  padding-bottom: 32px;
+}
