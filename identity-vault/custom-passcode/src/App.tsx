@@ -1,5 +1,13 @@
 import { IonApp, IonModal, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { useEffect, useRef, useState } from 'react';
+import { Route } from 'react-router-dom';
+import PinDialog from './components/PinDialog';
+import Tabs from './components/Tabs';
+import Login from './pages/Login';
+import Start from './pages/Start';
+import Unlock from './pages/Unlock';
+import { addOnPasscodeRequested, removeOnPasscodeRequested } from './util/session-vault';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -20,15 +28,7 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import { useEffect, useRef, useState } from 'react';
-import { Route } from 'react-router-dom';
-import PinDialog from './components/PinDialog';
-import Tabs from './components/Tabs';
-import Login from './pages/Login';
-import Start from './pages/Start';
-import Unlock from './pages/Unlock';
 import './theme/variables.css';
-import { addOnPasscodeRequested, removeOnPasscodeRequested } from './util/session-vault';
 
 setupIonicReact();
 
