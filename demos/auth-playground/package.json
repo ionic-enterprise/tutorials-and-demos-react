@@ -12,7 +12,7 @@
     "build:web": "tsc && vite build",
     "dev": "vite",
     "ios": "cap open ios",
-    "lint": "eslint",
+    "lint": "eslint .",
     "test": "vitest run"
   },
   "dependencies": {

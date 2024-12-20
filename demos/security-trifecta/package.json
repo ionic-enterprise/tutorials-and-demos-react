@@ -15,7 +15,7 @@
     "build": "tsc && vite build && cap sync",
     "dev": "vite --port=8100",
     "ios": "cap open ios",
-    "lint": "eslint",
+    "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
