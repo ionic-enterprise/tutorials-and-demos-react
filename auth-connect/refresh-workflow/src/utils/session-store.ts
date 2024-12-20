@@ -2,9 +2,9 @@ import { AuthResult } from '@ionic-enterprise/auth';
 import { Preferences } from '@capacitor/preferences';
 
 let session: AuthResult | null = null;
-let listeners: any[] = [];
+let listeners: (() => void)[] = [];
 
-const subscribe = (listener: any) => {
+const subscribe = (listener: () => void) => {
   listeners = [...listeners, listener];
   return () => {
     listeners = listeners.filter((l) => l !== listener);
@@ -16,7 +16,7 @@ const getSnapshot = (): AuthResult | null => {
 };
 
 const emitChange = () => {
-  for (let listener of listeners) {
+  for (const listener of listeners) {
     listener();
   }
 };
