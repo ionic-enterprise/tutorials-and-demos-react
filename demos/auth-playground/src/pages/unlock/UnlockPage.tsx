@@ -20,7 +20,8 @@ const UnlockPage: React.FC = () => {
       await unlock();
       await isAuthenticated();
       await history.replace('/');
-    } catch (err) {
+    } catch (err: unknown) {
+      console.error(err);
       // NOTE: You could alert or otherwise set an error message
       //       The most common failure is the user cancelling, so we just don't navigate
     }

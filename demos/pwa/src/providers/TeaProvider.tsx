@@ -5,10 +5,15 @@ import { client } from '../utils/backend-api';
 
 type RawData = Omit<Tea, 'image' | 'rating'>;
 
-type Props = { children?: ReactNode };
-type Context = { teas: Tea[]; rate: (id: number, rating: number) => Promise<void> };
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
+  teas: Tea[];
+  rate: (id: number, rating: number) => Promise<void>;
+}
 
-const images: Array<string> = ['green', 'black', 'herbal', 'oolong', 'dark', 'puer', 'white', 'yellow'];
+const images: string[] = ['green', 'black', 'herbal', 'oolong', 'dark', 'puer', 'white', 'yellow'];
 
 const unpack = async (data: Omit<Tea, 'image'>[]): Promise<Tea[]> => {
   return Promise.all(data.map((t) => transform(t)));

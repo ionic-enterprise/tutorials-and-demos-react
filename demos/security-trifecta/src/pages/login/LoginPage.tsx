@@ -1,8 +1,7 @@
-import { IonItem, IonLabel, IonPage, IonInput, IonContent } from '@ionic/react';
-import { useContext, useEffect } from 'react';
+import { IonContent, IonPage } from '@ionic/react';
 import LoginCard from './LoginCard';
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   return (
     <IonPage>
       <IonContent>

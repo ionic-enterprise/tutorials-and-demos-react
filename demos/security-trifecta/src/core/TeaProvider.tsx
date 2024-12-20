@@ -6,8 +6,10 @@ import { useTastingNotesDatabase } from './TastingNotesDbProvider';
 import { useCompare } from '../utils/compare';
 import { useTeaCategoriesDatabase } from './TeaCategoriesDbProvider';
 
-type Props = { children?: ReactNode };
-type Context = {
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
   teas: Tea[];
   teaCategories: Tea[];
   rate: (id: number, rating: number) => Promise<void>;
@@ -17,11 +19,11 @@ type Context = {
   refreshCategories: () => Promise<void>;
   refreshTastingNotes: () => Promise<void>;
   syncTeas: () => Promise<void>;
-};
+}
 
 const TeaContext = createContext<Context | undefined>(undefined);
 
-const TeaProvider: React.FC<Props> = ({ children }) => {
+const TeaProvider = ({ children }: Props) => {
   const [teas, setTeas] = useState<Tea[]>([]);
   const [teaCategories, setTeaCategories] = useState<Tea[]>([]);
   const { getAll, trim, upsert, save, reset } = useTastingNotesDatabase();
@@ -39,7 +41,7 @@ const TeaProvider: React.FC<Props> = ({ children }) => {
       const cats = await loadCategoriesAPI();
       setTeaCategories(cats);
       await trim(cats.map((cat: Tea) => cat.id));
-      const upserts: Array<Promise<any>> = cats.map((cat: Tea) => upsertCategory(cat));
+      const upserts: Promise<unknown>[] = cats.map((cat: Tea) => upsertCategory(cat));
       await Promise.all(upserts);
     } else {
       const cats = await loadCategoriesAPI();
@@ -67,7 +69,7 @@ const TeaProvider: React.FC<Props> = ({ children }) => {
 
     if (isPlatform('hybrid')) {
       await trim(loadedTeas.map((x: Tea) => x.id as number));
-      const upserts: Array<Promise<any>> = loadedTeas.map((tea: Tea) => upsert(tea));
+      const upserts: Promise<unknown>[] = loadedTeas.map((tea: Tea) => upsert(tea));
       await Promise.all(upserts);
     }
 
@@ -118,7 +120,7 @@ const TeaProvider: React.FC<Props> = ({ children }) => {
 
   const syncTeas = async (): Promise<void> => {
     const notes = await getAll(true);
-    const calls: Array<Promise<any>> = [];
+    const calls: Promise<unknown>[] = [];
 
     notes.forEach((note: Tea) => {
       if (note.syncStatus === 'UPDATE') {

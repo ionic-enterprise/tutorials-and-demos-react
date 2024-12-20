@@ -29,7 +29,7 @@ const performRefresh = async (authResult: AuthResult): Promise<AuthResult | unde
     try {
       newAuthResult = await AuthConnect.refreshSession(provider, authResult);
       setSession(newAuthResult);
-    } catch (error) {
+    } catch {
       await clearSession();
     }
   } else {
@@ -40,7 +40,7 @@ const performRefresh = async (authResult: AuthResult): Promise<AuthResult | unde
 };
 
 const getAuthResult = async (): Promise<AuthResult | undefined> => {
-  let authResult = await getSnapshot();
+  let authResult = getSnapshot();
   if (authResult && (await AuthConnect.isAccessTokenExpired(authResult))) {
     authResult = await performRefresh(authResult);
   }
@@ -63,7 +63,7 @@ const login = async (): Promise<void> => {
 };
 
 const logout = async (): Promise<void> => {
-  const authResult = await getSnapshot();
+  const authResult = getSnapshot();
   if (authResult) {
     await AuthConnect.logout(provider, authResult);
     await clearSession();
@@ -71,9 +71,9 @@ const logout = async (): Promise<void> => {
 };
 
 const getUserEmail = async (): Promise<string | void> => {
-  const authResult = await getSnapshot();
+  const authResult = getSnapshot();
   if (authResult) {
-    const { email } = (await AuthConnect.decodeToken(TokenType.id, authResult)) as any;
+    const { email } = (await AuthConnect.decodeToken(TokenType.id, authResult)) as { email?: string };
     return email;
   }
 };

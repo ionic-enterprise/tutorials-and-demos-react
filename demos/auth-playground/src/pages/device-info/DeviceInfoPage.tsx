@@ -26,7 +26,7 @@ const isNativePlatform = isPlatform('hybrid');
 
 const prettyPrintBooleanStatus = (isAvailable: boolean) => (isAvailable ? 'Yes' : 'No');
 
-const HardwareList: React.FC<{ hardware: SupportedBiometricType[] }> = ({ hardware }) => {
+const HardwareList = ({ hardware }: { hardware: SupportedBiometricType[] }) => {
   return (
     <ul>
       {hardware.length === 0 && <li>None</li>}
@@ -59,7 +59,7 @@ const DeviceInfoPage: React.FC = () => {
     try {
       await Device.showBiometricPrompt({ iosBiometricsLocalizedReason: 'This is only a test' });
       await displayBioResult('Success!!');
-    } catch (err) {
+    } catch {
       await displayBioResult('Failed. User likely cancelled the operation.');
     }
   };

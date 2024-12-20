@@ -94,9 +94,8 @@ export class OIDCAuthenticationService implements Authenticator {
     try {
       const res = await AuthConnect.login(this.provider, this.options);
       await setValue(this.authResultKey, res);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      // eslint-disable-next-line
-      console.log('login error:', err);
       const message: string = err.errorMessage;
       if (this.options === azureOptions && message !== undefined && message.includes('AADB2C90118')) {
         // This is to handle the password reset case for Azure AD and is only applicable to Azure  AD
@@ -186,7 +185,7 @@ export class OIDCAuthenticationService implements Authenticator {
       try {
         newAuthResult = await AuthConnect.refreshSession(this.provider, authResult);
         await setValue<AuthResult>(this.authResultKey, newAuthResult);
-      } catch (err) {
+      } catch {
         await clear();
       }
     } else {

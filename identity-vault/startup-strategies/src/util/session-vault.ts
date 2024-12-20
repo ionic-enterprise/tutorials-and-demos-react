@@ -21,7 +21,7 @@ export const initializeVault = async (): Promise<void> => {
       deviceSecurityType: DeviceSecurityType.None,
       lockAfterBackgrounded: 2000,
     });
-  } catch (e: unknown) {
+  } catch {
     await vault.clear();
     await updateUnlockMode('SecureStorage');
   }

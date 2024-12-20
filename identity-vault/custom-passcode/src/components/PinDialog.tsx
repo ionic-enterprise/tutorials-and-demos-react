@@ -16,10 +16,10 @@ import { useRef, useState } from 'react';
 import { backspace } from 'ionicons/icons';
 import './PinDialog.css';
 
-type PinDialogProperties = {
+interface PinDialogProperties {
   setPasscodeMode: boolean;
   onDismiss: (data: string | null) => void;
-};
+}
 
 const PinDialog = ({ setPasscodeMode, onDismiss }: PinDialogProperties) => {
   const [errorMessage, setErrorMessage] = useState('');

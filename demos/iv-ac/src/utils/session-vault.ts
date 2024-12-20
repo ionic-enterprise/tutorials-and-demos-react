@@ -7,11 +7,11 @@ import { UnlockMode } from '../models';
 
 type VaultUnlockType = Pick<IdentityVaultConfig, 'type' | 'deviceSecurityType'>;
 
-type CallbackMap = {
+interface CallbackMap {
   onSessionChange?: (session: AuthResult | undefined) => void;
   onVaultLock?: () => void;
   onPasscodeRequested?: (isPasscodeSetRequest: boolean, onComplete: (code: string) => void) => void;
-};
+}
 
 const keys = { session: 'session', mode: 'last-unlock-mode' };
 const vault = createVault();
@@ -30,7 +30,7 @@ const initializeVault = async (): Promise<void> => {
       customPasscodeInvalidUnlockAttempts: 2,
       unlockVaultOnLoad: false,
     });
-  } catch (e: unknown) {
+  } catch {
     await vault.clear();
     await setUnlockMode('SecureStorage');
   }

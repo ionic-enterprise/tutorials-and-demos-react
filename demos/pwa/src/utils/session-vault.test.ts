@@ -1,6 +1,6 @@
 import { Mock, vi } from 'vitest';
 import { Preferences } from '@capacitor/preferences';
-import { VaultType, DeviceSecurityType } from '@ionic-enterprise/identity-vault';
+import { VaultType, DeviceSecurityType, Vault, BrowserVault } from '@ionic-enterprise/identity-vault';
 import { UnlockMode } from '../models';
 import { createVault } from './vault-factory';
 
@@ -21,20 +21,11 @@ import { AuthResult } from '@ionic-enterprise/auth';
 vi.mock('@capacitor/preferences');
 
 describe('Session Utilities', () => {
-  let mockVault: any;
+  let mockVault: Vault | BrowserVault;
   const testSession = {
     accessToken: 'test-access-token',
     refreshToken: 'test-refresh-token',
     idToken: 'test-id-token',
-  };
-  const mockVaultOptions = {
-    key: 'io.ionic.teatasterreact',
-    type: VaultType.SecureStorage,
-    deviceSecurityType: DeviceSecurityType.None,
-    lockAfterBackgrounded: 5000,
-    shouldClearVaultAfterTooManyFailedAttempts: true,
-    customPasscodeInvalidUnlockAttempts: 2,
-    unlockVaultOnLoad: false,
   };
 
   beforeEach(async () => {
@@ -60,7 +51,7 @@ describe('Session Utilities', () => {
     });
 
     describe('session change callback', () => {
-      let mockCallback: any;
+      let mockCallback: Mock;
 
       beforeEach(() => {
         mockCallback = vi.fn();
@@ -104,7 +95,7 @@ describe('Session Utilities', () => {
     });
 
     describe('session change callback', () => {
-      let mockCallback: any;
+      let mockCallback: Mock;
 
       beforeEach(() => {
         mockCallback = vi.fn();
@@ -168,7 +159,7 @@ describe('Session Utilities', () => {
     });
 
     it('calls the session change callback', async () => {
-      let mockCallback = vi.fn();
+      const mockCallback = vi.fn();
       registerCallback('onSessionChange', mockCallback);
       await restoreSession();
       expect(mockCallback).toHaveBeenCalledTimes(1);
@@ -238,7 +229,7 @@ describe('Session Utilities', () => {
   });
 
   describe('onVaultLock', () => {
-    let mockCallback: any;
+    let mockCallback: Mock;
 
     beforeEach(async () => {
       mockCallback = vi.fn();

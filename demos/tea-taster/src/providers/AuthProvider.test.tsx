@@ -1,13 +1,14 @@
-import { Mock, vi } from 'vitest';
 import { act, render, renderHook, waitFor } from '@testing-library/react';
+import { ReactNode } from 'react';
+import { Mock, vi } from 'vitest';
 import { Session } from '../models';
+import { getSession, registerSessionChangeCallback } from '../utils/session';
 import AuthProvider, { useAuth } from './AuthProvider';
-import { getSession, registerSessionChangeCallback, setSession } from '../utils/session';
 
 vi.mock('../utils/session');
 
 describe('<AuthProvider />', () => {
-  const wrapper = ({ children }: any) => <AuthProvider>{children}</AuthProvider>;
+  const wrapper = ({ children }: { children: ReactNode }) => <AuthProvider>{children}</AuthProvider>;
   const testSession: Session = {
     user: {
       id: 314159,

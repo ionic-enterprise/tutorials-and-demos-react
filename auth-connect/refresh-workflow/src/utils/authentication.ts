@@ -49,7 +49,7 @@ const refreshIfExpired = async (): Promise<void> => {
       try {
         newAuthResult = await AuthConnect.refreshSession(provider, authResult);
       } catch (err) {
-        null;
+        console.error(err);
       }
     }
     setSession(newAuthResult);

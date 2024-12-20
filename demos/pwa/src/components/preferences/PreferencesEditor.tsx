@@ -23,9 +23,11 @@ import {
 } from '../../utils/device';
 import { getUnlockMode, setUnlockMode } from '../../utils/session-vault';
 
-type Props = { onDismiss: () => void };
+interface Props {
+  onDismiss: () => void;
+}
 
-export const PreferencesEditor: React.FC<Props> = ({ onDismiss }) => {
+export const PreferencesEditor = ({ onDismiss }: Props) => {
   const history = useHistory();
 
   const [disableBiometrics, setDisableBiometrics] = useState<boolean>(true);
@@ -65,13 +67,13 @@ export const PreferencesEditor: React.FC<Props> = ({ onDismiss }) => {
   };
 
   const handleBiometricToggle = async (updatedValue: boolean) => {
-    updatedValue && setUseCustomPasscode(false);
+    if (updatedValue) setUseCustomPasscode(false);
     setUseBiometrics(updatedValue);
     await setVaultLockMode(false, updatedValue, useSystemPasscode);
   };
 
   const handleSystemPasscodeToggle = async (updatedValue: boolean) => {
-    updatedValue && setUseCustomPasscode(false);
+    if (updatedValue) setUseCustomPasscode(false);
     setUseSystemPasscode(updatedValue);
     await setVaultLockMode(false, useBiometrics, updatedValue);
   };

@@ -22,7 +22,7 @@ import { setValue } from '@/utils/session-storage/session-vault';
 
 const ValueListPage: React.FC = () => {
   const [presentAlert] = useIonAlert();
-  const [values, setValues] = useState<Array<{ key: string; value: string }>>([]);
+  const [values, setValues] = useState<{ key: string; value: string }[]>([]);
   const { getValues } = useVault();
 
   const syncWithVault = async () => {

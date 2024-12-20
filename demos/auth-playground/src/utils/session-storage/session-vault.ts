@@ -32,7 +32,7 @@ export const initializeVault = async ({ onPasscodeRequested, onLock }: Initializ
       customPasscodeInvalidUnlockAttempts: 2,
       unlockVaultOnLoad: false,
     });
-  } catch (e) {
+  } catch {
     await vault.clear();
     await setUnlockMode('NeverLock');
   }
@@ -51,8 +51,8 @@ const provision = async (): Promise<void> => {
   if ((await Device.isBiometricsAllowed()) === BiometricPermissionState.Prompt) {
     try {
       await Device.showBiometricPrompt({ iosBiometricsLocalizedReason: 'Please authenticate to continue' });
-    } catch (e) {
-      // Error handling
+    } catch (e: unknown) {
+      console.error(e);
     }
   }
 };

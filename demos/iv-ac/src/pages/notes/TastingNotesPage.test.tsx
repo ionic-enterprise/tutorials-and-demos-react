@@ -7,7 +7,7 @@ const present = vi.fn();
 const mockRemove = vi.fn();
 
 vi.mock('@ionic/react', async (getOriginal) => {
-  const original: any = await getOriginal();
+  const original: object = await getOriginal();
   return { ...original, useIonModal: vi.fn(() => [present, vi.fn()]) };
 });
 vi.mock('../../providers/TeaProvider');

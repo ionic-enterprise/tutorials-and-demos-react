@@ -1,14 +1,15 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import { useAuth } from './AuthProvider';
 import { DbTransaction, SQLite, SQLiteObject } from '@ionic-enterprise/secure-storage';
 import { isPlatform } from '@ionic/react';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { getDatabaseKey } from '../utils/encryption';
 
-type Props = { children?: ReactNode };
-type Context = {
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
   db: SQLiteObject | undefined;
   getDb: () => Promise<SQLiteObject | undefined>;
-};
+}
 
 interface Column {
   name: string;
@@ -17,9 +18,8 @@ interface Column {
 
 const DatabaseContext = createContext<Context | undefined>(undefined);
 
-const DatabaseProvider: React.FC<Props> = ({ children }) => {
+const DatabaseProvider = ({ children }: Props) => {
   const [db, setDb] = useState<SQLiteObject>();
-  const [handle, setHandle] = useState<SQLiteObject | null>(null);
 
   useEffect(() => {
     // initializeDB();
@@ -47,7 +47,7 @@ const DatabaseProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const createTableSql = (name: string, columns: Array<Column>): string => {
+  const createTableSql = (name: string, columns: Column[]): string => {
     let cols = '';
     columns.forEach((c, i) => {
       cols += `${i ? ', ' : ''}${c.name} ${c.type}`;

@@ -1,7 +1,7 @@
-import { vi, Mock } from 'vitest';
-import { render, renderHook, waitFor } from '@testing-library/react';
-import { client } from '../utils/backend-api';
+import { renderHook, waitFor } from '@testing-library/react';
+import { Mock, vi } from 'vitest';
 import { TastingNote } from '../models';
+import { client } from '../utils/backend-api';
 import { useTastingNotes } from './useTastingNotes';
 
 vi.mock('../utils/backend-api');
@@ -61,7 +61,7 @@ describe('useTastingNotes', () => {
 
   describe('merge', () => {
     describe('a new note', () => {
-      let note: TastingNote = {
+      const note: TastingNote = {
         brand: 'Lipton',
         name: 'Yellow Label',
         notes: 'Overly acidic, highly tannic flavor',
@@ -94,7 +94,7 @@ describe('useTastingNotes', () => {
     });
 
     describe('an existing note', () => {
-      let note: TastingNote = {
+      const note: TastingNote = {
         id: 1,
         brand: 'Lipton',
         name: 'Green Tea',

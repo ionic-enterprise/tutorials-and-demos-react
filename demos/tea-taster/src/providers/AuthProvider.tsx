@@ -3,8 +3,12 @@ import { IonSpinner } from '@ionic/react';
 import { Session } from '../models';
 import { getSession, registerSessionChangeCallback, unregisterSessionChangeCallback } from '../utils/session';
 
-type Props = { children?: ReactNode };
-type Context = { session?: Session };
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
+  session?: Session;
+}
 
 const AuthContext = createContext<Context | undefined>(undefined);
 const AuthProvider = ({ children }: Props) => {

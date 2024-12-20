@@ -13,7 +13,7 @@ import {
 
 vi.mock('@capacitor/preferences');
 vi.mock('@ionic/react', async (getOriginal) => {
-  const original: any = await getOriginal();
+  const original: object = await getOriginal();
   return { ...original, isPlatform: vi.fn() };
 });
 

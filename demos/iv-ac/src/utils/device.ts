@@ -1,5 +1,5 @@
-import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
 import { Preferences } from '@capacitor/preferences';
+import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
 import { isPlatform } from '@ionic/react';
 
 const key = 'hide-in-background';
@@ -23,17 +23,17 @@ const provisionBiometricPermission = async (): Promise<void> => {
   if ((await Device.isBiometricsAllowed()) === BiometricPermissionState.Prompt) {
     try {
       await Device.showBiometricPrompt({ iosBiometricsLocalizedReason: 'Please authenticate to continue' });
-    } catch (error) {
-      null;
+    } catch (error: unknown) {
+      console.error(error);
     }
   }
 };
 
 export {
-  canUseBiometrics,
-  canUseSystemPasscode,
-  canUseCustomPasscode,
   canHideContentsInBackground,
+  canUseBiometrics,
+  canUseCustomPasscode,
+  canUseSystemPasscode,
   hideContentsInBackground,
   isHidingContentsInBackground,
   provisionBiometricPermission,

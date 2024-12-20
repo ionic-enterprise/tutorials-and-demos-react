@@ -15,10 +15,10 @@ const StartPage: React.FC = () => {
     }
   };
 
-  const startupForceUnlock = async () => {
-    await restoreSession();
-    history.replace('/tabs/tea');
-  };
+  //const startupForceUnlock = async () => {
+  //  await restoreSession();
+  //  history.replace('/tabs/tea');
+  //};
 
   useEffect(() => {
     // This strategy takes you to the unlock page if there is a session to be unlocked.

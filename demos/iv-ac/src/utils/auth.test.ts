@@ -1,11 +1,11 @@
-import { vi, Mock } from 'vitest';
-import { clearSession, getSession, setSession } from './session-vault';
+import { Auth0Provider, AuthConnect } from '@ionic-enterprise/auth';
+import { Mock, vi } from 'vitest';
 import { getAccessToken, isAuthenticated, login, logout } from './auth';
-import { Auth0Provider, AuthConnect, CognitoProvider } from '@ionic-enterprise/auth';
+import { clearSession, getSession, setSession } from './session-vault';
 
 vi.mock('@ionic-enterprise/auth');
 vi.mock('@ionic/react', async (getOriginal) => {
-  const original: any = await getOriginal();
+  const original: object = await getOriginal();
   return { ...original, isPlatform: vi.fn().mockReturnValue(true) };
 });
 vi.mock('./session-vault');

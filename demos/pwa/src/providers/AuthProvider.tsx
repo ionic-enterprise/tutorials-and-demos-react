@@ -6,10 +6,15 @@ import { registerCallback, unregisterCallback } from '../utils/session-vault';
 import { setupAuthConnect } from '../utils/auth';
 import { PinDialog } from '../components/pin-dialog/PinDialog';
 
-type Props = { children?: ReactNode };
-type Context = { session?: AuthResult };
-type CustomPasscodeCallback = (opts: { data: any; role?: string }) => void;
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
+  session?: AuthResult;
+}
+type CustomPasscodeCallback = (opts: { data: string; role?: string }) => void;
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 let handlePasscodeRequest: CustomPasscodeCallback = () => {};
 const AuthContext = createContext<Context | undefined>(undefined);
 const AuthProvider = ({ children }: Props) => {
@@ -20,7 +25,7 @@ const AuthProvider = ({ children }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [present, dismiss] = useIonModal(PinDialog, {
     setPasscodeMode: isSetPasscodeMode,
-    onDismiss: (opts: { data: any; role?: string }) => handlePasscodeRequest(opts),
+    onDismiss: (opts: { data: string; role?: string }) => handlePasscodeRequest(opts),
   });
 
   const handlePasscodeRequested = (isPasscodeSetRequest: boolean, onComplete: (code: string) => void): void => {
@@ -52,7 +57,11 @@ const AuthProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    showModal ? present() : dismiss();
+    if (showModal) {
+      present();
+    } else {
+      dismiss();
+    }
   }, [showModal]);
 
   return <AuthContext.Provider value={{ session }}>{isSetup ? children : <IonSpinner />}</AuthContext.Provider>;

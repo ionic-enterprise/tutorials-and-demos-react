@@ -73,7 +73,7 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    needRefresh && presentRefreshAlert();
+    if (needRefresh) presentRefreshAlert();
   }, [needRefresh]);
 
   return (

@@ -16,11 +16,6 @@ const StartPage: React.FC = () => {
     }
   };
 
-  const startupForceUnlock = async () => {
-    await restoreSession();
-    history.replace('/teas');
-  };
-
   useEffect(() => {
     startup();
   }, []);

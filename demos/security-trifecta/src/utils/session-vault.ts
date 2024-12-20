@@ -8,20 +8,20 @@ import { isPlatform } from '@ionic/react';
 
 type VaultUnlockType = Pick<IdentityVaultConfig, 'type' | 'deviceSecurityType'>;
 
-type CallbackMap = {
+interface CallbackMap {
   onVaultLock?: () => void;
   onPasscodeRequested?: (isPasscodeSetRequest: boolean, onComplete: (code: string) => void) => void;
-};
+}
 
 const keys = { session: 'session', mode: 'last-unlock-mode' };
 const vault = createVault();
 
 let session: AuthResult | undefined;
-let listeners: any[] = [];
+let listeners: (() => void)[] = [];
 
 const callbackMap: CallbackMap = {};
 
-const subscribe = (listener: any) => {
+const subscribe = (listener: () => void) => {
   listeners = [...listeners, listener];
   return () => {
     listeners = listeners.filter((l) => l !== listener);
@@ -33,7 +33,7 @@ const getSnapshot = (): AuthResult | undefined => {
 };
 
 const emitChange = () => {
-  for (let listener of listeners) {
+  for (const listener of listeners) {
     listener();
   }
 };
@@ -55,7 +55,7 @@ const initializeVault = async (): Promise<void> => {
       customPasscodeInvalidUnlockAttempts: 2,
       unlockVaultOnLoad: false,
     });
-  } catch (e: unknown) {
+  } catch {
     await vault.clear();
     await setUnlockMode('SecureStorage');
   }

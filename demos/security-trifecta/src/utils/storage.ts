@@ -17,12 +17,12 @@ const initialize = async (): Promise<void> => {
   return isReady;
 };
 
-const getValue = async (key: string): Promise<any> => {
+const getValue = async <T>(key: string): Promise<T> => {
   await initialize();
   return storage.get(key);
 };
 
-const setValue = async (key: string, value: any): Promise<void> => {
+const setValue = async (key: string, value: unknown): Promise<void> => {
   await initialize();
   await storage.set(key, value);
 };

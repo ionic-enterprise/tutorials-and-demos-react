@@ -3,15 +3,15 @@ import { setupAuthConnect } from '../utils/authentication';
 import { IonSpinner } from '@ionic/react';
 import { getSnapshot, subscribe } from '../utils/session-store';
 
-type Context = {
+interface Context {
   isAuthenticated: boolean;
-};
+}
 
 export const AuthenticationContext = createContext<Context>({
   isAuthenticated: false,
 });
 
-export const AuthenticationProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export const AuthenticationProvider = ({ children }: PropsWithChildren) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
   const session = useSyncExternalStore(subscribe, getSnapshot);

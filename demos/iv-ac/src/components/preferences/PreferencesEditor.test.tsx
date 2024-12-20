@@ -72,8 +72,8 @@ describe('<PreferencesEditor />', () => {
       render(component);
       const bioToggle = await waitFor(() => screen.getByTestId('use-biometrics-toggle') as HTMLIonToggleElement);
       const sysToggle = await waitFor(() => screen.getByTestId('use-system-passcode-toggle') as HTMLIonToggleElement);
-      bio && (await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {}))));
-      sys && (await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {}))));
+      if (bio) await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {})));
+      if (sys) await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {})));
       expect(setUnlockMode).toHaveBeenCalledWith(mode);
     });
 
@@ -87,7 +87,7 @@ describe('<PreferencesEditor />', () => {
       await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {})));
       await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {})));
       await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {})));
-      sys && (await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {}))));
+      if (sys) await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {})));
       expect(setUnlockMode).toHaveBeenCalledWith(mode);
     });
   });
@@ -137,8 +137,8 @@ describe('<PreferencesEditor />', () => {
       render(component);
       const bioToggle = await waitFor(() => screen.getByTestId('use-biometrics-toggle') as HTMLIonToggleElement);
       const sysToggle = await waitFor(() => screen.getByTestId('use-system-passcode-toggle') as HTMLIonToggleElement);
-      bio && (await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {}))));
-      sys && (await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {}))));
+      if (bio) await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {})));
+      if (sys) await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {})));
       expect(setUnlockMode).toHaveBeenCalledWith(mode);
     });
 
@@ -152,7 +152,7 @@ describe('<PreferencesEditor />', () => {
       await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {})));
       await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {})));
       await waitFor(() => fireEvent(sysToggle, new CustomEvent('ionChange', {})));
-      bio && (await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {}))));
+      if (bio) await waitFor(() => fireEvent(bioToggle, new CustomEvent('ionChange', {})));
       expect(setUnlockMode).toHaveBeenCalledWith(mode);
     });
   });

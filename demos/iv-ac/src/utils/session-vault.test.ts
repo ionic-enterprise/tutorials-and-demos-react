@@ -21,6 +21,7 @@ import { AuthResult } from '@ionic-enterprise/auth';
 vi.mock('@capacitor/preferences');
 
 describe('Session Utilities', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let mockVault: any;
   const testSession = {
     accessToken: 'test-access-token',
@@ -51,7 +52,7 @@ describe('Session Utilities', () => {
     });
 
     describe('session change callback', () => {
-      let mockCallback: any;
+      let mockCallback: Mock;
 
       beforeEach(() => {
         mockCallback = vi.fn();
@@ -95,7 +96,7 @@ describe('Session Utilities', () => {
     });
 
     describe('session change callback', () => {
-      let mockCallback: any;
+      let mockCallback: Mock;
 
       beforeEach(() => {
         mockCallback = vi.fn();
@@ -159,7 +160,7 @@ describe('Session Utilities', () => {
     });
 
     it('calls the session change callback', async () => {
-      let mockCallback = vi.fn();
+      const mockCallback = vi.fn();
       registerCallback('onSessionChange', mockCallback);
       await restoreSession();
       expect(mockCallback).toHaveBeenCalledTimes(1);
@@ -229,7 +230,7 @@ describe('Session Utilities', () => {
   });
 
   describe('onVaultLock', () => {
-    let mockCallback: any;
+    let mockCallback: Mock;
 
     beforeEach(async () => {
       mockCallback = vi.fn();

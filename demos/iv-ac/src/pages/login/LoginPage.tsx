@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
       await login();
       setLoginFailed(false);
       history.replace('/');
-    } catch (error) {
+    } catch {
       setLoginFailed(true);
     }
   };

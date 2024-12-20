@@ -6,7 +6,7 @@ const getValues = async () => {
   return Promise.all(
     keys.map(async (key: string) => ({
       key,
-      value: JSON.stringify(await getValue<any>(key), undefined, 2),
+      value: JSON.stringify(await getValue<unknown>(key), undefined, 2),
     })),
   );
 };

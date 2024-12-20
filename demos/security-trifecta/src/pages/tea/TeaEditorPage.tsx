@@ -9,19 +9,16 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonModal,
-  IonPage,
   IonSelect,
   IonSelectOption,
   IonTextarea,
   IonTitle,
-  IonToggle,
   IonToolbar,
 } from '@ionic/react';
-import './TeaEditorPage.css';
 import { close } from 'ionicons/icons';
-import { Tea } from '../../models/Tea';
 import { useEffect, useState } from 'react';
+import { Tea } from '../../models/Tea';
+import './TeaEditorPage.css';
 
 interface TeaEditorProps {
   tea: Tea | undefined;
@@ -30,7 +27,7 @@ interface TeaEditorProps {
   onDismiss: () => void;
 }
 
-const TeaEditorPage: React.FC<TeaEditorProps> = ({ tea, teaCategories, onDismiss, saveTea }) => {
+const TeaEditorPage = ({ tea, teaCategories, onDismiss, saveTea }: TeaEditorProps) => {
   const [teaCategory, setTeaCategory] = useState<Tea | undefined>(undefined);
   const [name, setName] = useState<string>('');
   const [brand, setBrand] = useState<string>('');
@@ -79,7 +76,7 @@ const TeaEditorPage: React.FC<TeaEditorProps> = ({ tea, teaCategories, onDismiss
     onDismiss();
   };
 
-  const updateCategory = async (value: any) => {
+  const updateCategory = async (value: number) => {
     const index = teaCategories.findIndex((t) => t.id === value);
     if (index !== -1) {
       const cat = teaCategories[index];

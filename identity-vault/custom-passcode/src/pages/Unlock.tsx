@@ -21,7 +21,7 @@ const Unlock = () => {
       await restoreSession();
       history.replace('/tabs/tab1');
     } catch (err: unknown) {
-      null;
+      console.error(err);
     }
   };
 

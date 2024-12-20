@@ -17,12 +17,12 @@ import { close } from 'ionicons/icons';
 
 import './PinDialog.css';
 
-type Props = {
+interface Props {
   setPasscodeMode: boolean;
-  onDismiss: (opts: { data: any; role?: string }) => void;
-};
+  onDismiss: (opts: { data?: string; role?: string }) => void;
+}
 
-export const PinDialog: React.FC<Props> = ({ setPasscodeMode, onDismiss }) => {
+export const PinDialog = ({ setPasscodeMode, onDismiss }: Props) => {
   const [pin, setPin] = useState<string>('');
   const [verifyPin, setVerifyPin] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');

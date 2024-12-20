@@ -1,43 +1,33 @@
 import {
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonCol,
+  IonButton,
+  IonButtons,
   IonContent,
-  IonGrid,
+  IonFab,
+  IonFabButton,
   IonHeader,
-  IonImg,
+  IonIcon,
   IonItem,
+  IonItemOption,
+  IonItemOptions,
+  IonItemSliding,
   IonLabel,
   IonList,
   IonPage,
-  IonRow,
-  IonItemSliding,
   IonTitle,
-  IonToolbar,
-  IonItemOptions,
-  IonItemOption,
-  IonButton,
-  IonButtons,
-  IonToggle,
-  ToggleCustomEvent,
-  IonIcon,
-  useIonModal,
-  IonFab,
-  IonFabButton,
   IonToast,
+  IonToolbar,
+  useIonModal,
 } from '@ionic/react';
-import { useState, useEffect } from 'react';
-import { Tea } from '../../models/Tea';
+import { add, logOutOutline, sync } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useTea } from '../../core/TeaProvider';
-import './TeaListPage.css';
-import { logOutOutline, refresh, sync, add } from 'ionicons/icons';
+import { Tea } from '../../models/Tea';
 import { logout } from '../../utils/auth';
 import TeaEditorPage from './TeaEditorPage';
+import './TeaListPage.css';
 
-const TeaListPage: React.FC = () => {
+const TeaListPage = () => {
   const { teas, refresh, teaCategories, saveTea, remove, syncTeas, refreshTastingNotes } = useTea();
   const history = useHistory();
   const [tea, setTea] = useState<Tea | undefined>(undefined);

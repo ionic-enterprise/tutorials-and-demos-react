@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   IonButton,
   IonCard,
@@ -7,34 +7,31 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonContent,
-  IonFooter,
-  IonHeader,
   IonIcon,
   IonInput,
-  IonItem,
-  IonList,
   IonPage,
   IonToast,
-  IonTitle,
-  IonToolbar,
 } from '@ionic/react';
 import { logInOutline } from 'ionicons/icons';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import * as yup from 'Yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'Yup';
 import { login } from '../../utils/auth';
 
 import './LoginPage.css';
 
-type LoginInputs = { email: string; password: string };
+interface LoginInputs {
+  email: string;
+  password: string;
+}
 
 const validationSchema = yup.object({
   email: yup.string().required().email().label('Email address'),
   password: yup.string().required().label('Password'),
 });
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   const history = useHistory();
   const [loginFailed, setLoginFailed] = useState<boolean>(false);
   const {
@@ -53,7 +50,7 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (data: LoginInputs) => {
     const success = await login(data.email, data.password);
     setLoginFailed(!success);
-    success && history.replace('/');
+    if (success) history.replace('/');
   };
 
   return (

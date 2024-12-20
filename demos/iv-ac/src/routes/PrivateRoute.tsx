@@ -2,7 +2,9 @@ import { ReactNode } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
 
-type Props = { children?: ReactNode };
+interface Props {
+  children?: ReactNode;
+}
 
 export const PrivateRoute = ({ children }: Props) => {
   const { session } = useAuth();

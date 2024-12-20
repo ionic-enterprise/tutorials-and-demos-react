@@ -2,7 +2,9 @@ import { ReactNode } from 'react';
 import { Redirect } from 'react-router';
 import { getSnapshot } from '../utils/session-vault';
 
-type Props = { children?: ReactNode };
+interface Props {
+  children?: ReactNode;
+}
 
 export const PrivateRoute = ({ children }: Props) => {
   const session = getSnapshot();

@@ -11,9 +11,10 @@ interface Props {
 }
 
 let didInit = false;
-const AppInitializer: React.FC<Props> = ({ children }) => {
+const AppInitializer = ({ children }: Props) => {
   const history = useHistory();
   const onPasscodeRequested = usePinDialog();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, hideSplashScreen] = useSplashScreen();
   const [isReady, setIsReady] = useState(false);
 

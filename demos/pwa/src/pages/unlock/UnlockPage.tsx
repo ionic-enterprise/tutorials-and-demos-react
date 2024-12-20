@@ -19,6 +19,7 @@ const UnlockPage: React.FC = () => {
       history.replace('/');
     } catch (err) {
       // Handle or log the error, or remove the try-catch block entirely
+      console.error(err);
     }
   };
 

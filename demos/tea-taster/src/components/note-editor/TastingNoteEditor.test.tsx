@@ -9,7 +9,7 @@ import { TastingNote } from '../../models';
 vi.mock('@capacitor/share');
 vi.mock('../../hooks/useTastingNotes');
 vi.mock('@ionic/react', async (getOriginal) => {
-  const original: any = await getOriginal();
+  const original: object = await getOriginal();
   return { ...original, isPlatform: vi.fn() };
 });
 

@@ -1,3 +1,4 @@
+import { Device } from '@ionic-enterprise/identity-vault';
 import {
   IonButton,
   IonCard,
@@ -12,10 +13,9 @@ import {
 import { logInOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { login } from '../../utils/auth';
 import { UnlockMode } from '../../models/UnlockMode';
-import { getUnlockMode, setUnlockMode, canUseLocking } from '../../utils/session-vault';
-import { Device } from '@ionic-enterprise/identity-vault';
+import { login } from '../../utils/auth';
+import { canUseLocking, setUnlockMode } from '../../utils/session-vault';
 
 interface UnlockOption {
   mode: UnlockMode;

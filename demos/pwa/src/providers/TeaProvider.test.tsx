@@ -4,6 +4,7 @@ import { GetOptions, Preferences } from '@capacitor/preferences';
 import { client } from '../utils/backend-api';
 import { Tea } from '../models';
 import TeaProvider, { useTea } from './TeaProvider';
+import { ReactNode } from 'react';
 
 vi.mock('@capacitor/preferences');
 vi.mock('../utils/backend-api');
@@ -63,7 +64,7 @@ describe('TeaProvider', () => {
   });
 
   describe('rate', () => {
-    const wrapper = ({ children }: any) => <TeaProvider>{children}</TeaProvider>;
+    const wrapper = ({ children }: { children: ReactNode }) => <TeaProvider>{children}</TeaProvider>;
 
     beforeEach(() => {
       (client.get as Mock).mockResolvedValue({ data: httpResultTeas });

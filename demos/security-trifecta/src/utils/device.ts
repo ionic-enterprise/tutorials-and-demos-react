@@ -23,8 +23,8 @@ const provisionBiometricPermission = async (): Promise<void> => {
   if ((await Device.isBiometricsAllowed()) === BiometricPermissionState.Prompt) {
     try {
       await Device.showBiometricPrompt({ iosBiometricsLocalizedReason: 'Please authenticate to continue' });
-    } catch (error) {
-      null;
+    } catch (error: unknown) {
+      console.error(error);
     }
   }
 };

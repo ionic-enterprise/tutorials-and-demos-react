@@ -43,7 +43,7 @@ describe('Session Utilities', () => {
     });
 
     describe('session change callback', () => {
-      let mockCallback: any;
+      let mockCallback: Mock;
 
       beforeEach(() => {
         mockCallback = vi.fn();
@@ -79,7 +79,7 @@ describe('Session Utilities', () => {
     });
 
     describe('session change callback', () => {
-      let mockCallback: any;
+      let mockCallback: Mock;
 
       beforeEach(() => {
         mockCallback = vi.fn();

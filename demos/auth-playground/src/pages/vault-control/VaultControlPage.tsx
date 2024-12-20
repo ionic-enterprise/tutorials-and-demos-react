@@ -181,7 +181,7 @@ const VaultControlPage: React.FC = () => {
             <dt>Secure Storage</dt>
             <dd>
               The data is stored in the vault but it is never locked. This type of vault is used when the token needs to
-              be protected, but device being unlocked is "good enough" in order to access the application.
+              be protected, but device being unlocked is &quot;good enough&quot; in order to access the application.
             </dd>
             <dt>In Memory</dt>
             <dd>
@@ -197,9 +197,10 @@ const VaultControlPage: React.FC = () => {
           <dl>
             <dt>Lock</dt>
             <dd>
-              This option is not available with the "Secure Storage" vault. For "Device" and "Custom Passcode", the
-              vault will lock and the app will redirect to the "unlock" page. For "In Memory", the data stored by the
-              vault is cleared and will behave in a similar manner to clearing the vault.
+              This option is not available with the &quot;Secure Storage&quot; vault. For &quot;Device&quot; and
+              &quot;Custom Passcode&quot;, the vault will lock and the app will redirect to the &quot;unlock&quot; page.
+              For &quot;In Memory&quot;, the data stored by the vault is cleared and will behave in a similar manner to
+              clearing the vault.
             </dd>
             <dt>Clear</dt>
             <dd>
@@ -213,8 +214,8 @@ const VaultControlPage: React.FC = () => {
           <h2>On Web</h2>
           <p>
             The web does not have a secure storage area. As such, there is no vault but we create a fake one for
-            development purposes. It behaves like a "Secure Storage" vault, but is <strong>not</strong> secure. As such,
-            the only action you can take is to clear the vault.
+            development purposes. It behaves like a &quot;Secure Storage&quot; vault, but is <strong>not</strong>{' '}
+            secure. As such, the only action you can take is to clear the vault.
           </p>
         </div>
 

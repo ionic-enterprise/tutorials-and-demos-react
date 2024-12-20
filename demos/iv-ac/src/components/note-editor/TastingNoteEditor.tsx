@@ -25,7 +25,11 @@ import { useTastingNotes } from '../../hooks/useTastingNotes';
 import { useEffect } from 'react';
 import { shareOutline } from 'ionicons/icons';
 
-type Props = { onDismiss: () => void; teas: Tea[]; note?: TastingNote };
+interface Props {
+  onDismiss: () => void;
+  teas: Tea[];
+  note?: TastingNote;
+}
 
 const validationSchema = yup.object({
   brand: yup.string().required().label('Brand'),
@@ -35,7 +39,7 @@ const validationSchema = yup.object({
   notes: yup.string().required().label('Notes'),
 });
 
-export const TastingNoteEditor: React.FC<Props> = ({ onDismiss, teas, note }) => {
+export const TastingNoteEditor = ({ onDismiss, teas, note }: Props) => {
   const { merge } = useTastingNotes();
   const {
     handleSubmit,
@@ -53,7 +57,7 @@ export const TastingNoteEditor: React.FC<Props> = ({ onDismiss, teas, note }) =>
   const allowShare = watch(['brand', 'name', 'rating']).every((el) => !!el);
 
   useEffect(() => {
-    note && reset(note);
+    if (note) reset(note);
   }, [note]);
 
   const getClassNames = (field: keyof TastingNote) =>

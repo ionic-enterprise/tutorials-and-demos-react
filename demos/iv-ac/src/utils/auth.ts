@@ -29,7 +29,7 @@ const performRefresh = async (authResult: AuthResult): Promise<AuthResult | unde
     try {
       newAuthResult = await AuthConnect.refreshSession(provider, authResult);
       setSession(newAuthResult);
-    } catch (error) {
+    } catch {
       await clearSession();
     }
   } else {

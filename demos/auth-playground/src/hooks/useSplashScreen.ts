@@ -9,14 +9,14 @@ const isNative = Capacitor.isNativePlatform();
 let enterDuration = 200;
 let leaveDuration = 200;
 const enterAnimation = (baseEl: HTMLElement) => {
-  const root = baseEl.shadowRoot;
+  const root = baseEl.shadowRoot || baseEl;
 
   const backdropAnimation = createAnimation()
-    .addElement(root?.querySelector('ion-backdrop')!)
+    .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', '0.01', 'var(--backdrop-opacity)');
 
   const wrapperAnimation = createAnimation()
-    .addElement(root?.querySelector('.modal-wrapper')!)
+    .addElement(root.querySelector('.modal-wrapper')!)
     .keyframes([
       { offset: 0, opacity: '0', transform: 'scale(1)' },
       { offset: 1, opacity: '1', transform: 'scale(1)' },
@@ -35,6 +35,7 @@ const leaveAnimation = (baseEl: HTMLElement) => {
 let didInit = false;
 export const useSplashScreen = (minimumTimeVisible = isNative ? 0 : 400) => {
   const start = useRef<number>();
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const onDidDismiss = useRef(() => {});
   const [showWebSplashscreen, hideWebSplashscreen] = useIonModal(WebSplashscreen);
 

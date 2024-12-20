@@ -1,35 +1,33 @@
+/* eslint @typescript-eslint/no-explicit-any: off, @typescript-eslint/no-empty-function: off */
 import { ReactNode, createContext, useContext } from 'react';
 import { useDatabase } from './DatabaseProvider';
 import { Tea } from '../models/Tea';
 
-type Props = { children?: ReactNode };
-type Context = {
-  getAllCategories: () => Promise<Array<Tea>>;
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
+  getAllCategories: () => Promise<Tea[]>;
   upsertCategory: (cat: Tea) => Promise<void>;
-  trimCategory: (idsToKeep: Array<number>) => Promise<void>;
-};
+  trimCategory: (idsToKeep: number[]) => Promise<void>;
+}
 
 const TeaCategoriesContext = createContext<Context | undefined>(undefined);
 
-const TeaCategoriesDbProvider: React.FC<Props> = ({ children }) => {
-  const { db, getDb } = useDatabase();
+const TeaCategoriesDbProvider = ({ children }: Props) => {
+  const { getDb } = useDatabase();
 
-  const getAllCategories = async (): Promise<Array<Tea>> => {
-    const cats: Array<Tea> = [];
+  const getAllCategories = async (): Promise<Tea[]> => {
+    const cats: Tea[] = [];
     const handle = await getDb();
     if (handle) {
       try {
         await handle.transaction((tx) =>
-          tx.executeSql(
-            'SELECT id, name, description FROM TeaCategories ORDER BY name',
-            [],
-            // tslint:disable-next-line:variable-name
-            (_t: any, r: any) => {
-              for (let i = 0; i < r.rows.length; i++) {
-                cats.push(r.rows.item(i));
-              }
-            },
-          ),
+          tx.executeSql('SELECT id, name, description FROM TeaCategories ORDER BY name', [], (_t: any, r: any) => {
+            for (let i = 0; i < r.rows.length; i++) {
+              cats.push(r.rows.item(i));
+            }
+          }),
         );
       } catch (e) {
         console.log(e);
@@ -48,9 +46,7 @@ const TeaCategoriesDbProvider: React.FC<Props> = ({ children }) => {
               ' ON CONFLICT(id) DO' +
               ' UPDATE SET name = ?, description = ? where id = ?',
             [cat.id, cat.name, cat.description, cat.name, cat.description, cat.id],
-            () => {
-              null;
-            },
+            () => {},
           );
         });
       } catch (e) {
@@ -67,7 +63,7 @@ const TeaCategoriesDbProvider: React.FC<Props> = ({ children }) => {
     return str;
   };
 
-  const trimCategory = async (idsToKeep: Array<number>): Promise<void> => {
+  const trimCategory = async (idsToKeep: number[]): Promise<void> => {
     const handle = await getDb();
     if (handle) {
       try {
@@ -75,9 +71,7 @@ const TeaCategoriesDbProvider: React.FC<Props> = ({ children }) => {
           tx.executeSql(
             `DELETE FROM TeaCategories WHERE id not in (${params(idsToKeep.length)})`,
             [...idsToKeep],
-            () => {
-              null;
-            },
+            () => {},
           );
         });
       } catch (e) {

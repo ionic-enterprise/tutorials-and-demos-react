@@ -1,25 +1,28 @@
+/* eslint @typescript-eslint/no-explicit-any: off, @typescript-eslint/no-empty-function: off */
 import { ReactNode, createContext, useContext } from 'react';
 import { useDatabase } from './DatabaseProvider';
 import { getUserEmail } from '../utils/auth';
 import { Tea } from '../models/Tea';
 
-type Props = { children?: ReactNode };
-type Context = {
-  getAll: (includeDeleted?: boolean) => Promise<Array<Tea>>;
+interface Props {
+  children?: ReactNode;
+}
+interface Context {
+  getAll: (includeDeleted?: boolean) => Promise<Tea[]>;
   reset: () => Promise<void>;
   remove: (note: Tea) => Promise<void>;
-  trim: (idsToKeep: Array<number>) => Promise<void>;
+  trim: (idsToKeep: number[]) => Promise<void>;
   save: (note: Tea) => Promise<Tea>;
   upsert: (note: Tea) => Promise<void>;
-};
+}
 
 const TastingNotesDbContext = createContext<Context | undefined>(undefined);
 
-const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
-  const { db, getDb } = useDatabase();
+const TastingNotesDbProvider = ({ children }: Props) => {
+  const { getDb } = useDatabase();
 
-  const getAll = async (includeDeleted = false): Promise<Array<Tea>> => {
-    const notes: Array<Tea> = [];
+  const getAll = async (includeDeleted = false): Promise<Tea[]> => {
+    const notes: Tea[] = [];
     const handle = await getDb();
     if (handle) {
       const email = await getUserEmail();
@@ -31,7 +34,6 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
           tx.executeSql(
             `SELECT id, name, brand, notes, rating, teaCategoryId, syncStatus FROM TastingNotes WHERE ${predicate}`,
             [email],
-            // tslint:disable-next-line:variable-name
             (_t: any, r: any) => {
               for (let i = 0; i < r.rows.length; i++) {
                 notes.push(r.rows.item(i));
@@ -54,16 +56,12 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
             tx.executeSql(
               "UPDATE TastingNotes SET syncStatus = null WHERE syncStatus = 'UPDATE' AND userEmail = ?",
               [email],
-              () => {
-                null;
-              },
+              () => {},
             );
             tx.executeSql(
               "DELETE FROM TastingNotes WHERE syncStatus in ('DELETE', 'INSERT') AND userEmail = ?",
               [email],
-              () => {
-                null;
-              },
+              () => {},
             );
           });
         } catch (e) {
@@ -83,9 +81,7 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
             tx.executeSql(
               "UPDATE TastingNotes SET syncStatus = 'DELETE' WHERE userEmail = ? AND id = ?",
               [email, note.id],
-              () => {
-                null;
-              },
+              () => {},
             );
           });
         } catch (e) {
@@ -103,7 +99,7 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
     return str;
   };
 
-  const trim = async (idsToKeep: Array<number>): Promise<void> => {
+  const trim = async (idsToKeep: number[]): Promise<void> => {
     const handle = await getDb();
     if (handle) {
       const email = await getUserEmail();
@@ -113,9 +109,7 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
             tx.executeSql(
               `DELETE FROM TastingNotes WHERE userEmail = ? AND id not in (${params(idsToKeep.length)})`,
               [email, ...idsToKeep],
-              () => {
-                null;
-              },
+              () => {},
             );
           });
         } catch (e) {
@@ -132,22 +126,15 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
       if (email) {
         await handle.transaction((tx) => {
           console.log('tx', tx);
-          tx.executeSql(
-            'SELECT COALESCE(MAX(id), 0) + 1 AS newId FROM TastingNotes',
-            [],
-            // tslint:disable-next-line:variable-name
-            (_t: any, r: any) => {
-              note.id = r.rows.item(0).newId;
-              tx.executeSql(
-                'INSERT INTO TastingNotes (id, name, brand, notes, rating, teaCategoryId, userEmail, syncStatus)' +
-                  " VALUES (?, ?, ?, ?, ?, ?, ?, 'INSERT')",
-                [note.id, note.name, note.brand, note.notes, note.rating, note.teaCategoryId, email],
-                () => {
-                  null;
-                },
-              );
-            },
-          );
+          tx.executeSql('SELECT COALESCE(MAX(id), 0) + 1 AS newId FROM TastingNotes', [], (_t: any, r: any) => {
+            note.id = r.rows.item(0).newId;
+            tx.executeSql(
+              'INSERT INTO TastingNotes (id, name, brand, notes, rating, teaCategoryId, userEmail, syncStatus)' +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, 'INSERT')",
+              [note.id, note.name, note.brand, note.notes, note.rating, note.teaCategoryId, email],
+              () => {},
+            );
+          });
         });
       }
       note.syncStatus = 'INSERT';
@@ -166,9 +153,7 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
               " syncStatus = CASE syncStatus WHEN 'INSERT' THEN 'INSERT' else 'UPDATE' end" +
               ' WHERE userEmail = ? AND id = ?',
             [note.name, note.brand, note.notes, note.rating, note.teaCategoryId, email, note.id],
-            () => {
-              null;
-            },
+            () => {},
           );
         });
       }
@@ -208,9 +193,7 @@ const TastingNotesDbProvider: React.FC<Props> = ({ children }) => {
                 email,
                 note.id,
               ],
-              () => {
-                null;
-              },
+              () => {},
             );
           });
         } catch (e) {

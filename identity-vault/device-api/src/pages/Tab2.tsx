@@ -18,7 +18,7 @@ import './Tab2.css';
 const Tab2: React.FC = () => {
   const [hasSecureHardware, setHasSecureHardware] = useState(false);
   const [isBiometricsSupported, setIsBiometricsSupported] = useState(false);
-  const [availableHardware, setAvailableHardware] = useState<Array<string>>([]);
+  const [availableHardware, setAvailableHardware] = useState<string[]>([]);
   const [biometricStrengthLevel, setBiometricStrengthLevel] = useState('');
   const [isBiometricsAllowed, setIsBiometricsAllowed] = useState('');
   const [isBiometricsEnabled, setIsBiometricsEnabled] = useState(false);
@@ -50,7 +50,7 @@ const Tab2: React.FC = () => {
       await Device.showBiometricPrompt({
         iosBiometricsLocalizedReason: 'Just to show you how this works',
       });
-    } catch (e) {
+    } catch {
       // This is the most likely scenario
       alert('user cancelled biometrics prompt');
     }

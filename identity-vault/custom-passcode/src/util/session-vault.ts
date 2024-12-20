@@ -21,7 +21,7 @@ export const initializeVault = async (): Promise<void> => {
       deviceSecurityType: DeviceSecurityType.None,
       lockAfterBackgrounded: 2000,
     });
-  } catch (e: unknown) {
+  } catch {
     await vault.clear();
     await updateUnlockMode('SecureStorage');
   }
@@ -38,7 +38,7 @@ export const addOnPasscodeRequested = (
 };
 
 export const removeOnPasscodeRequested = () => {
-  vault.onPasscodeRequested(() => {});
+  vault.onPasscodeRequested(() => null);
 };
 
 export const storeSession = async (session: Session): Promise<void> => {

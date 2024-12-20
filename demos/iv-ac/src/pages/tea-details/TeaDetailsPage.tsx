@@ -9,7 +9,6 @@ const TeaDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { teas, rate } = useTea();
   const [tea, setTea] = useState<Tea>();
-  const [rating, setRating] = useState<number>(2);
 
   useEffect(() => {
     setTea(teas.find((t) => t.id === parseInt(id, 10)));

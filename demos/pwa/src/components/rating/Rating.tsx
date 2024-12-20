@@ -2,12 +2,12 @@ import { IonIcon } from '@ionic/react';
 import { star, starOutline } from 'ionicons/icons';
 import './Rating.css';
 
-type Props = {
+interface Props {
   rating?: number;
-  onRatingChange?: (rating: number) => any;
-};
+  onRatingChange?: (rating: number) => unknown;
+}
 
-export const Rating: React.FC<Props> = ({ rating = 0, onRatingChange = () => void 0 }) => (
+export const Rating = ({ rating = 0, onRatingChange = () => void 0 }: Props) => (
   <div className="rating">
     {[1, 2, 3, 4, 5].map((num, idx) => (
       <IonIcon

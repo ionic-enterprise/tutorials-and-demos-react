@@ -23,7 +23,7 @@ export const initializeVault = async (): Promise<void> => {
       deviceSecurityType: DeviceSecurityType.None,
       lockAfterBackgrounded: 30000,
     });
-  } catch (e: unknown) {
+  } catch {
     await vault.clear();
     await updateUnlockMode('SecureStorage');
   }
@@ -109,8 +109,8 @@ const provisionBiometrics = async (): Promise<void> => {
   if ((await Device.isBiometricsAllowed()) === BiometricPermissionState.Prompt) {
     try {
       await Device.showBiometricPrompt({ iosBiometricsLocalizedReason: 'Please authenticate to continue' });
-    } catch (error) {
-      null;
+    } catch (error: unknown) {
+      console.error(error);
     }
   }
 };
