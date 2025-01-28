@@ -2,8 +2,8 @@
 
 android {
   compileOptions {
-      sourceCompatibility JavaVersion.VERSION_17
-      targetCompatibility JavaVersion.VERSION_17
+      sourceCompatibility JavaVersion.VERSION_21
+      targetCompatibility JavaVersion.VERSION_21
   }
 }
 
@@ -18,7 +18,7 @@ dependencies {
     implementation project(':ionic-enterprise-auth')
 
 }
-apply from: "../../../../node_modules/.pnpm/@ionic-enterprise+identity-vault@5.14.5_typescript@5.7.2/node_modules/@ionic-enterprise/identity-vault/src/android/ionicnativeauth.gradle"
+apply from: "../../../../node_modules/.pnpm/@ionic-enterprise+identity-vault@5.14.5_typescript@5.7.3/node_modules/@ionic-enterprise/identity-vault/src/android/ionicnativeauth.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()
