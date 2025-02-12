@@ -14,6 +14,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import './Tab2.css';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
 
 const Tab2: React.FC = () => {
   const [hasSecureHardware, setHasSecureHardware] = useState(false);
@@ -34,15 +35,21 @@ const Tab2: React.FC = () => {
       setBiometricStrengthLevel(await Device.getBiometricStrengthLevel());
       setIsBiometricsAllowed(await Device.isBiometricsAllowed());
       setIsBiometricsEnabled(await Device.isBiometricsEnabled());
-      setIsHideScreenOnBackgroundEnabled(await Device.isHideScreenOnBackgroundEnabled());
       setIsLockedOutOfBiometrics(await Device.isLockedOutOfBiometrics());
       setIsSystemPasscodeSet(await Device.isSystemPasscodeSet());
+      const { enabled } = await PrivacyScreen.isEnabled();
+      setIsHideScreenOnBackgroundEnabled(enabled);
     })();
   }, []);
 
   const toggleHideScreenOnBackground = async (): Promise<void> => {
-    await Device.setHideScreenOnBackground(!isHideScreenOnBackgroundEnabled);
-    setIsHideScreenOnBackgroundEnabled(await Device.isHideScreenOnBackgroundEnabled());
+    if (isHideScreenOnBackgroundEnabled) {
+      await PrivacyScreen.disable();
+    } else {
+      await PrivacyScreen.enable();
+    }
+    const { enabled } = await PrivacyScreen.isEnabled();
+    setIsHideScreenOnBackgroundEnabled(enabled);
   };
 
   const showBiometricPrompt = async (): Promise<void> => {

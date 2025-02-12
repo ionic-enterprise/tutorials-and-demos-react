@@ -21,6 +21,7 @@ import {
   BiometricSecurityStrength,
   SupportedBiometricType,
 } from '@ionic-enterprise/identity-vault';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
 
 const isNativePlatform = isPlatform('hybrid');
 
@@ -50,9 +51,13 @@ const DeviceInfoPage: React.FC = () => {
   const [availableHardware, setAvailableHardware] = useState<SupportedBiometricType[]>([]);
 
   const togglePrivacy = async () => {
-    await Device.setHideScreenOnBackground(!privacyScreen);
-    const isEnabled = await Device.isHideScreenOnBackgroundEnabled();
-    setPrivacyScreen(isEnabled);
+    if (privacyScreen) {
+      await PrivacyScreen.disable();
+    } else {
+      await PrivacyScreen.enable();
+    }
+    const { enabled } = await PrivacyScreen.isEnabled();
+    setPrivacyScreen(enabled);
   };
 
   const showBiometricPrompt = async () => {
@@ -75,7 +80,7 @@ const DeviceInfoPage: React.FC = () => {
     Device.isBiometricsAllowed().then((x) => setBiometricsAllowed(x));
     Device.getBiometricStrengthLevel().then((x) => setBiometricStrength(x));
     Device.isSystemPasscodeSet().then((x) => setSystemPasscode(x));
-    Device.isHideScreenOnBackgroundEnabled().then((x) => setPrivacyScreen(x));
+    PrivacyScreen.isEnabled().then(({ enabled }) => setPrivacyScreen(enabled));
     Device.isLockedOutOfBiometrics().then((x) => setLockedOut(x));
     Device.getAvailableHardware().then((x) => setAvailableHardware(x));
   }, []);

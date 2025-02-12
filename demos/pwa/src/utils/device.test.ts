@@ -10,8 +10,10 @@ import {
   isHidingContentsInBackground,
   provisionBiometricPermission,
 } from './device';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
 
 vi.mock('@capacitor/preferences');
+vi.mock('@capacitor/privacy-screen');
 vi.mock('@ionic/react', async (getOriginal) => {
   const original: object = await getOriginal();
   return { ...original, isPlatform: vi.fn() };
@@ -108,10 +110,15 @@ describe('Device Utilities', () => {
 
   describe('hideContentsInBackground', () => {
     it.each([[true], [false]])('calls the device API', async (value: boolean) => {
-      Device.setHideScreenOnBackground = vi.fn();
       await hideContentsInBackground(value);
-      expect(Device.setHideScreenOnBackground).toHaveBeenCalledTimes(1);
-      expect(Device.setHideScreenOnBackground).toHaveBeenCalledWith(value, true);
+      if (value) {
+        expect(PrivacyScreen.enable).toHaveBeenCalledTimes(1);
+        expect(PrivacyScreen.enable).toHaveBeenCalledWith({ android: { dimBackground: true } });
+        expect(PrivacyScreen.disable).not.toHaveBeenCalled();
+      } else {
+        expect(PrivacyScreen.disable).toHaveBeenCalledTimes(1);
+        expect(PrivacyScreen.enable).not.toHaveBeenCalled();
+      }
     });
 
     it.each([[true], [false]])('saves the value to preferences', async (value: boolean) => {

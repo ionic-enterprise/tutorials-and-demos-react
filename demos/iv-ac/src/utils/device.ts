@@ -1,4 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
 import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
 import { isPlatform } from '@ionic/react';
 
@@ -10,7 +11,11 @@ const canUseCustomPasscode = (): boolean => isPlatform('hybrid');
 const canHideContentsInBackground = (): boolean => isPlatform('hybrid');
 
 const hideContentsInBackground = async (value: boolean): Promise<void> => {
-  await Device.setHideScreenOnBackground(value, true);
+  if (value) {
+    await PrivacyScreen.enable({ android: { dimBackground: true } });
+  } else {
+    PrivacyScreen.disable();
+  }
   return Preferences.set({ key, value: JSON.stringify(value) });
 };
 

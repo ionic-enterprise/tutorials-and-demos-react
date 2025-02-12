@@ -1,10 +1,10 @@
+import { usePinDialog } from '@/hooks/usePinDialog';
+import { useSplashScreen } from '@/hooks/useSplashScreen';
+import { initializeAuthService, isAuthenticated } from '@/utils/authentication';
+import { canUnlock, initializeVault } from '@/utils/session-storage/session-vault';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
 import { ReactNode, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Device } from '@ionic-enterprise/identity-vault';
-import { initializeAuthService, isAuthenticated } from '@/utils/authentication';
-import { initializeVault, canUnlock } from '@/utils/session-storage/session-vault';
-import { useSplashScreen } from '@/hooks/useSplashScreen';
-import { usePinDialog } from '@/hooks/usePinDialog';
 
 interface Props {
   children?: ReactNode;
@@ -32,7 +32,7 @@ const AppInitializer = ({ children }: Props) => {
       await isAuthenticated();
     }
 
-    Device.setHideScreenOnBackground(true);
+    PrivacyScreen.enable();
 
     hideSplashScreen();
 

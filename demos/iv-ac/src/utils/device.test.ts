@@ -1,7 +1,8 @@
-import { vi, Mock } from 'vitest';
-import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
 import { Preferences } from '@capacitor/preferences';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
+import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
 import { isPlatform } from '@ionic/react';
+import { Mock, vi } from 'vitest';
 import {
   canUseBiometrics,
   canUseCustomPasscode,
@@ -12,6 +13,7 @@ import {
 } from './device';
 
 vi.mock('@capacitor/preferences');
+vi.mock('@capacitor/privacy-screen');
 vi.mock('@ionic/react', async (getOriginal) => {
   const original: object = await getOriginal();
   return { ...original, isPlatform: vi.fn() };
@@ -108,10 +110,15 @@ describe('Device Utilities', () => {
 
   describe('hideContentsInBackground', () => {
     it.each([[true], [false]])('calls the device API', async (value: boolean) => {
-      Device.setHideScreenOnBackground = vi.fn();
       await hideContentsInBackground(value);
-      expect(Device.setHideScreenOnBackground).toHaveBeenCalledTimes(1);
-      expect(Device.setHideScreenOnBackground).toHaveBeenCalledWith(value, true);
+      if (value) {
+        expect(PrivacyScreen.enable).toHaveBeenCalledTimes(1);
+        expect(PrivacyScreen.enable).toHaveBeenCalledWith({ android: { dimBackground: true } });
+        expect(PrivacyScreen.disable).not.toHaveBeenCalled();
+      } else {
+        expect(PrivacyScreen.disable).toHaveBeenCalledTimes(1);
+        expect(PrivacyScreen.enable).not.toHaveBeenCalled();
+      }
     });
 
     it.each([[true], [false]])('saves the value to preferences', async (value: boolean) => {
