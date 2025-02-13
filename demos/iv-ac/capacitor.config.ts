@@ -6,12 +6,12 @@ const config: CapacitorConfig = {
   appId: 'io.ionic.teataster',
   appName: 'Tea Tasting Notes',
   webDir: 'dist',
-  server: {
-    androidScheme: 'https',
-  },
   plugins: {
     SplashScreen: {
       launchAutoHide: false,
+    },
+    StatusBar: {
+      overlaysWebView: false,
     },
   },
 };

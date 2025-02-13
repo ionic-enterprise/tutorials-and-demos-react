@@ -4,8 +4,10 @@ const config: CapacitorConfig = {
   appId: 'io.ionic.securitytrifectareact',
   appName: 'security-trifecta-react',
   webDir: 'dist',
-  server: {
-    androidScheme: 'https',
+  plugins: {
+    StatusBar: {
+      overlaysWebView: false,
+    },
   },
 };
 

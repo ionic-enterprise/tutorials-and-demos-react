@@ -4,8 +4,10 @@ const config: CapacitorConfig = {
   appId: 'io.ionic.gettingstartediv',
   appName: 'iv-getting-started',
   webDir: 'dist',
-  server: {
-    androidScheme: 'https',
+  plugins: {
+    StatusBar: {
+      overlaysWebView: false,
+    },
   },
 };
 
