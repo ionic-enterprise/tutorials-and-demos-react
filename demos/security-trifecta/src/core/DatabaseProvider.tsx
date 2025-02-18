@@ -1,6 +1,6 @@
 import { DbTransaction, SQLite, SQLiteObject } from '@ionic-enterprise/secure-storage';
 import { isPlatform } from '@ionic/react';
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import { getDatabaseKey } from '../utils/encryption';
 
 interface Props {
@@ -20,10 +20,6 @@ const DatabaseContext = createContext<Context | undefined>(undefined);
 
 const DatabaseProvider = ({ children }: Props) => {
   const [db, setDb] = useState<SQLiteObject>();
-
-  useEffect(() => {
-    // initializeDB();
-  }, []);
 
   const initializeDB = async (): Promise<SQLiteObject | undefined> => {
     if (isPlatform('hybrid')) {
