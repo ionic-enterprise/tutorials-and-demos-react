@@ -1,17 +1,14 @@
-import { Mock, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { isPlatform } from '@ionic/react';
+import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
-import { TastingNoteEditor } from './TastingNoteEditor';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { Mock, vi } from 'vitest';
 import { useTastingNotes } from '../../hooks/useTastingNotes';
 import { TastingNote } from '../../models';
+import { TastingNoteEditor } from './TastingNoteEditor';
 
+vi.mock('@capacitor/core');
 vi.mock('@capacitor/share');
 vi.mock('../../hooks/useTastingNotes');
-vi.mock('@ionic/react', async (getOriginal) => {
-  const original: object = await getOriginal();
-  return { ...original, isPlatform: vi.fn() };
-});
 
 const props = {
   onDismiss: vi.fn(),
@@ -57,7 +54,7 @@ const note: TastingNote = {
 
 describe('<TastingNoteEditor />', () => {
   beforeEach(() => {
-    (isPlatform as Mock).mockReturnValue(true);
+    (Capacitor.isNativePlatform as Mock).mockReturnValue(true);
     vi.clearAllMocks();
   });
 
@@ -211,7 +208,7 @@ describe('<TastingNoteEditor />', () => {
 
   describe('share button', () => {
     describe('in a web context', () => {
-      beforeEach(() => (isPlatform as Mock).mockReturnValue(false));
+      beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(false));
 
       it('does not exist', () => {
         render(<TastingNoteEditor {...props} />);

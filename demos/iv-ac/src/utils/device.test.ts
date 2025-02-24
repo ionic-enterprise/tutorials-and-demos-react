@@ -1,7 +1,7 @@
+import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import { PrivacyScreen } from '@capacitor/privacy-screen';
 import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
-import { isPlatform } from '@ionic/react';
 import { Mock, vi } from 'vitest';
 import {
   canUseBiometrics,
@@ -12,12 +12,9 @@ import {
   provisionBiometricPermission,
 } from './device';
 
+vi.mock('@capacitor/core');
 vi.mock('@capacitor/preferences');
 vi.mock('@capacitor/privacy-screen');
-vi.mock('@ionic/react', async (getOriginal) => {
-  const original: object = await getOriginal();
-  return { ...original, isPlatform: vi.fn() };
-});
 
 describe('Device Utilities', () => {
   beforeEach(() => {
@@ -26,7 +23,7 @@ describe('Device Utilities', () => {
 
   describe('canUseBiometrics', () => {
     describe('on the web', () => {
-      beforeEach(() => (isPlatform as Mock).mockReturnValue(false));
+      beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(false));
 
       it('resolves false if biometrics is not set up', async () => {
         Device.isBiometricsEnabled = vi.fn().mockResolvedValue(false);
@@ -40,7 +37,7 @@ describe('Device Utilities', () => {
     });
 
     describe('on mobile', () => {
-      beforeEach(() => (isPlatform as Mock).mockReturnValue(true));
+      beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(true));
 
       it('resolves false if biometrics is not set up', async () => {
         Device.isBiometricsEnabled = vi.fn().mockResolvedValue(false);
@@ -56,7 +53,7 @@ describe('Device Utilities', () => {
 
   describe('canUseSystemPasscode', () => {
     describe('on the web', () => {
-      beforeEach(() => (isPlatform as Mock).mockReturnValue(false));
+      beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(false));
 
       it('resolves false if the system passcode is not set', async () => {
         Device.isSystemPasscodeSet = vi.fn().mockResolvedValue(false);
@@ -70,7 +67,7 @@ describe('Device Utilities', () => {
     });
 
     describe('on mobile', () => {
-      beforeEach(() => (isPlatform as Mock).mockReturnValue(true));
+      beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(true));
 
       it('resolves false if the system passcode is not set', async () => {
         Device.isSystemPasscodeSet = vi.fn().mockResolvedValue(false);
@@ -86,24 +83,24 @@ describe('Device Utilities', () => {
 
   describe('canUseCustomPasscode', () => {
     it('returns false if on the web ', () => {
-      (isPlatform as Mock).mockReturnValue(false);
+      (Capacitor.isNativePlatform as Mock).mockReturnValue(false);
       expect(canUseCustomPasscode()).toBe(false);
     });
 
     it('returns true if on hybrid', () => {
-      (isPlatform as Mock).mockReturnValue(true);
+      (Capacitor.isNativePlatform as Mock).mockReturnValue(true);
       expect(canUseCustomPasscode()).toBe(true);
     });
   });
 
   describe('canHideContentsInBackground', () => {
     it('returns false if on the web ', () => {
-      (isPlatform as Mock).mockReturnValue(false);
+      (Capacitor.isNativePlatform as Mock).mockReturnValue(false);
       expect(canUseCustomPasscode()).toBe(false);
     });
 
     it('returns true if on hybrid', () => {
-      (isPlatform as Mock).mockReturnValue(true);
+      (Capacitor.isNativePlatform as Mock).mockReturnValue(true);
       expect(canUseCustomPasscode()).toBe(true);
     });
   });

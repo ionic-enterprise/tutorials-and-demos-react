@@ -1,9 +1,9 @@
+import { Capacitor } from '@capacitor/core';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { Tea } from '../models/Tea';
 import { client } from '../utils/backend-api';
-import { isPlatform } from '@ionic/react';
-import { useTastingNotesDatabase } from './TastingNotesDbProvider';
 import { useCompare } from '../utils/compare';
+import { useTastingNotesDatabase } from './TastingNotesDbProvider';
 import { useTeaCategoriesDatabase } from './TeaCategoriesDbProvider';
 
 interface Props {
@@ -37,7 +37,7 @@ const TeaProvider = ({ children }: Props) => {
   };
 
   const loadCategories = async () => {
-    if (isPlatform('hybrid')) {
+    if (Capacitor.isNativePlatform()) {
       const cats = await loadCategoriesAPI();
       setTeaCategories(cats);
       await trim(cats.map((cat: Tea) => cat.id));
@@ -50,7 +50,7 @@ const TeaProvider = ({ children }: Props) => {
   };
 
   const refreshCategories = async (): Promise<void> => {
-    if (isPlatform('hybrid')) {
+    if (Capacitor.isNativePlatform()) {
       const cats = await getAllCategories();
       setTeaCategories(cats);
     } else {
@@ -67,7 +67,7 @@ const TeaProvider = ({ children }: Props) => {
   const loadTastingNotes = async () => {
     const loadedTeas = await loadTastingNoteAPI();
 
-    if (isPlatform('hybrid')) {
+    if (Capacitor.isNativePlatform()) {
       await trim(loadedTeas.map((x: Tea) => x.id as number));
       const upserts: Promise<unknown>[] = loadedTeas.map((tea: Tea) => upsert(tea));
       await Promise.all(upserts);
@@ -86,7 +86,7 @@ const TeaProvider = ({ children }: Props) => {
   };
 
   const refreshTastingNotes = async (): Promise<void> => {
-    if (isPlatform('hybrid')) {
+    if (Capacitor.isNativePlatform()) {
       const notes = await getAll();
       setTeas(notes);
     } else {
@@ -102,7 +102,7 @@ const TeaProvider = ({ children }: Props) => {
   };
 
   const saveTea = async (tea: Tea): Promise<Tea> => {
-    const savedTea = isPlatform('hybrid') ? await save(tea) : await saveAPI(tea);
+    const savedTea = Capacitor.isNativePlatform() ? await save(tea) : await saveAPI(tea);
 
     const newTeas = teas;
     const index = newTeas.findIndex((t) => t.id === savedTea.id);
@@ -152,7 +152,7 @@ const TeaProvider = ({ children }: Props) => {
   };
 
   const initialize = async () => {
-    if (isPlatform('hybrid')) await syncTeas();
+    if (Capacitor.isNativePlatform()) await syncTeas();
     await loadCategories();
     await loadTastingNotes();
   };

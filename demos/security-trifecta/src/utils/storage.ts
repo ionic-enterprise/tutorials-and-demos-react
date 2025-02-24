@@ -1,12 +1,12 @@
+import { Capacitor } from '@capacitor/core';
 import { getDatabaseKey } from './encryption';
-import { isPlatform } from '@ionic/react';
 import { useKeyValueStorage } from './key-value-storage';
 
 const storage = useKeyValueStorage();
 let isReady: Promise<void>;
 
 const createDatabase = async (): Promise<void> => {
-  const key = isPlatform('hybrid') ? await getDatabaseKey() : '';
+  const key = Capacitor.isNativePlatform() ? await getDatabaseKey() : '';
   await storage.create(key || '');
 };
 

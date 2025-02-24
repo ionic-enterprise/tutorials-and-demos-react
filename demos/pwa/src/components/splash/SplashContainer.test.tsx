@@ -1,14 +1,11 @@
-import { Mock, vi } from 'vitest';
+import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { render } from '@testing-library/react';
-import { isPlatform } from '@ionic/react';
+import { Mock, vi } from 'vitest';
 import SplashContainer from './SplashContainer';
 
+vi.mock('@capacitor/core');
 vi.mock('@capacitor/splash-screen');
-vi.mock('@ionic/react', async (getOriginal) => {
-  const original: object = await getOriginal();
-  return { ...original, isPlatform: vi.fn() };
-});
 
 describe('<SplashContainer />', () => {
   beforeEach(() => {
@@ -16,7 +13,7 @@ describe('<SplashContainer />', () => {
   });
 
   describe('in a mobile context', () => {
-    beforeEach(() => (isPlatform as Mock).mockReturnValue(true));
+    beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(true));
 
     it('should hide the splash screen', () => {
       render(<SplashContainer />);
@@ -25,7 +22,7 @@ describe('<SplashContainer />', () => {
   });
 
   describe('in a web context', () => {
-    beforeEach(() => (isPlatform as Mock).mockReturnValue(false));
+    beforeEach(() => (Capacitor.isNativePlatform as Mock).mockReturnValue(false));
 
     it('should not hide the splash screen', () => {
       render(<SplashContainer />);

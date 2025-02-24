@@ -4,9 +4,9 @@ import { getAccessToken, isAuthenticated, login, logout } from './auth';
 import { clearSession, getSession, setSession } from './session-vault';
 
 vi.mock('@ionic-enterprise/auth');
-vi.mock('@ionic/react', async (getOriginal) => {
+vi.mock('@capcitor/core', async (getOriginal) => {
   const original: object = await getOriginal();
-  return { ...original, isPlatform: vi.fn().mockReturnValue(true) };
+  return { ...original, Capacitor: { isNativePlatform: vi.fn().mockReturnValue(true) } };
 });
 vi.mock('./session-vault');
 

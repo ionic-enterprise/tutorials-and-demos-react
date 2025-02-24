@@ -1,4 +1,7 @@
-import { isPlatform } from '@ionic/react';
+import { AuthVendor } from '@/models';
+import { Authenticator } from '@/utils/authentication/authenticator';
+import { clear, getValue, setValue } from '@/utils/session-storage/session-vault';
+import { Capacitor } from '@capacitor/core';
 import {
   Auth0Provider,
   AuthConnect,
@@ -7,11 +10,8 @@ import {
   CognitoProvider,
   ProviderOptions,
 } from '@ionic-enterprise/auth';
-import { AuthVendor } from '@/models';
-import { Authenticator } from '@/utils/authentication/authenticator';
-import { getValue, setValue, clear } from '@/utils/session-storage/session-vault';
 
-const isNativePlatform = isPlatform('hybrid');
+const isNativePlatform = Capacitor.isNativePlatform();
 
 // NOTE: All of our auth providers are configured to use almost identical values for redirectUri and logoutUrl.
 //       For mobile, these URIs all use the msauth scheme. This is done to be consistent with the Azure AD

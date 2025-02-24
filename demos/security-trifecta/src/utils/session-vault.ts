@@ -1,10 +1,10 @@
+import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { DeviceSecurityType, IdentityVaultConfig, VaultType } from '@ionic-enterprise/identity-vault';
 import { AuthResult } from '@ionic-enterprise/auth';
-import { createVault } from './vault-factory';
-import { provisionBiometricPermission } from './device';
+import { DeviceSecurityType, IdentityVaultConfig, VaultType } from '@ionic-enterprise/identity-vault';
 import { UnlockMode } from '../models/UnlockMode';
-import { isPlatform } from '@ionic/react';
+import { provisionBiometricPermission } from './device';
+import { createVault } from './vault-factory';
 
 type VaultUnlockType = Pick<IdentityVaultConfig, 'type' | 'deviceSecurityType'>;
 
@@ -108,7 +108,7 @@ const getUnlockModeConfig = async (unlockMode: UnlockMode): Promise<VaultUnlockT
   }
 };
 
-const canUseLocking = (): boolean => isPlatform('hybrid');
+const canUseLocking = (): boolean => Capacitor.isNativePlatform();
 
 const canUnlock = async (): Promise<boolean> => {
   const { value } = await Preferences.get({ key: keys.mode });
@@ -135,17 +135,17 @@ const unregisterCallback = <T extends keyof CallbackMap>(topic: T): void => {
 };
 
 export {
-  initializeVault,
+  canUnlock,
+  canUseLocking,
   clearSession,
   getSession,
+  getSnapshot,
+  getUnlockMode,
+  initializeVault,
+  registerCallback,
   restoreSession,
   setSession,
-  canUnlock,
   setUnlockMode,
-  getUnlockMode,
-  registerCallback,
-  unregisterCallback,
-  canUseLocking,
   subscribe,
-  getSnapshot,
+  unregisterCallback,
 };

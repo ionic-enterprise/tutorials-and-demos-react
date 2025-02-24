@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
+import { PrivacyScreen } from '@capacitor/privacy-screen';
 import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonHeader,
+  BiometricPermissionState,
+  BiometricSecurityStrength,
+  Device,
+  SupportedBiometricType,
+} from '@ionic-enterprise/identity-vault';
+import {
   IonBackButton,
+  IonButton,
   IonButtons,
-  IonTitle,
-  IonToolbar,
+  IonContent,
+  IonHeader,
   IonItem,
   IonLabel,
   IonList,
   IonNote,
-  isPlatform,
+  IonPage,
+  IonTitle,
+  IonToolbar,
   useIonAlert,
 } from '@ionic/react';
-import {
-  Device,
-  BiometricPermissionState,
-  BiometricSecurityStrength,
-  SupportedBiometricType,
-} from '@ionic-enterprise/identity-vault';
-import { PrivacyScreen } from '@capacitor/privacy-screen';
+import { useEffect, useState } from 'react';
 
-const isNativePlatform = isPlatform('hybrid');
+const isNativePlatform = Capacitor.isNativePlatform();
 
 const prettyPrintBooleanStatus = (isAvailable: boolean) => (isAvailable ? 'Yes' : 'No');
 

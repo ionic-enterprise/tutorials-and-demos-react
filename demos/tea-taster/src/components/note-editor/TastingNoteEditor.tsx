@@ -1,3 +1,6 @@
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   IonButton,
   IonButtons,
@@ -13,17 +16,14 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
-  isPlatform,
 } from '@ionic/react';
-import { Share } from '@capacitor/share';
+import { shareOutline } from 'ionicons/icons';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'Yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useTastingNotes } from '../../hooks/useTastingNotes';
 import { TastingNote, Tea } from '../../models';
 import { Rating } from '../rating/Rating';
-import { useTastingNotes } from '../../hooks/useTastingNotes';
-import { useEffect } from 'react';
-import { shareOutline } from 'ionicons/icons';
 
 interface Props {
   onDismiss: () => void;
@@ -53,7 +53,7 @@ export const TastingNoteEditor = ({ onDismiss, teas, note }: Props) => {
     resolver: yupResolver(validationSchema),
     defaultValues: note || undefined,
   });
-  const sharingIsAvailable = isPlatform('hybrid');
+  const sharingIsAvailable = Capacitor.isNativePlatform();
   const allowShare = watch(['brand', 'name', 'rating']).every((el) => !!el);
 
   useEffect(() => {

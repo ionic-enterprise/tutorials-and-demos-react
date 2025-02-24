@@ -1,20 +1,20 @@
-import { isPlatform } from '@ionic/react';
+import { createVault } from '@/utils/vault-factory';
+import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import {
+  BiometricPermissionState,
   Device,
-  VaultType,
   DeviceSecurityType,
   IdentityVaultConfig,
-  BiometricPermissionState,
+  VaultType,
 } from '@ionic-enterprise/identity-vault';
-import { createVault } from '@/utils/vault-factory';
 
 interface InitializeOptions {
   onPasscodeRequested: (isPasscodeSetRequest: boolean) => Promise<string>;
   onLock: () => void;
 }
 
-const isNativePlatform = isPlatform('hybrid');
+const isNativePlatform = Capacitor.isNativePlatform();
 
 export type UnlockMode = 'Device' | 'SystemPIN' | 'SessionPIN' | 'NeverLock' | 'ForceLogin';
 

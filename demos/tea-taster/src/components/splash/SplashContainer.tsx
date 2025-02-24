@@ -1,5 +1,5 @@
+import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { isPlatform } from '@ionic/react';
 import { ReactNode, useEffect } from 'react';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 const SplashContainer = ({ children }: Props) => {
   useEffect(() => {
-    if (isPlatform('hybrid')) SplashScreen.hide();
+    if (Capacitor.isNativePlatform()) SplashScreen.hide();
   }, []);
 
   return <>{children}</>;

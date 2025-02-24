@@ -1,8 +1,8 @@
+import { Capacitor } from '@capacitor/core';
 import { Auth0Provider, AuthConnect, AuthResult, ProviderOptions } from '@ionic-enterprise/auth';
-import { isPlatform } from '@ionic/react';
 import { clearSession, getSession, setSession } from './session-vault';
 
-const isMobile = isPlatform('hybrid');
+const isMobile = Capacitor.isNativePlatform();
 const url = isMobile ? 'msauth://auth-action-complete' : 'http://localhost:8100/auth-action-complete';
 const options: ProviderOptions = {
   audience: 'https://io.ionic.demo.ac',

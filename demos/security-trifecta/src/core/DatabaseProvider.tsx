@@ -1,5 +1,5 @@
+import { Capacitor } from '@capacitor/core';
 import { DbTransaction, SQLite, SQLiteObject } from '@ionic-enterprise/secure-storage';
-import { isPlatform } from '@ionic/react';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { getDatabaseKey } from '../utils/encryption';
 
@@ -22,7 +22,7 @@ const DatabaseProvider = ({ children }: Props) => {
   const [db, setDb] = useState<SQLiteObject>();
 
   const initializeDB = async (): Promise<SQLiteObject | undefined> => {
-    if (isPlatform('hybrid')) {
+    if (Capacitor.isNativePlatform()) {
       const key = await getDatabaseKey();
       if (key) {
         try {

@@ -1,31 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useVault } from '@/hooks/useVault';
+import { isAuthenticated } from '@/utils/authentication';
+import { clear, getConfig, lock, setUnlockMode, UnlockMode } from '@/utils/session-storage/session-vault';
+import { Capacitor } from '@capacitor/core';
+import { Device, VaultType } from '@ionic-enterprise/identity-vault';
 import {
-  IonPage,
+  IonButton,
   IonContent,
-  IonIcon,
-  IonTitle,
-  IonHeader,
-  IonToolbar,
-  IonList,
   IonFab,
   IonFabButton,
   IonFabList,
-  IonButton,
+  IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
+  IonList,
   IonNote,
-  isPlatform,
+  IonPage,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
 import { ellipsisVerticalOutline, hardwareChipOutline, listOutline } from 'ionicons/icons';
-import { Device, VaultType } from '@ionic-enterprise/identity-vault';
-import { setUnlockMode, lock, clear, getConfig, UnlockMode } from '@/utils/session-storage/session-vault';
-import { isAuthenticated } from '@/utils/authentication';
-import { useVault } from '@/hooks/useVault';
-
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './VaultControlPage.css';
 
-const isNativePlatform = isPlatform('hybrid');
+const isNativePlatform = Capacitor.isNativePlatform();
 
 const VaultControlPage: React.FC = () => {
   const history = useHistory();

@@ -1,14 +1,16 @@
+import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
 import { PrivacyScreen } from '@capacitor/privacy-screen';
 import { BiometricPermissionState, Device } from '@ionic-enterprise/identity-vault';
-import { isPlatform } from '@ionic/react';
 
 const key = 'hide-in-background';
 
-const canUseBiometrics = async (): Promise<boolean> => isPlatform('hybrid') && (await Device.isBiometricsEnabled());
-const canUseSystemPasscode = async (): Promise<boolean> => isPlatform('hybrid') && (await Device.isSystemPasscodeSet());
-const canUseCustomPasscode = (): boolean => isPlatform('hybrid');
-const canHideContentsInBackground = (): boolean => isPlatform('hybrid');
+const canUseBiometrics = async (): Promise<boolean> =>
+  Capacitor.isNativePlatform() && (await Device.isBiometricsEnabled());
+const canUseSystemPasscode = async (): Promise<boolean> =>
+  Capacitor.isNativePlatform() && (await Device.isSystemPasscodeSet());
+const canUseCustomPasscode = (): boolean => Capacitor.isNativePlatform();
+const canHideContentsInBackground = (): boolean => Capacitor.isNativePlatform();
 
 const hideContentsInBackground = async (value: boolean): Promise<void> => {
   if (value) {
