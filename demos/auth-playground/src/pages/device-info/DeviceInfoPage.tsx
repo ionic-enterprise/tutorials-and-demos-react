@@ -54,7 +54,7 @@ const DeviceInfoPage: React.FC = () => {
     if (privacyScreen) {
       await PrivacyScreen.disable();
     } else {
-      await PrivacyScreen.enable();
+      await PrivacyScreen.enable({ android: { privacyModeOnActivityHidden: 'dim' } });
     }
     const { enabled } = await PrivacyScreen.isEnabled();
     setPrivacyScreen(enabled);

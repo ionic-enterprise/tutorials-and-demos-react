@@ -32,7 +32,7 @@ const AppInitializer = ({ children }: Props) => {
       await isAuthenticated();
     }
 
-    PrivacyScreen.enable();
+    PrivacyScreen.enable({ android: { privacyModeOnActivityHidden: 'dim' } });
 
     hideSplashScreen();
 

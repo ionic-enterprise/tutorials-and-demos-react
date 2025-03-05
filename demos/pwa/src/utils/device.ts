@@ -14,7 +14,7 @@ const canHideContentsInBackground = (): boolean => Capacitor.isNativePlatform();
 
 const hideContentsInBackground = async (value: boolean): Promise<void> => {
   if (value) {
-    await PrivacyScreen.enable({ android: { dimBackground: true } });
+    await PrivacyScreen.enable({ android: { dimBackground: true, privacyModeOnActivityHidden: 'dim' } });
   } else {
     await PrivacyScreen.disable();
   }

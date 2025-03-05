@@ -110,7 +110,9 @@ describe('Device Utilities', () => {
       await hideContentsInBackground(value);
       if (value) {
         expect(PrivacyScreen.enable).toHaveBeenCalledTimes(1);
-        expect(PrivacyScreen.enable).toHaveBeenCalledWith({ android: { dimBackground: true } });
+        expect(PrivacyScreen.enable).toHaveBeenCalledWith({
+          android: { dimBackground: true, privacyModeOnActivityHidden: 'splash' },
+        });
         expect(PrivacyScreen.disable).not.toHaveBeenCalled();
       } else {
         expect(PrivacyScreen.disable).toHaveBeenCalledTimes(1);
