@@ -34,7 +34,7 @@ const leaveAnimation = (baseEl: HTMLElement) => {
 
 let didInit = false;
 export const useSplashScreen = (minimumTimeVisible = isNative ? 0 : 400) => {
-  const start = useRef<number>();
+  const start = useRef<number>(0);
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const onDidDismiss = useRef(() => {});
   const [showWebSplashscreen, hideWebSplashscreen] = useIonModal(WebSplashscreen);
