@@ -1,9 +1,11 @@
 import { IonPage, IonContent, IonCard, IonCardContent, IonCardTitle, IonButton, IonIcon } from '@ionic/react';
 import { lockOpenOutline, arrowRedoOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
-import { clearSession, restoreSession } from '../../utils/session-vault';
+import { clearSession, restoreSession, setUnlockMode } from '../../utils/session-vault';
+import { VaultErrorCodes } from '@ionic-enterprise/identity-vault';
 
 import './UnlockPage.css';
+import { logout } from '../../utils/auth';
 
 const UnlockPage: React.FC = () => {
   const history = useHistory();
@@ -17,9 +19,14 @@ const UnlockPage: React.FC = () => {
     try {
       await restoreSession();
       history.replace('/');
-    } catch (err) {
-      // Handle or log the error, or remove the try-catch block entirely
-      console.error(err);
+    } catch (err: any) {
+      if (err.code === VaultErrorCodes.InvalidatedCredential) {
+        await setUnlockMode('SecureStorage');
+        await logout();
+        history.replace('/login');
+      } else {
+        console.log(err);
+      }
     }
   };
 

@@ -1,6 +1,8 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import { restoreSession } from '../../utils/session-vault';
+import { restoreSession, setUnlockMode } from '../../utils/session-vault';
+import { VaultErrorCodes } from '@ionic-enterprise/identity-vault';
+import { logout } from '../../utils/auth';
 
 const UnlockCard: React.FC = () => {
   const history = useHistory();
@@ -9,8 +11,14 @@ const UnlockCard: React.FC = () => {
     try {
       await restoreSession();
       history.replace('/');
-    } catch (err) {
-      console.log('Error logging in:', err);
+    } catch (err: any) {
+      if (err.code === VaultErrorCodes.InvalidatedCredential) {
+        await setUnlockMode('SecureStorage');
+        await logout();
+        history.replace('/login');
+      } else {
+        console.log('Error logging in:', err);
+      }
     }
   };
 

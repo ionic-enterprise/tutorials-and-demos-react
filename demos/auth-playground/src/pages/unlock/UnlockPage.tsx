@@ -2,9 +2,10 @@ import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent, IonCard, IonCardContent, IonCardTitle, IonButton, IonIcon } from '@ionic/react';
 import { lockOpenOutline, arrowRedoOutline } from 'ionicons/icons';
 import { isAuthenticated, logout } from '@/utils/authentication';
-import { canUnlock, unlock, clear } from '@/utils/session-storage/session-vault';
+import { canUnlock, unlock, clear, setUnlockMode } from '@/utils/session-storage/session-vault';
 
 import './UnlockPage.css';
+import { VaultErrorCodes } from '@ionic-enterprise/identity-vault';
 
 const UnlockPage: React.FC = () => {
   const history = useHistory();
@@ -20,10 +21,15 @@ const UnlockPage: React.FC = () => {
       await unlock();
       await isAuthenticated();
       await history.replace('/');
-    } catch (err: unknown) {
-      console.error(err);
-      // NOTE: You could alert or otherwise set an error message
-      //       The most common failure is the user cancelling, so we just don't navigate
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (err.code === VaultErrorCodes.InvalidatedCredential) {
+        await setUnlockMode('NeverLock');
+        await logout();
+        history.replace('/login');
+      } else {
+        console.log(err);
+      }
     }
   };
 
